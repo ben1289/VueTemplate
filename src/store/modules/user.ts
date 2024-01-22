@@ -5,6 +5,7 @@ import { useGlobalConfig, useMessage, useStorage } from '@/hooks'
 import { setTenantId, setToken } from '@/utils/auth'
 import { useDictStore } from '@/store'
 import router from '@/router'
+import i18n from '@/locale'
 
 interface UserInfo {
   id: number
@@ -51,7 +52,8 @@ const useUserStore = defineStore(STORE_ID, () => {
    * 重新登录
    */
   function loginAgain() {
-    const { t } = useI18n()
+    // @ts-expect-error Type instantiation is excessively deep and possibly infinite.
+    const { t } = i18n.global
     const message = useMessage()
     message.warningAlert(t('app.loginTimeout'), false, {
       okText: t('app.loginAgain'),
