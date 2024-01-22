@@ -10,21 +10,22 @@ const userStore = useUserStore()
 <template>
   <AConfigProvider :locale="appStore.arcoLocale" :size="appStore.layoutSize" global>
     <ASpin class="h-full w-full" :loading="globalConfig.loading.value" dot>
-      <AWatermark
-        v-if="globalConfig.watermark"
-        :content="[globalConfig.watermark, userStore.userInfo?.nickname ?? '']"
-        :gap="[200, 200]"
-      >
-        <RouterView />
-      </AWatermark>
-      <RouterView v-else />
+      <RouterView />
     </ASpin>
   </AConfigProvider>
+
+  <!-- 水印 -->
+  <Teleport v-if="globalConfig.watermark" to="body">
+    <AWatermark
+      :content="[globalConfig.watermark, userStore.userInfo?.nickname ?? '']"
+      :gap="[200, 200]"
+      :z-index="999999"
+    />
+  </Teleport>
 </template>
 
 <style scoped>
 .arco-watermark {
-  width: 100%;
-  height: 100%;
+  position: static !important;
 }
 </style>
