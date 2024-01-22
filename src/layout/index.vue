@@ -74,13 +74,10 @@ const tabRouteStore = useTabRouteStore()
     background-color: var(--layout-main-bg-color);
     overflow: auto;
 
-    & > .container-full {
+    & > .fixed-full {
       flex: 1;
       margin: 10px;
-      padding: 10px;
-      background-color: #fff;
-      border: 1px solid var(--color-border-2);
-      border-radius: 4px;
+      overflow: hidden;
     }
 
     .right-slide-enter-active {
