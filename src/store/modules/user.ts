@@ -32,7 +32,7 @@ const useUserStore = defineStore(STORE_ID, () => {
   }
 
   function clearStorage() {
-    window.localStorage.removeItem(STORE_ID)
+    localStorage.removeItem(STORE_ID)
   }
 
   /**
