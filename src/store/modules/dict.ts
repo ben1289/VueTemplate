@@ -32,7 +32,7 @@ const useDictStore = defineStore(STORE_ID, () => {
   persist: {
     storage: sessionStorage,
     beforeRestore() {
-      const { expires } = JSON.parse(sessionStorage.getItem(STORE_ID) ?? '')
+      const { expires } = JSON.parse(sessionStorage.getItem(STORE_ID) ?? '{}')
       if (!expires || new Date(expires) < new Date()) {
         sessionStorage.removeItem(STORE_ID)
       }
