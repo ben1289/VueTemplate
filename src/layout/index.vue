@@ -76,7 +76,7 @@ const tabRouteStore = useTabRouteStore()
 
     & > .fixed-full {
       flex: 1;
-      margin: 10px;
+      padding: 10px;
       overflow: hidden;
     }
 
