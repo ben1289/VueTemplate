@@ -28,8 +28,11 @@ export default {
     confirm: '确认',
     cancel: '取消',
     close: '关闭',
+    operate: '操作',
     tip: '提示',
     notice: '通知',
+    yes: '是',
+    no: '否',
   },
   app: {
     logout: '退出登录',

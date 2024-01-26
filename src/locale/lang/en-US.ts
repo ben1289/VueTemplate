@@ -28,8 +28,11 @@ export default {
     confirm: 'Confirm',
     cancel: 'Cancel',
     close: 'Close',
+    operate: 'Operate',
     tip: 'Tip',
     notice: 'Notice',
+    yes: 'Yes',
+    no: 'No',
   },
   app: {
     logout: 'Logout',
