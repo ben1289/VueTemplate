@@ -52,7 +52,7 @@ const useUserStore = defineStore(STORE_ID, () => {
    * 重新登录
    */
   function loginAgain() {
-    // @ts-expect-error Type instantiation is excessively deep and possibly infinite.
+    // @ts-ignore Type instantiation is excessively deep and possibly infinite.
     const { t } = i18n.global
     const message = useMessage()
     message.warningAlert(t('app.loginTimeout'), false, {

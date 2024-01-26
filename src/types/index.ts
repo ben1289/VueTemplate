@@ -19,7 +19,7 @@ export interface MenuData {
   componentName: string
   link: string
   permission: string
-  sort: number | null
+  sort?: number
   keepAlive: boolean
   visible: boolean
   state: boolean

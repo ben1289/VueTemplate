@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormInstance } from '@arco-design/web-vue'
+import type { FormInstance, TreeNodeData } from '@arco-design/web-vue'
 import type { WithPartial, MenuData as _MenuData } from '@/types'
 import { MenuShowTypeEnum, MenuTypeEnum } from '@/enums'
 import { useMessage } from '@/hooks'
@@ -32,7 +32,6 @@ function createInitFormData(): MenuData {
     componentName: '',
     link: '',
     permission: '',
-    sort: null,
     keepAlive: false,
     visible: true,
     state: true,
@@ -140,7 +139,7 @@ function handleSave() {
 
       <AForm ref="formRef" :model="formData" :rules="formRules" auto-label-width>
         <AFormItem :label="t('menu.parentMenu')" field="parentId">
-          <ATreeSelect v-model="formData.parentId" :data="menuTree" :field-names="{ key: 'id', title: 'name', icon: '' }" />
+          <ATreeSelect v-model="formData.parentId" :data="menuTree as TreeNodeData[]" :field-names="{ key: 'id', title: 'name', icon: '' }" />
         </AFormItem>
 
         <AFormItem :label="t('menu.type')" field="type">

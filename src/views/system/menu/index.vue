@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormInstance, TableInstance } from '@arco-design/web-vue'
+import type { FormInstance, TableColumnData, TableInstance } from '@arco-design/web-vue'
 import type { MenuData } from '@/types'
 import AddEdit from './addEdit.vue'
 import { generateTreeData } from '@/utils/dataHandler'
@@ -18,7 +18,7 @@ const formData = reactive({
 
 const tableRef = ref<TableInstance>()
 const tbLoading = ref(false)
-const tbColumns = [
+const tbColumns: TableColumnData[] = [
   {
     title: t('menu.name'),
     dataIndex: 'name',
@@ -26,12 +26,12 @@ const tbColumns = [
   {
     title: t('menu.type'),
     dataIndex: 'type',
-    render: ({ record }: { record: MenuData }) => t(`menu.${record.type}`),
+    render: ({ record }) => t(`menu.${record.type}`),
   },
   {
     title: t('menu.showType'),
     dataIndex: 'showType',
-    render: ({ record }: { record: MenuData }) => record.showType && t(`menu.${record.showType}`),
+    render: ({ record }) => record.showType && t(`menu.${record.showType}`),
   },
   {
     title: t('menu.visible'),
