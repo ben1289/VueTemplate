@@ -23,6 +23,9 @@ export default defineConfig(
         'vue/component-name-in-template-casing': ['error', 'PascalCase', { registeredComponentsOnly: false }],
         'vue/eqeqeq': ['off'],
       },
+      typescript: {
+        'ts/prefer-ts-expect-error': 'off',
+      },
     },
   },
 )
