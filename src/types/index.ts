@@ -1,3 +1,5 @@
+import type { MenuShowTypeEnum, MenuTypeEnum } from '@/enums'
+
 export type ResponseContent<T = any> = Promise<{
   code: number
   msg: string
@@ -7,14 +9,20 @@ export type ResponseContent<T = any> = Promise<{
 export interface MenuData {
   id: number
   parentId: number
+  type: MenuTypeEnum
   name: string
-  path: string
-  visible: boolean
+  icon: string
+  showType: MenuShowTypeEnum
+  routePath: string
+  routeName: string
+  componentPath: string
+  componentName: string
+  link: string
+  permission: string
+  sort: number | null
   keepAlive: boolean
-  component?: string
-  componentName?: string
-  icon?: string
-  children?: MenuData[]
+  visible: boolean
+  state: boolean
 }
 
 export interface Dict<T = any> extends Record<string, any> {
@@ -22,3 +30,9 @@ export interface Dict<T = any> extends Record<string, any> {
   label: string
   value: T
 }
+
+/*
+ * 类型工具
+ */
+
+export type WithPartial<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>

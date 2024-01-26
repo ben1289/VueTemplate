@@ -1,8 +1,13 @@
 import type { RouteRecordRaw } from 'vue-router'
-import type { MenuData } from '@/types'
+import type { MenuData as _MenuData } from '@/types'
 import { defineStore } from 'pinia'
 import useUserStore from './user'
 import router from '@/router'
+import { MenuShowTypeEnum, MenuTypeEnum } from '@/enums'
+
+interface MenuData extends _MenuData {
+  children?: MenuData[]
+}
 
 const useRouteStore = defineStore('routeStore', () => {
   const isSet = ref(false)
@@ -21,52 +26,51 @@ const useRouteStore = defineStore('routeStore', () => {
 
   function generateRoutes(menus: MenuData[]): RouteRecordRaw[] {
     const Layout = () => import('@/layout/index.vue')
-    return menus.map((menu) => {
-      const { parentId, path, component, componentName, children, name, keepAlive } = menu
-      if (parentId === 0) {
-        if (component) {
+    return menus
+      .filter(menu => menu.type !== MenuTypeEnum.BUTTON && menu.showType !== MenuShowTypeEnum.LINK)
+      .map((menu) => {
+        const {
+          name,
+          showType,
+          routePath,
+          routeName,
+          componentPath,
+          componentName,
+          keepAlive,
+          children,
+        } = menu
+        if (menu.type === MenuTypeEnum.DIR) {
+          // MenuTypeEnum.DIR
           return {
-            path,
-            component: Layout,
-            children: [{
-              path: '',
-              name: componentName ?? Symbol(path),
-              component: getRouteComp(component),
-              children: [],
-              meta: {
-                title: name,
-                componentName,
-                keepAlive,
-              },
-            }],
+            path: routePath,
+            name: routeName || undefined,
+            meta: { title: name, componentName, keepAlive },
+            children: children ? generateRoutes(children) : [],
           }
         } else {
-          return {
-            path,
-            name: componentName ?? Symbol(path),
-            component: Layout,
-            children: children ? generateRoutes(children) : [],
-            meta: {
-              title: name,
-              componentName,
-              keepAlive,
-            },
+          // MenuTypeEnum.MENU
+          const route = {
+            path: routePath,
+            name: routeName || undefined,
+            component: getRouteComp(componentPath),
+            meta: { title: name, componentName, keepAlive },
+            children: [],
+          }
+          if (showType === MenuShowTypeEnum.LAYOUT) {
+            // MenuShowTypeEnum.LAYOUT
+            return {
+              path: '',
+              component: Layout,
+              children: [
+                route,
+              ],
+            }
+          } else {
+            // fullPage
+            return route
           }
         }
-      } else {
-        return {
-          path,
-          name: componentName ?? Symbol(path),
-          component: getRouteComp(component),
-          children: children ? generateRoutes(children) : [],
-          meta: {
-            title: name,
-            componentName,
-            keepAlive,
-          },
-        }
-      }
-    })
+      })
   }
 
   function setRoutes() {

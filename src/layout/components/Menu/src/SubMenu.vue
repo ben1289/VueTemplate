@@ -1,41 +1,46 @@
 <script setup lang="ts">
-import type { MenuData } from '@/types'
+import type { MenuData as _MenuData } from '@/types'
+import { MenuShowTypeEnum, MenuTypeEnum } from '@/enums'
 
-defineOptions({ name: 'SubMenu' })
-const props = defineProps<Props>()
-
-interface Props {
-  menuData: MenuData
-  parentPath?: string
+interface MenuData extends _MenuData {
+  children?: MenuData[]
 }
 
-const isSubMenu = computed(() => props.menuData?.children?.length)
+defineOptions({ name: 'SubMenu' })
+
+const props = defineProps<{
+  menuData: MenuData
+  parentPath?: string
+}>()
 
 const path = computed(() => {
   if (props.parentPath) {
-    return [props.parentPath, props.menuData.path].join('/')
+    return [props.parentPath, props.menuData.routePath].join('/')
   } else {
-    return props.menuData.path
+    return props.menuData.routePath
   }
 })
 </script>
 
 <template>
-  <ASubMenu v-if="isSubMenu" :key="path" :title="menuData.name">
-    <template v-if="menuData?.icon" #icon>
-      <i :class="menuData.icon" />
-    </template>
-    <template v-for="subMenu in menuData.children" :key="subMenu.id">
-      <SubMenu v-if="subMenu.visible" :menu-data="subMenu" :parent-path="path" />
-    </template>
-  </ASubMenu>
-
-  <AMenuItem v-else :key="path">
-    <template v-if="menuData?.icon" #icon>
-      <i :class="menuData.icon" />
-    </template>
-    {{ menuData.name }}
-  </AMenuItem>
+  <template v-if="menuData.type === MenuTypeEnum.DIR">
+    <ASubMenu :key="path" :title="menuData.name">
+      <template v-if="menuData?.icon" #icon>
+        <i :class="menuData.icon" />
+      </template>
+      <template v-for="subMenu in menuData.children" :key="subMenu.id">
+        <SubMenu v-if="subMenu.visible && subMenu.type !== MenuTypeEnum.BUTTON" :menu-data="subMenu" :parent-path="path" />
+      </template>
+    </ASubMenu>
+  </template>
+  <template v-else>
+    <AMenuItem :key="menuData.showType === MenuShowTypeEnum.LINK ? menuData.link : path">
+      <template v-if="menuData?.icon" #icon>
+        <i :class="menuData.icon" />
+      </template>
+      {{ menuData.name }}
+    </AMenuItem>
+  </template>
 </template>
 
 <style scoped lang="less">
