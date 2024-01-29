@@ -24,7 +24,7 @@ function handleMenuClick(key: string) {
 
 <template>
   <AMenu
-    :default-selected-keys="[route.path]"
+    :selected-keys="[route.path]"
     :collapsed="appStore.menuCollapse"
     accordion
     auto-open-selected
