@@ -4,6 +4,8 @@ import aZhCN from '@arco-design/web-vue/es/locale/lang/zh-cn'
 import { LayoutModeEnum, LayoutSizeEnum, LocaleEnum } from '@/enums'
 
 const useAppStore = defineStore('appStore', () => {
+  const loading = ref(false)
+
   /* 布局 */
   const layoutMode = ref<LayoutModeEnum>(LayoutModeEnum.ASIDE_FULL)
   const layoutSize = ref<LayoutSizeEnum>(LayoutSizeEnum.MEDIUM)
@@ -34,6 +36,7 @@ const useAppStore = defineStore('appStore', () => {
   }
 
   return {
+    loading,
     layoutMode,
     layoutSize,
     menuCollapse,

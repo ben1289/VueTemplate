@@ -1,5 +1,3 @@
-const loading = ref(false)
-
 export default function useGlobalConfig() {
   const appTitle = import.meta.env.VITE_APP_TITLE
   const homePath = import.meta.env.VITE_HOME_PATH
@@ -7,7 +5,6 @@ export default function useGlobalConfig() {
   const watermark = import.meta.env.VITE_WATERMARK
 
   return {
-    loading,
     appTitle,
     homePath,
     tenantEnable,

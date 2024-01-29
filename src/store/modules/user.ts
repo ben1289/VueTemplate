@@ -1,9 +1,9 @@
 import type { MenuData } from '@/types'
 import { defineStore } from 'pinia'
 import { getInfoApi, getTenantIdApi, loginApi, logoutApi } from '@/api/login'
-import { useGlobalConfig, useMessage, useStorage } from '@/hooks'
+import { useMessage, useStorage } from '@/hooks'
 import { setTenantId, setToken } from '@/utils/auth'
-import { useDictStore } from '@/store'
+import { useAppStore, useDictStore } from '@/store'
 import router from '@/router'
 import i18n from '@/locale'
 
@@ -68,14 +68,14 @@ const useUserStore = defineStore(STORE_ID, () => {
    * 退出
    */
   async function logout() {
-    const globalConfig = useGlobalConfig()
-    globalConfig.loading.value = true
+    const appStore = useAppStore()
+    appStore.loading = true
     try {
       await logoutApi()
       await clearCache()
       await router.push('/login')
     } finally {
-      globalConfig.loading.value = false
+      appStore.loading = false
     }
   }
 
