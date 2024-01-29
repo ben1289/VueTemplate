@@ -30,7 +30,7 @@ const tabRouteStore = useTabRouteStore()
 
     <main class="layout-main">
       <RouterView v-slot="{ Component, route }">
-        <Transition name="right-slide">
+        <Transition name="fade" mode="out-in">
           <KeepAlive :include="[...tabRouteStore.keepAliveComponents]">
             <component :is="Component" :key="route.fullPath" />
           </KeepAlive>
@@ -72,7 +72,8 @@ const tabRouteStore = useTabRouteStore()
     display: flex;
     flex-direction: column;
     background-color: var(--layout-main-bg-color);
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     & > .fixed-full {
       flex: 1;
@@ -80,12 +81,19 @@ const tabRouteStore = useTabRouteStore()
       overflow: hidden;
     }
 
-    .right-slide-enter-active {
-      transition: transform 0.3s ease;
+    .fade-enter-from {
+      opacity: 0;
+      transform: translateX(-30px);
     }
 
-    .right-slide-enter-from {
-      transform: translateX(100%);
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: all 0.3s ease;
+    }
+
+    .fade-leave-to {
+      opacity: 0;
+      transform: translateX(30px);
     }
 
     & > footer {
