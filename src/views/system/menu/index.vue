@@ -2,7 +2,7 @@
 import type { FormInstance, TableColumnData, TableInstance } from '@arco-design/web-vue'
 import type { MenuData } from '@/types'
 import AddEdit from './addEdit.vue'
-import { generateTreeData } from '@/utils/dataHandler'
+import { arrayToTree } from '@/utils/dataHandler'
 import { useMessage } from '@/hooks'
 import * as menuApi from '@/api/system/menu'
 
@@ -58,7 +58,7 @@ function query() {
   tbLoading.value = true
   menuApi.getMenuList(formData).then((res) => {
     const { data } = res
-    tbData.value = generateTreeData(data)
+    tbData.value = arrayToTree(data)
   }).finally(() => {
     tbLoading.value = false
   })
