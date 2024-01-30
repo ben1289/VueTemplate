@@ -1,41 +1,34 @@
 <script setup lang="ts">
 import Logo from './components/Logo'
+import ModuleMenu from './components/ModuleMenu'
 import ToolBar from './components/ToolBar'
 import TabBar from './components/TabBar'
 import Menu, { Collapse } from './components/Menu'
-import { LayoutModeEnum } from '@/enums'
+import MainContent from './components/MainContent'
 import { useGlobalConfig } from '@/hooks'
-import { useAppStore, useTabRouteStore } from '@/store'
 
 defineOptions({ name: 'Layout' })
 
 const globalConfig = useGlobalConfig()
-const appStore = useAppStore()
-const tabRouteStore = useTabRouteStore()
 </script>
 
 <template>
-  <section class="layout-container" :class="appStore.layoutMode">
+  <section class="layout-container">
     <header class="layout-header">
-      <Logo v-if="appStore.layoutMode === LayoutModeEnum.HEADER_FULL" />
+      <Logo />
+      <ModuleMenu />
       <ToolBar />
-      <TabBar />
     </header>
 
     <aside class="layout-aside">
-      <Logo v-if="appStore.layoutMode === LayoutModeEnum.ASIDE_FULL" />
-      <Collapse v-else class="m-a" />
       <Menu />
+      <Collapse class="icon-btn w-full" />
     </aside>
 
+    <TabBar />
+
     <main class="layout-main">
-      <RouterView v-slot="{ Component, route }">
-        <Transition name="fade" mode="out-in">
-          <KeepAlive :include="[...tabRouteStore.keepAliveComponents]">
-            <component :is="Component" :key="route.fullPath" />
-          </KeepAlive>
-        </Transition>
-      </RouterView>
+      <MainContent />
 
       <footer>
         {{ `Copyright © ${new Date().getFullYear()} ${globalConfig.appTitle}. All Rights Reserved.` }}
@@ -47,7 +40,11 @@ const tabRouteStore = useTabRouteStore()
 <style scoped lang="less">
 .layout-container {
   display: grid;
-  grid-template-rows: var(--layout-header-height) minmax(0, 1fr);
+  grid-template-areas:
+    'header header'
+    'aside tabBar'
+    'aside main';
+  grid-template-rows: var(--layout-header-height) minmax(0, 30px) minmax(0, 1fr);
   grid-template-columns: auto minmax(0, 1fr);
   width: 100%;
   height: 100%;
@@ -55,15 +52,17 @@ const tabRouteStore = useTabRouteStore()
   .layout-header {
     grid-area: header;
     display: grid;
-    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-template-columns: var(--layout-aside-width) minmax(0, 1fr) auto;
     color: var(--layout-header-text-color);
     background-color: var(--layout-header-bg-color);
+    border-bottom: 1px solid var(--color-border-2);
+    overflow: hidden;
   }
 
   .layout-aside {
     grid-area: aside;
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
     background-color: var(--layout-aside-bg-color);
   }
 
@@ -81,21 +80,6 @@ const tabRouteStore = useTabRouteStore()
       overflow: hidden;
     }
 
-    .fade-enter-from {
-      opacity: 0;
-      transform: translateX(-30px);
-    }
-
-    .fade-enter-active,
-    .fade-leave-active {
-      transition: all 0.3s ease;
-    }
-
-    .fade-leave-to {
-      opacity: 0;
-      transform: translateX(30px);
-    }
-
     & > footer {
       flex-shrink: 0;
       display: flex;
@@ -107,25 +91,20 @@ const tabRouteStore = useTabRouteStore()
       background-color: var(--layout-footer-bg-color);
     }
   }
-}
 
-.layout-container.header-full {
-  grid-template-areas:
-    'header header'
-    'aside main';
+  :deep(.icon-btn) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: calc(var(--layout-header-height) / 2);
+    min-height: calc(var(--layout-header-height) / 2);
+    color: var(--color-text-2);
+    cursor: pointer;
+    transition: all 0.3s;
 
-  .layout-header {
-    grid-template-columns: var(--layout-aside-width) minmax(0, 1fr);
-
-    .layout-logo {
-      grid-row: 1 / -1;
+    &:hover {
+      backdrop-filter: brightness(0.95);
     }
   }
-}
-
-.layout-container.aside-full {
-  grid-template-areas:
-    'aside header'
-    'aside main';
 }
 </style>

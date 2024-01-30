@@ -9,7 +9,7 @@ const appStore = useAppStore()
 
 <template>
   <ADropdown trigger="click" @select="appStore.toggleLocale">
-    <span class="tool-button">
+    <span class="icon-btn">
       <i class="i-mdi-translate text-20px" />
     </span>
     <template #content>

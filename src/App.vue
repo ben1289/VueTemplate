@@ -8,7 +8,7 @@ const userStore = useUserStore()
 </script>
 
 <template>
-  <AConfigProvider :locale="appStore.arcoLocale" :size="appStore.layoutSize" global>
+  <AConfigProvider :locale="appStore.arcoLocale" global>
     <ASpin class="h-full w-full" :loading="appStore.loading" dot>
       <RouterView />
     </ASpin>

@@ -1,14 +1,10 @@
 import { defineStore } from 'pinia'
 import aEnUS from '@arco-design/web-vue/es/locale/lang/en-us'
 import aZhCN from '@arco-design/web-vue/es/locale/lang/zh-cn'
-import { LayoutModeEnum, LayoutSizeEnum, LocaleEnum } from '@/enums'
+import { LocaleEnum } from '@/enums'
 
 const useAppStore = defineStore('appStore', () => {
   const loading = ref(false)
-
-  /* 布局 */
-  const layoutMode = ref<LayoutModeEnum>(LayoutModeEnum.ASIDE_FULL)
-  const layoutSize = ref<LayoutSizeEnum>(LayoutSizeEnum.MEDIUM)
 
   /* 菜单 */
   const menuCollapse = ref(false)
@@ -37,8 +33,6 @@ const useAppStore = defineStore('appStore', () => {
 
   return {
     loading,
-    layoutMode,
-    layoutSize,
     menuCollapse,
     toggleMenuCollapse,
     locale,

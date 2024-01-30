@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { DropdownInstance, ScrollbarInstance } from '@arco-design/web-vue'
 import type { RouteLocation } from 'vue-router'
 import { useGlobalConfig } from '@/hooks'
 import { useTabRouteStore } from '@/store'
@@ -10,11 +9,10 @@ const route = useRoute()
 const globalConfig = useGlobalConfig()
 const tabRouteStore = useTabRouteStore()
 
-const scrollbarRef = ref<ScrollbarInstance>()
-const dropdownRef = ref<DropdownInstance[]>()
-
 watch(route, () => {
-  tabRouteStore.addRoute(route)
+  if (!route.path.includes('/redirect')) {
+    tabRouteStore.addRoute(route)
+  }
 }, { immediate: true })
 
 // 是否可关闭
@@ -22,22 +20,12 @@ const closable = (tabRoute: RouteLocation) => tabRoute.path !== globalConfig.hom
 // 是否为当前路由
 const isCurtRoute = (tabRoute: RouteLocation) => tabRoute.path === route.path
 
-const leftOffset = ref(0)
-
-/**
- * 设置滚动条偏移量
- * @param offset
- */
-function handleScroll(offset: number) {
-  toValue(scrollbarRef)?.scrollLeft(toValue(leftOffset) + offset)
-}
-
 /**
  * 刷新
  * @param tabRoute
  */
 function refresh(tabRoute: RouteLocation) {
-  router.replace({ path: `/redirect${tabRoute.path}`, query: tabRoute.query })
+  tabRouteStore.refreshRoute(tabRoute)
 }
 
 /**
@@ -95,17 +83,10 @@ function handleSelect(value: any, tabRoute: RouteLocation) {
 
 <template>
   <div class="tab-bar">
-    <span class="tab-bar-btn !border-l-none" @click="handleScroll(-200)"><i class="i-mdi-chevron-double-left text-22px" size="20" /></span>
-    <AScrollbar
-      ref="scrollbarRef"
-      class="h-full inline-flex gap-5px overflow-auto"
-      outer-class="flex-1 p-[2px_5px]"
-      @scroll="({ target }) => leftOffset = (target as Element).scrollLeft"
-    >
+    <AScrollbar class="h-full inline-flex gap-5px overflow-auto" outer-class="flex-1 p-[2px_5px]">
       <ADropdown
         v-for="(tabRoute) in tabRouteStore.routes"
         :key="tabRoute.fullPath"
-        ref="dropdownRef"
         class="shrink-0"
         trigger="contextMenu"
         @select="handleSelect($event, tabRoute)"
@@ -133,32 +114,13 @@ function handleSelect(value: any, tabRoute: RouteLocation) {
         </template>
       </ADropdown>
     </AScrollbar>
-    <span class="tab-bar-btn !border-r-none" @click="handleScroll(200)"><i class="i-mdi-chevron-double-right text-22px" size="20" /></span>
-    <span class="tab-bar-btn !border-r-none" @click="refresh(route)"><i class="i-mdi-refresh text-22px" size="20" /></span>
-    <ADropdown trigger="click" @select="handleSelect($event, route)">
-      <span class="tab-bar-btn !border-r-none"><i class="i-mdi-view-grid text-22px" size="20" /></span>
-      <template #content>
-        <ADoption value="refresh">
-          {{ t('common.refresh') }}
-        </ADoption>
-        <ADoption value="close">
-          {{ t('common.close') }}
-        </ADoption>
-        <ADoption value="closeOther">
-          {{ t('tabBar.closeOther') }}
-        </ADoption>
-        <ADoption value="closeAll">
-          {{ t('tabBar.closeAll') }}
-        </ADoption>
-      </template>
-    </ADropdown>
+    <span class="tab-bar-btn !border-r-none" @click="refresh(route)"><i class="i-mdi-refresh text-22px" /></span>
   </div>
 </template>
 
 <style scoped lang="less">
 .tab-bar {
   display: flex;
-  border-top: 1px solid var(--color-border-2);
   border-bottom: 1px solid var(--color-border-2);
   overflow: hidden;
 
@@ -207,16 +169,6 @@ function handleSelect(value: any, tabRoute: RouteLocation) {
         width: 1em;
         margin-left: 2px;
       }
-    }
-  }
-
-  :deep(.arco-scrollbar) {
-    .arco-scrollbar-container {
-      scroll-behavior: smooth;
-    }
-
-    &:hover .arco-scrollbar-container {
-      scroll-behavior: auto;
     }
   }
 }

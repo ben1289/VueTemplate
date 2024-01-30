@@ -13,11 +13,12 @@ const useTabRouteStore = defineStore('tabRouteStore', () => {
     toValue(routes).forEach((route) => {
       const { keepAlive, componentName } = route.meta || {}
       if (keepAlive && componentName) {
-        components.push(componentName as string)
+        components.push(componentName)
       }
     })
     return components
   })
+  const noKeepAliveComponents = ref<string[]>([])
 
   /**
    * 添加路由
@@ -54,7 +55,30 @@ const useTabRouteStore = defineStore('tabRouteStore', () => {
     routes.value = [homeRoute]
   }
 
-  return { routes, keepAliveComponents, addRoute, removeRoute, removeOtherRoute, removeAllRoute }
+  /**
+   * 刷新路由
+   * @param route
+   */
+  function refreshRoute(route: RouteLocation) {
+    const { path, query, meta } = route
+    if (meta.keepAlive && meta.componentName) {
+      noKeepAliveComponents.value.push(meta.componentName)
+    }
+    router.replace({ path: `/redirect${path}`, query }).then(() => {
+      noKeepAliveComponents.value = []
+    })
+  }
+
+  return {
+    routes,
+    keepAliveComponents,
+    noKeepAliveComponents,
+    addRoute,
+    removeRoute,
+    removeOtherRoute,
+    removeAllRoute,
+    refreshRoute,
+  }
 })
 
 export default useTabRouteStore

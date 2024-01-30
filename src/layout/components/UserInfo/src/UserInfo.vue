@@ -27,7 +27,7 @@ async function handleSelect(value: any) {
 
 <template>
   <ADropdown class="h-full" trigger="click" @select="handleSelect">
-    <div class="tool-button flex items-center gap-6px p-x-5px !h-a !w-a">
+    <div class="icon-btn flex items-center gap-6px p-x-5px">
       <img :src="userStore.userInfo?.avatar" alt="头像" class="user-photo">
       <span>{{ userStore.userInfo?.nickname }}</span>
     </div>
