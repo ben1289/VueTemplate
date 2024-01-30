@@ -23,6 +23,7 @@ export interface MenuData {
   keepAlive: boolean
   visible: boolean
   state: boolean
+  children?: MenuData[]
 }
 
 export interface Dict<T = any> extends Record<string, any> {

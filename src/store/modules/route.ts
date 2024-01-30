@@ -1,13 +1,9 @@
 import type { RouteRecordRaw } from 'vue-router'
-import type { MenuData as _MenuData } from '@/types'
+import type { MenuData } from '@/types'
 import { defineStore } from 'pinia'
 import useUserStore from './user'
 import router from '@/router'
 import { MenuShowTypeEnum, MenuTypeEnum } from '@/enums'
-
-interface MenuData extends _MenuData {
-  children?: MenuData[]
-}
 
 const useRouteStore = defineStore('routeStore', () => {
   const isSet = ref(false)

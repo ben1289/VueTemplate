@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import type { MenuData as _MenuData } from '@/types'
+import type { MenuData } from '@/types'
 import { MenuShowTypeEnum, MenuTypeEnum } from '@/enums'
-
-interface MenuData extends _MenuData {
-  children?: MenuData[]
-}
 
 defineOptions({ name: 'SubMenu' })
 
