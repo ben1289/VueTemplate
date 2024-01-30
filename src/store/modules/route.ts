@@ -61,6 +61,7 @@ const useRouteStore = defineStore('routeStore', () => {
             return {
               path: '',
               component: Layout,
+              redirect: { name: 'error404' },
               children: [
                 route,
               ],
@@ -82,7 +83,7 @@ const useRouteStore = defineStore('routeStore', () => {
       routes.value = generateRoutes(userStore.menus)
     }
     toValue(routes).forEach(route => router.addRoute(route))
-    router.addRoute({ path: '/:path(.*)*', component: () => import('@/views/error/404.vue') })
+    router.addRoute({ path: '/:path(.*)*', name: 'error404', component: () => import('@/views/error/404.vue') })
     isSet.value = true
   }
 
