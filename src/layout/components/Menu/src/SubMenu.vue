@@ -25,7 +25,7 @@ const path = computed(() => {
         <i :class="menuData.icon" />
       </template>
       <template v-for="subMenu in menuData.children" :key="subMenu.id">
-        <SubMenu v-if="subMenu.visible && subMenu.type !== MenuTypeEnum.BUTTON" :menu-data="subMenu" :parent-path="path" />
+        <SubMenu v-if="subMenu.visible" :menu-data="subMenu" :parent-path="path" />
       </template>
     </ASubMenu>
   </template>

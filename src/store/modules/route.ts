@@ -23,7 +23,7 @@ const useRouteStore = defineStore('routeStore', () => {
   function generateRoutes(menus: MenuData[]): RouteRecordRaw[] {
     const Layout = () => import('@/layout/index.vue')
     return menus
-      .filter(menu => menu.type !== MenuTypeEnum.BUTTON && menu.showType !== MenuShowTypeEnum.LINK)
+      .filter(menu => menu.showType !== MenuShowTypeEnum.LINK)
       .map((menu) => {
         const {
           name,

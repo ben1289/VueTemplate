@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import SubMenu from './SubMenu.vue'
-import { MenuTypeEnum } from '@/enums'
 import { useAppStore, useUserStore } from '@/store'
 
 defineOptions({ name: 'MainMenu' })
@@ -32,7 +31,7 @@ function handleMenuClick(key: string) {
     @menu-item-click="handleMenuClick"
   >
     <template v-for="menu in userStore.menus" :key="menu.id">
-      <SubMenu v-if="menu.visible && menu.type !== MenuTypeEnum.BUTTON" :menu-data="menu" />
+      <SubMenu v-if="menu.visible" :menu-data="menu" />
     </template>
   </AMenu>
 </template>

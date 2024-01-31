@@ -1,11 +1,13 @@
 import type { MenuData } from '@/types'
 import { defineStore } from 'pinia'
-import { getInfoApi, getTenantIdApi, loginApi, logoutApi } from '@/api/login'
-import { useMessage, useStorage } from '@/hooks'
-import { setTenantId, setToken } from '@/utils/auth'
-import { useAppStore, useDictStore } from '@/store'
 import router from '@/router'
 import i18n from '@/locale'
+import { setTenantId, setToken } from '@/utils/auth'
+import { arrayToTree } from '@/utils/dataHandler'
+import { useMessage, useStorage } from '@/hooks'
+import { useAppStore, useDictStore } from '@/store'
+import { getInfoApi, getTenantIdApi, loginApi, logoutApi } from '@/api/login'
+import { MenuTypeEnum } from '@/enums'
 
 interface UserInfo {
   id: number
@@ -26,7 +28,7 @@ const useUserStore = defineStore(STORE_ID, () => {
     const { data } = await getInfoApi()
     userInfo.value = data.user as UserInfo
     roles.value = data.roles
-    menus.value = data.menus
+    menus.value = arrayToTree(data.menus.filter(menu => menu.type !== MenuTypeEnum.BUTTON))
     permissions.value = data.permissions
     isSet.value = true
   }
