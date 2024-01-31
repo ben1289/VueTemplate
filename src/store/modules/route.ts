@@ -63,7 +63,7 @@ const useRouteStore = defineStore('routeStore', () => {
               ],
             }
           } else {
-            // fullPage
+            // MenuShowTypeEnum.FULL_PAGE
             return route
           }
         }
