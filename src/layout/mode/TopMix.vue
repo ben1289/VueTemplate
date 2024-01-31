@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import Logo from '../components/Logo'
-import ModuleMenu from '../components/ModuleMenu'
+import TopMenu from '../components/TopMenu'
 import ToolBar from '../components/ToolBar'
 import TabBar from '../components/TabBar'
 import Menu from '../components/Menu'
 import MainContent from '../components/MainContent'
 import { useGlobalConfig } from '@/hooks'
-import { useAppStore } from '@/store'
+import { useAppStore, useTopMenuStore } from '@/store'
 
 defineOptions({ name: 'TopMix' })
 
 const globalConfig = useGlobalConfig()
 const appStore = useAppStore()
+const topMenuStore = useTopMenuStore()
 
 const headerHeight = computed(() => `${appStore.header.height}px`)
 const siderWidth = computed(() => `${appStore.sider.width}px`)
@@ -23,18 +24,19 @@ const footerHeight = computed(() => `${appStore.footer.height}px`)
   <ALayout class="h-full w-full">
     <ALayoutHeader>
       <Logo />
-      <ModuleMenu />
+      <TopMenu />
       <ToolBar />
     </ALayoutHeader>
 
     <ALayout class="overflow-hidden">
       <ALayoutSider
+        v-if="topMenuStore.menus.length"
         :width="appStore.sider.width"
         :collapsed-width="appStore.sider.collapsedWidth"
         breakpoint="xl"
         collapsible
       >
-        <Menu />
+        <Menu :menus="topMenuStore.menus" />
       </ALayoutSider>
 
       <ALayout class="overflow-hidden">

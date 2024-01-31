@@ -1,40 +1,41 @@
 <script setup lang="ts">
 import type { MenuData } from '@/types'
+import { useMenuClick } from '@/layout/hooks'
 import { MenuShowTypeEnum, MenuTypeEnum } from '@/enums'
 
 defineOptions({ name: 'SubMenu' })
 
 const props = defineProps<{
-  menuData: MenuData
+  menu: MenuData
   parentPath?: string
 }>()
 
 const path = computed(() => {
   if (props.parentPath) {
-    return [props.parentPath, props.menuData.routePath].join('/')
+    return [props.parentPath, props.menu.routePath].join('/')
   } else {
-    return props.menuData.routePath
+    return props.menu.routePath
   }
 })
 </script>
 
 <template>
-  <template v-if="menuData.type === MenuTypeEnum.DIR">
-    <ASubMenu :key="path" :title="menuData.name">
-      <template v-if="menuData?.icon" #icon>
-        <i :class="menuData.icon" />
+  <template v-if="menu.type === MenuTypeEnum.DIR">
+    <ASubMenu :key="path" :title="menu.name">
+      <template v-if="menu?.icon" #icon>
+        <i :class="menu.icon" />
       </template>
-      <template v-for="subMenu in menuData.children" :key="subMenu.id">
-        <SubMenu v-if="subMenu.visible" :menu-data="subMenu" :parent-path="path" />
+      <template v-for="subMenu in menu.children" :key="subMenu.id">
+        <SubMenu v-if="subMenu.visible" :menu="subMenu" :parent-path="path" />
       </template>
     </ASubMenu>
   </template>
   <template v-else>
-    <AMenuItem :key="menuData.showType === MenuShowTypeEnum.LINK ? menuData.link : path">
-      <template v-if="menuData?.icon" #icon>
-        <i :class="menuData.icon" />
+    <AMenuItem :key="menu.showType === MenuShowTypeEnum.LINK ? menu.link : path" @click="useMenuClick(menu)">
+      <template v-if="menu?.icon" #icon>
+        <i :class="menu.icon" />
       </template>
-      {{ menuData.name }}
+      {{ menu.name }}
     </AMenuItem>
   </template>
 </template>

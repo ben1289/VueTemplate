@@ -1,23 +1,14 @@
 <script setup lang="ts">
+import type { MenuData } from '@/types'
 import SubMenu from './SubMenu.vue'
-import { useUserStore } from '@/store'
 
 defineOptions({ name: 'MainMenu' })
 
-const router = useRouter()
-const route = useRoute()
-const userStore = useUserStore()
+defineProps<{
+  menus: MenuData[]
+}>()
 
-function handleMenuClick(key: string) {
-  if (key === route.path)
-    return
-  const urlRegex = /^(https?):\/\/[^\s/$.?#].\S*$/
-  if (urlRegex.test(key)) {
-    window.open(key)
-  } else {
-    router.push(key)
-  }
-}
+const route = useRoute()
 </script>
 
 <template>
@@ -26,10 +17,9 @@ function handleMenuClick(key: string) {
     accordion
     auto-open-selected
     auto-scroll-into-view
-    @menu-item-click="handleMenuClick"
   >
-    <template v-for="menu in userStore.menus" :key="menu.id">
-      <SubMenu v-if="menu.visible" :menu-data="menu" />
+    <template v-for="menu in menus" :key="menu.id">
+      <SubMenu v-if="menu.visible" :menu="menu" />
     </template>
   </AMenu>
 </template>

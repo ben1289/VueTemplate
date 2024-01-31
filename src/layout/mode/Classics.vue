@@ -6,12 +6,13 @@ import TabBar from '../components/TabBar'
 import Menu from '../components/Menu'
 import MainContent from '../components/MainContent'
 import { useGlobalConfig } from '@/hooks'
-import { useAppStore } from '@/store'
+import { useAppStore, useUserStore } from '@/store'
 
 defineOptions({ name: 'Classics' })
 
 const globalConfig = useGlobalConfig()
 const appStore = useAppStore()
+const userStore = useUserStore()
 
 const headerHeight = computed(() => `${appStore.header.height}px`)
 const siderWidth = computed(() => `${appStore.sider.width}px`)
@@ -39,7 +40,7 @@ const footerHeight = computed(() => `${appStore.footer.height}px`)
         breakpoint="xl"
         collapsible
       >
-        <Menu />
+        <Menu :menus="userStore.menus" />
       </ALayoutSider>
 
       <ALayout class="overflow-hidden">

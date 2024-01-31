@@ -5,9 +5,17 @@ import useUserStore from './modules/user'
 import useDictStore from './modules/dict'
 import useRouteStore from './modules/route'
 import useTabRouteStore from './modules/tabRoute'
+import useTopMenuStore from './modules/topMenu'
 
 const pinia = createPinia()
 pinia.use(persistedState)
 
-export { useAppStore, useUserStore, useDictStore, useRouteStore, useTabRouteStore }
+export {
+  useAppStore,
+  useUserStore,
+  useDictStore,
+  useRouteStore,
+  useTabRouteStore,
+  useTopMenuStore,
+}
 export default pinia
