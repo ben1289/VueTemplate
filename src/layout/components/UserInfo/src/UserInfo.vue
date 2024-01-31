@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import InfoDialog from './InfoDialog.vue'
-import { useUserStore } from '@/store'
 import { useMessage } from '@/hooks'
+import { useAppStore, useUserStore } from '@/store'
 
 const { t } = useI18n()
-const userStore = useUserStore()
 const message = useMessage()
+const appStore = useAppStore()
+const userStore = useUserStore()
+
+const headerHeight = computed(() => `${appStore.header.height}px`)
 
 const infoDialogRef = ref<InstanceType<typeof InfoDialog>>()
 
@@ -46,7 +49,7 @@ async function handleSelect(value: any) {
 
 <style scoped lang="less">
 .user-photo {
-  --size: calc(var(--layout-header-height) / 2 * 0.8);
+  --size: calc(v-bind(headerHeight) / 2 * 0.8);
   width: var(--size);
   height: var(--size);
   border-radius: 50%;

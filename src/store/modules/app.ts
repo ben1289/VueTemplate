@@ -4,13 +4,21 @@ import aZhCN from '@arco-design/web-vue/es/locale/lang/zh-cn'
 import { LocaleEnum } from '@/enums'
 
 const useAppStore = defineStore('appStore', () => {
+  // 页面加载状态
   const loading = ref(false)
 
-  /* 菜单 */
-  const menuCollapse = ref(false)
-  function toggleMenuCollapse() {
-    menuCollapse.value = !toValue(menuCollapse)
-  }
+  // 布局 mode: [Classic, TopMix]
+  const layout = reactive({ mode: 'TopMix' })
+  // 头部
+  const header = reactive({ height: 60 })
+  // 侧边栏
+  const sider = reactive({ width: 200, collapsedWidth: 48 })
+  // tab栏
+  const tabBar = reactive({ visible: true, height: 30 })
+  // 页面内容 animateMode: [fade-slide]
+  const content = reactive({ animate: true, animateMode: 'fade-slide' })
+  // 页脚
+  const footer = reactive({ visible: true, height: 40 })
 
   /* 国际化 */
   const locale = ref<LocaleEnum>(LocaleEnum.ZH_CN)
@@ -33,8 +41,12 @@ const useAppStore = defineStore('appStore', () => {
 
   return {
     loading,
-    menuCollapse,
-    toggleMenuCollapse,
+    layout,
+    header,
+    sider,
+    tabBar,
+    content,
+    footer,
     locale,
     arcoLocale,
     toggleLocale,

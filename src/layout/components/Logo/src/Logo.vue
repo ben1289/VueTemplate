@@ -19,6 +19,5 @@ const globalConfig = useGlobalConfig()
   justify-content: center;
   align-items: center;
   gap: 10px;
-  height: var(--layout-logo-height);
 }
 </style>

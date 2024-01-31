@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import SubMenu from './SubMenu.vue'
-import { useAppStore, useUserStore } from '@/store'
+import { useUserStore } from '@/store'
 
 defineOptions({ name: 'MainMenu' })
 
 const router = useRouter()
 const route = useRoute()
-const appStore = useAppStore()
 const userStore = useUserStore()
 
 function handleMenuClick(key: string) {
@@ -24,7 +23,6 @@ function handleMenuClick(key: string) {
 <template>
   <AMenu
     :selected-keys="[route.path]"
-    :collapsed="appStore.menuCollapse"
     accordion
     auto-open-selected
     auto-scroll-into-view
@@ -37,7 +35,5 @@ function handleMenuClick(key: string) {
 </template>
 
 <style scoped lang="less">
-.arco-menu:not(.arco-menu-collapsed) {
-  width: var(--layout-aside-width);
-}
+
 </style>

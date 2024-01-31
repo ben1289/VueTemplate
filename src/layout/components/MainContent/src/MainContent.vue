@@ -1,31 +1,35 @@
 <script setup lang="ts">
-import { useTabRouteStore } from '@/store'
+import { useAppStore, useTabRouteStore } from '@/store'
 
+const appStore = useAppStore()
 const tabRouteStore = useTabRouteStore()
 </script>
 
 <template>
   <RouterView v-slot="{ Component, route }">
-    <Transition name="fade" mode="out-in">
+    <Transition v-if="appStore.content.animate" :name="appStore.content.animateMode" mode="out-in">
       <KeepAlive :include="[...tabRouteStore.keepAliveComponents]" :exclude="[...tabRouteStore.noKeepAliveComponents]">
         <component :is="Component" :key="route.fullPath" />
       </KeepAlive>
     </Transition>
+    <KeepAlive v-else :include="[...tabRouteStore.keepAliveComponents]" :exclude="[...tabRouteStore.noKeepAliveComponents]">
+      <component :is="Component" :key="route.fullPath" />
+    </KeepAlive>
   </RouterView>
 </template>
 
 <style scoped lang="less">
-.fade-enter-from {
+.fade-slide-enter-from {
   opacity: 0;
   transform: translateX(-30px);
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.fade-slide-enter-active,
+.fade-slide-leave-active {
   transition: all 0.3s ease;
 }
 
-.fade-leave-to {
+.fade-slide-leave-to {
   opacity: 0;
   transform: translateX(30px);
 }
