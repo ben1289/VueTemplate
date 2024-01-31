@@ -85,76 +85,74 @@ const addEditRef = ref<InstanceType<typeof AddEdit>>()
 </script>
 
 <template>
-  <div class="fixed-full">
-    <ASplit class="card h-full" default-size="0.6" min="0.3" max="0.7">
-      <template #first>
-        <div class="grid grid-rows-[auto_auto_1fr] h-full gap-10px">
-          <AForm ref="formRef" :model="formData" layout="inline">
-            <AFormItem :label="t('menu.name')" field="name">
-              <AInput v-model="formData.name" />
-            </AFormItem>
-            <AFormItem class="m-l-a !w-auto">
-              <ASpace>
-                <AButton type="primary" @click="query">
-                  {{ t('common.query') }}
-                </AButton>
-                <AButton @click="reset">
-                  {{ t('common.reset') }}
-                </AButton>
-              </ASpace>
-            </AFormItem>
-          </AForm>
-          <ASpace>
-            <AButton type="outline" @click="addEditRef?.operateMenu()">
+  <ASplit class="card h-full" default-size="0.6" min="0.3" max="0.7">
+    <template #first>
+      <div class="grid grid-rows-[auto_auto_1fr] h-full gap-10px">
+        <AForm ref="formRef" :model="formData" layout="inline">
+          <AFormItem :label="t('menu.name')" field="name">
+            <AInput v-model="formData.name" />
+          </AFormItem>
+          <AFormItem class="m-l-a !w-auto">
+            <ASpace>
+              <AButton type="primary" @click="query">
+                {{ t('common.query') }}
+              </AButton>
+              <AButton @click="reset">
+                {{ t('common.reset') }}
+              </AButton>
+            </ASpace>
+          </AFormItem>
+        </AForm>
+        <ASpace>
+          <AButton type="outline" @click="addEditRef?.operateMenu()">
+            {{ t('common.add') }}
+          </AButton>
+        </ASpace>
+        <ATable
+          ref="tableRef"
+          :loading="tbLoading"
+          :columns="tbColumns"
+          :data="tbData"
+          row-key="id"
+          :scroll="{ y: '100%' }"
+          :pagination="false"
+        >
+          <template #visible="{ record }">
+            <ATag v-if="record.visible" color="arcoblue">
+              {{ t('common.yes') }}
+            </ATag>
+            <ATag v-else>
+              {{ t('common.no') }}
+            </ATag>
+          </template>
+
+          <template #state="{ record }">
+            <ATag v-if="record.state" color="arcoblue">
+              {{ t('menu.enable') }}
+            </ATag>
+            <ATag v-else>
+              {{ t('common.disable') }}
+            </ATag>
+          </template>
+
+          <template #operate="{ record }">
+            <AButton type="text" @click="addEditRef?.operateMenu(undefined, record.id)">
               {{ t('common.add') }}
             </AButton>
-          </ASpace>
-          <ATable
-            ref="tableRef"
-            :loading="tbLoading"
-            :columns="tbColumns"
-            :data="tbData"
-            row-key="id"
-            :scroll="{ y: '100%' }"
-            :pagination="false"
-          >
-            <template #visible="{ record }">
-              <ATag v-if="record.visible" color="arcoblue">
-                {{ t('common.yes') }}
-              </ATag>
-              <ATag v-else>
-                {{ t('common.no') }}
-              </ATag>
-            </template>
-
-            <template #state="{ record }">
-              <ATag v-if="record.state" color="arcoblue">
-                {{ t('menu.enable') }}
-              </ATag>
-              <ATag v-else>
-                {{ t('common.disable') }}
-              </ATag>
-            </template>
-
-            <template #operate="{ record }">
-              <AButton type="text" @click="addEditRef?.operateMenu(undefined, record.id)">
-                {{ t('common.add') }}
-              </AButton>
-              <AButton type="text" @click="addEditRef?.operateMenu(record.id)">
-                {{ t('common.edit') }}
-              </AButton>
-              <AButton type="text" status="danger" @click="handleDelete(record.id)">
-                {{ t('common.delete') }}
-              </AButton>
-            </template>
-          </ATable>
-        </div>
-      </template>
-      <template #second>
-        <AddEdit ref="addEditRef" @refresh="query" />
-      </template>
-    </ASplit>
-  </div>
+            <AButton type="text" @click="addEditRef?.operateMenu(record.id)">
+              {{ t('common.edit') }}
+            </AButton>
+            <AButton type="text" status="danger" @click="handleDelete(record.id)">
+              {{ t('common.delete') }}
+            </AButton>
+          </template>
+        </ATable>
+      </div>
+    </template>
+    <template #second>
+      <AddEdit ref="addEditRef" @refresh="query" />
+    </template>
+  </ASplit>
 </template>
 
 <style scoped lang="less">

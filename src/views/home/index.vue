@@ -5,7 +5,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <ASpace class="m-10px" direction="vertical" :size="16">
+  <ASpace class="w-full" direction="vertical" :size="16">
     <ARow>
       <ACol>
         <ACard class="h-200px" :bordered="false">
