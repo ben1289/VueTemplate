@@ -7,6 +7,7 @@ import { useGlobImport, useStorage } from '@/hooks'
 
 defineOptions({ name: 'Board' })
 
+const { t } = useI18n()
 const storage = useStorage()
 
 // 自定义布局
@@ -66,7 +67,7 @@ function cancel() {
             <i v-if="customMode" class="i-mdi-checkbox-marked-circle-outline" />
             <i v-else class="i-mdi-view-dashboard-edit" />
           </template>
-          {{ customMode ? '完成' : '自定义' }}
+          {{ customMode ? t('board.finish') : t('board.custom') }}
         </AButton>
       </div>
 
@@ -75,7 +76,7 @@ function cancel() {
       </div>
     </div>
 
-    <ACard v-if="customMode" class="board-drawer" title="自定义">
+    <ACard v-if="customMode" class="board-drawer" :title="t('board.custom')">
       <template #extra>
         <AButton type="text" shape="circle" size="mini" @click="cancel">
           <template #icon>
@@ -86,13 +87,13 @@ function cancel() {
 
       <div class="grid grid-rows-[repeat(3,_auto)_1fr] h-full">
         <ADivider orientation="left">
-          布局
+          {{ t('board.layout') }}
         </ADivider>
 
         <Thumbnail v-model="layoutName" />
 
         <ADivider orientation="left">
-          组件
+          {{ t('board.component') }}
         </ADivider>
 
         <AList :bordered="false" :split="false" hoverable>
