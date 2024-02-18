@@ -52,8 +52,6 @@ const tbColumns: TableColumnData[] = [
 ]
 const tbData = ref<MenuData[]>([])
 
-provide('menuTree', tbData)
-
 function query() {
   tbLoading.value = true
   menuApi.getMenuList(formData).then((res) => {
@@ -150,7 +148,7 @@ const addEditRef = ref<InstanceType<typeof AddEdit>>()
       </div>
     </template>
     <template #second>
-      <AddEdit ref="addEditRef" @refresh="query" />
+      <AddEdit ref="addEditRef" :menu-data="tbData" @refresh="query" />
     </template>
   </ASplit>
 </template>

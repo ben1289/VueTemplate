@@ -7,6 +7,10 @@ import * as menuApi from '@/api/system/menu'
 
 type MenuData = WithPartial<_MenuData, 'id'>
 
+const props = defineProps<{
+  menuData: _MenuData[]
+}>()
+
 const emit = defineEmits<{
   (e: 'refresh'): void
 }>()
@@ -39,7 +43,7 @@ function createInitFormData(): MenuData {
 }
 
 const detailLoading = ref(false)
-const menuTree = computed(() => [{ id: 0, name: t('menu.rootMenu'), children: toValue(inject('menuTree')) }])
+const menuTree = computed(() => [{ id: 0, name: t('menu.rootMenu'), children: props.menuData }])
 const formRef = ref<FormInstance>()
 const formData = ref<MenuData | null>(null)
 const formRules = {
@@ -139,7 +143,11 @@ function handleSave() {
 
       <AForm ref="formRef" :model="formData" :rules="formRules" auto-label-width>
         <AFormItem :label="t('menu.parentMenu')" field="parentId">
-          <ATreeSelect v-model="formData.parentId" :data="menuTree as TreeNodeData[]" :field-names="{ key: 'id', title: 'name', icon: '' }" />
+          <ATreeSelect
+            v-model="formData.parentId"
+            :data="menuTree as unknown as TreeNodeData[]"
+            :field-names="{ key: 'id', title: 'name', icon: '' }"
+          />
         </AFormItem>
 
         <AFormItem :label="t('menu.type')" field="type">
