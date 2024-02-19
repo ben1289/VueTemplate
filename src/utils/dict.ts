@@ -1,5 +1,4 @@
 import type { Dict } from '@/types'
-import { isEqual } from 'lodash-es'
 import { useDictStore } from '@/store'
 
 export function getDictOptions(type: string): Dict[] {
@@ -29,5 +28,5 @@ export function getBoolDictOptions(type: string): Dict<boolean>[] {
 }
 
 export function getDictLabel(type: string, value: any): string {
-  return getDictOptions(type).find(dict => isEqual(dict.value, value))?.label ?? ''
+  return getDictOptions(type).find(dict => dict.value == value)?.label ?? ''
 }
