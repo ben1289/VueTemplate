@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InfoDialog from './InfoDialog.vue'
+import InfoModal from './InfoModal.vue'
 import { useMessage } from '@/hooks'
 import { useAppStore, useUserStore } from '@/store'
 
@@ -10,12 +10,12 @@ const userStore = useUserStore()
 
 const headerHeight = computed(() => `${appStore.header.height}px`)
 
-const infoDialogRef = ref<InstanceType<typeof InfoDialog>>()
+const infoModalRef = ref<InstanceType<typeof InfoModal>>()
 
 async function handleSelect(value: any) {
   switch (value) {
     case 'userInfo':
-      toValue(infoDialogRef)?.open()
+      toValue(infoModalRef)?.open()
       break
     case 'logout':
       message.confirm(t('app.logoutTip'), {
@@ -44,7 +44,7 @@ async function handleSelect(value: any) {
     </template>
   </ADropdown>
 
-  <InfoDialog ref="infoDialogRef" />
+  <InfoModal ref="infoModalRef" />
 </template>
 
 <style scoped lang="less">
