@@ -7,3 +7,8 @@ export enum commonStatusEnum {
   ENABLE = 1,
   DISABLE = 0,
 }
+
+export enum userSexEnum {
+  MALE = 1,
+  FEMALE = 2,
+}
