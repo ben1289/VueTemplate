@@ -3,9 +3,9 @@ export enum dictTypeEnum {
   USER_SEX = 'system_user_sex',
 }
 
-export enum commonStatusEnum {
-  ENABLE = 1,
+export enum commonStateEnum {
   DISABLE = 0,
+  ENABLE = 1,
 }
 
 export enum userSexEnum {
