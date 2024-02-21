@@ -37,8 +37,6 @@ export default {
     enable: 'Enable',
     disable: 'Disable',
     pleaseSelectMenu: 'Please select menu on the left',
-    saveSuccess: 'Save successful',
-    deleteSuccess: 'Delete successful',
     notSaveConfirm: 'Current data has not been saved, do you want to abandon saving?',
     deleteConfirm: 'Delete after it cannot be recovered, do you want to continue?',
   },

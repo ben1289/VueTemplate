@@ -253,10 +253,10 @@ function resetPwd() {
           </AFormItem>
           <div class="flex items-center justify-center gap-x-20px">
             <AButton type="primary" @click="updatePwd">
-              {{ t('common.save') }}
+              {{ t('action.save') }}
             </AButton>
             <AButton @click="resetPwd">
-              {{ t('common.reset') }}
+              {{ t('action.reset') }}
             </AButton>
           </div>
         </AForm>
@@ -265,7 +265,7 @@ function resetPwd() {
 
     <template #footer>
       <AButton @click="visible = false">
-        {{ t('common.close') }}
+        {{ t('action.close') }}
       </AButton>
     </template>
   </AModal>

@@ -9,6 +9,14 @@ const locales = import.meta.glob([
 export default {
   ...assign({}, ...Object.values(locales)),
   common: {
+    operate: 'Operate',
+    tip: 'Tip',
+    notice: 'Notice',
+    yes: 'Yes',
+    no: 'No',
+    more: 'More',
+  },
+  action: {
     add: 'Add',
     create: 'Create',
     edit: 'Edit',
@@ -28,11 +36,11 @@ export default {
     confirm: 'Confirm',
     cancel: 'Cancel',
     close: 'Close',
-    operate: 'Operate',
-    tip: 'Tip',
-    notice: 'Notice',
-    yes: 'Yes',
-    no: 'No',
+  },
+  tip: {
+    operateSuccess: 'Operate Success',
+    saveSuccess: 'Save Success',
+    deleteSuccess: 'Delete Success',
   },
   app: {
     logout: 'Logout',

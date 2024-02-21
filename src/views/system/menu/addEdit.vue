@@ -117,7 +117,7 @@ function handleSave() {
       saveLoading.value = true
       menuApi.saveMenu(toValue(formData)).then(() => {
         emit('refresh')
-        message.success(t('menu.saveSuccess'))
+        message.success(t('tip.saveSuccess'))
         handleCancel()
       }).finally(() => {
         saveLoading.value = false
@@ -129,14 +129,14 @@ function handleSave() {
 
 <template>
   <ASpin class="h-full w-full" :loading="detailLoading">
-    <APageHeader v-if="formData" :title="formData?.id ? t('common.edit') : t('common.add')" :show-back="false">
+    <APageHeader v-if="formData" :title="formData?.id ? t('action.edit') : t('action.add')" :show-back="false">
       <template #extra>
         <ASpace>
           <AButton @click="handleCancel">
-            {{ t('common.cancel') }}
+            {{ t('action.cancel') }}
           </AButton>
           <AButton type="primary" :loading="saveLoading" @click="handleSave">
-            {{ t('common.save') }}
+            {{ t('action.save') }}
           </AButton>
         </ASpace>
       </template>

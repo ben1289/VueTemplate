@@ -100,10 +100,10 @@ function handleSelect(value: any, tabRoute: RouteLocation) {
         </span>
         <template #content>
           <ADoption value="refresh" :disabled="!isCurtRoute(tabRoute)">
-            {{ t('common.refresh') }}
+            {{ t('action.refresh') }}
           </ADoption>
           <ADoption value="close" :disabled="!closable(tabRoute)">
-            {{ t('common.close') }}
+            {{ t('action.close') }}
           </ADoption>
           <ADoption value="closeOther" :disabled="!isCurtRoute(tabRoute)">
             {{ t('tabBar.closeOther') }}

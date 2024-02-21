@@ -72,7 +72,7 @@ function handleDelete(id: number) {
   message.confirm(t('menu.deleteConfirm'), {
     onOk() {
       menuApi.deleteMenu(id).then(() => {
-        message.success(t('menu.deleteSuccess'))
+        message.success(t('tip.deleteSuccess'))
         query()
       })
     },
@@ -93,17 +93,17 @@ const addEditRef = ref<InstanceType<typeof AddEdit>>()
           <AFormItem class="m-l-a !w-auto">
             <ASpace>
               <AButton type="primary" @click="query">
-                {{ t('common.query') }}
+                {{ t('action.query') }}
               </AButton>
               <AButton @click="reset">
-                {{ t('common.reset') }}
+                {{ t('action.reset') }}
               </AButton>
             </ASpace>
           </AFormItem>
         </AForm>
         <ASpace>
           <AButton type="outline" @click="addEditRef?.operateMenu()">
-            {{ t('common.add') }}
+            {{ t('action.add') }}
           </AButton>
         </ASpace>
         <ATable
@@ -135,13 +135,13 @@ const addEditRef = ref<InstanceType<typeof AddEdit>>()
 
           <template #operate="{ record }">
             <AButton type="text" @click="addEditRef?.operateMenu(undefined, record.id)">
-              {{ t('common.add') }}
+              {{ t('action.add') }}
             </AButton>
             <AButton type="text" @click="addEditRef?.operateMenu(record.id)">
-              {{ t('common.edit') }}
+              {{ t('action.edit') }}
             </AButton>
             <AButton type="text" status="danger" @click="handleDelete(record.id)">
-              {{ t('common.delete') }}
+              {{ t('action.delete') }}
             </AButton>
           </template>
         </ATable>

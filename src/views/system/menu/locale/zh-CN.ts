@@ -37,8 +37,6 @@ export default {
     enable: '生效',
     disable: '失效',
     pleaseSelectMenu: '请选择左侧菜单',
-    saveSuccess: '保存成功',
-    deleteSuccess: '删除成功',
     notSaveConfirm: '当前数据还未保存，是否放弃保存？',
     deleteConfirm: '删除后不可恢复，是否继续？',
   },
