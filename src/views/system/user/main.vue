@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
 import ResetPwdModal from './resetPwdModal.vue'
-import { dictTypeEnum } from '@/enums'
+import { commonStateEnum, dictTypeEnum } from '@/enums'
 import { getDictLabel, getIntDictOptions } from '@/utils/dict'
 import { downloadByBlob } from '@/utils/download'
 import { useMessage } from '@/hooks'
@@ -53,6 +53,11 @@ const tbCols: TableColumnData[] = [
     dataIndex: 'dept',
   },
   {
+    title: t('user.state'),
+    align: 'center',
+    slotName: 'state',
+  },
+  {
     title: t('common.operate'),
     align: 'center',
     width: 160,
@@ -94,6 +99,25 @@ function handleExport() {
         downloadByBlob(res, t('user.exportXlsx'))
       })
     },
+  })
+}
+
+function handleBeforeStateChange(state: any) {
+  return new Promise<boolean>((resolve) => {
+    message.confirm(t(state ? 'user.enableTip' : 'user.disableTip'), {
+      onOk() {
+        resolve(true)
+      },
+      onCancel() {
+        resolve(false)
+      },
+    })
+  })
+}
+
+function handleStateChange(id: number, state: boolean) {
+  userApi.updateUserState({ id, state }).catch(() => {
+    query()
   })
 }
 
@@ -155,6 +179,17 @@ function handleDelete(id: number) {
         :total="tbTotal"
         row-key="id"
       >
+        <template #state="{ record }">
+          <ASwitch
+            v-model="record.state"
+            type="round"
+            :checked-value="commonStateEnum.ENABLE"
+            :unchecked-value="commonStateEnum.DISABLE"
+            :before-change="handleBeforeStateChange"
+            @change="handleStateChange(record.id, $event as boolean)"
+          />
+        </template>
+
         <template #operate="{ record }">
           <ASpace>
             <AButton type="text" @click="gotoAddEdit(record.id)">

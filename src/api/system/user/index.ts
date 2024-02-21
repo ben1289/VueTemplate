@@ -38,6 +38,18 @@ export function saveUser(data: any): ResponseContent {
 }
 
 /**
+ * 更新用户状态
+ * @param data
+ */
+export function updateUserState(data: any): ResponseContent {
+  return service({
+    url: '/system/user/update-state',
+    method: 'PUT',
+    data,
+  })
+}
+
+/**
  * 删除用户
  * @param id
  */
