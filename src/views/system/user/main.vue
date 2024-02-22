@@ -45,7 +45,7 @@ const tbCols: TableColumnData[] = [
     dataIndex: 'mobile',
   },
   {
-    title: t('user.dept'),
+    title: t('user.email'),
     dataIndex: 'email',
   },
   {
