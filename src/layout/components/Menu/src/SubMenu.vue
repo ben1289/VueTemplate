@@ -31,7 +31,7 @@ const path = computed(() => {
     </ASubMenu>
   </template>
   <template v-else>
-    <AMenuItem :key="menu.showType === MenuShowTypeEnum.LINK ? menu.link : path" @click="useMenuClick(menu)">
+    <AMenuItem :key="menu.showType === MenuShowTypeEnum.LINK ? menu.link : path" @click="useMenuClick({ ...menu, routePath: path })">
       <template v-if="menu?.icon" #icon>
         <i :class="menu.icon" />
       </template>
