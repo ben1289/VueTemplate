@@ -191,31 +191,29 @@ function handleDelete(id: number) {
         </template>
 
         <template #operate="{ record }">
-          <ASpace>
-            <AButton type="text" @click="gotoAddEdit(record.id)">
-              {{ t('action.edit') }}
-            </AButton>
+          <AButton type="text" @click="gotoAddEdit(record.id)">
+            {{ t('action.edit') }}
+          </AButton>
 
-            <ADropdown>
-              <AButton type="text">
-                {{ t('common.more') }}
-              </AButton>
-              <template #content>
-                <ADoption @click="handleResetPwd(record.id)">
-                  <template #icon>
-                    <i class="i-mdi-lock-reset" />
-                  </template>
-                  {{ t('user.resetPwd') }}
-                </ADoption>
-                <ADoption @click="handleDelete(record.id)">
-                  <template #icon>
-                    <i class="i-mdi-delete-outline" />
-                  </template>
-                  {{ t('action.delete') }}
-                </ADoption>
-              </template>
-            </ADropdown>
-          </ASpace>
+          <ADropdown>
+            <AButton type="text">
+              {{ t('common.more') }}
+            </AButton>
+            <template #content>
+              <ADoption @click="handleResetPwd(record.id)">
+                <template #icon>
+                  <i class="i-mdi-lock-reset" />
+                </template>
+                {{ t('user.resetPwd') }}
+              </ADoption>
+              <ADoption @click="handleDelete(record.id)">
+                <template #icon>
+                  <i class="i-mdi-delete-outline" />
+                </template>
+                {{ t('action.delete') }}
+              </ADoption>
+            </template>
+          </ADropdown>
         </template>
       </CusTable>
     </div>
