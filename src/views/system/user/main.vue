@@ -225,9 +225,5 @@ function handleDelete(id: number) {
 </template>
 
 <style scoped lang="less">
-.arco-form {
-  .arco-form-item {
-    width: 260px;
-  }
-}
+
 </style>
