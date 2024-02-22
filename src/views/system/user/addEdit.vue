@@ -27,18 +27,6 @@ init()
 const roleOptions = ref<any[]>([])
 const deptTree = ref<any[]>([])
 
-function init() {
-  getRoleSimpleList().then((res) => {
-    roleOptions.value = res.data
-  })
-  getDeptSimpleList().then((res) => {
-    deptTree.value = arrayToTree(res.data)
-  })
-  if (props.id) {
-    getDetail(props.id)
-  }
-}
-
 const formRef = ref<FormInstance>()
 const formData = ref({
   username: '',
@@ -59,10 +47,18 @@ const formRules = {
   role: [{ required: true, message: t('user.roleRequired') }],
 }
 
-function getDetail(id: number) {
-  userApi.getUserDetail(id).then((res) => {
-    formData.value = res.data
+function init() {
+  getRoleSimpleList().then((res) => {
+    roleOptions.value = res.data
   })
+  getDeptSimpleList().then((res) => {
+    deptTree.value = arrayToTree(res.data)
+  })
+  if (props.id) {
+    userApi.getUserDetail(props.id).then((res) => {
+      formData.value = res.data
+    })
+  }
 }
 
 function gotoMain() {
