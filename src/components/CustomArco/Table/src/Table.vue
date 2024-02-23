@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface TableProps {
-  total: number
+  total?: number
 }
 
 withDefaults(defineProps<TableProps>(), {
