@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { TableInstance } from '@arco-design/web-vue'
+
 interface TableProps {
   total?: number
 }
@@ -6,6 +8,10 @@ interface TableProps {
 withDefaults(defineProps<TableProps>(), {
   total: 0,
 })
+
+const tableRef = ref<TableInstance>()
+
+defineExpose({ arcoTable: tableRef })
 
 interface Page {
   pageNo: number
@@ -21,6 +27,7 @@ const page = defineModel<Page>('page', {
 
 <template>
   <ATable
+    ref="tableRef"
     :scroll="{ y: '100%' }"
     :pagination="{
       total,
