@@ -113,8 +113,8 @@ function save() {
             :data="menuTree"
             :field-names="{ key: 'id', title: 'name', icon: '' }"
             action-on-node-click="expand"
-
-            checkable block-node
+            checkable
+            block-node
           />
         </div>
       </AFormItem>
