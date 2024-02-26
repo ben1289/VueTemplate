@@ -46,7 +46,7 @@ function handleClose() {
     @before-ok="handleBeforeOk"
     @close="handleClose"
   >
-    <AForm ref="formRef" :model="formData" :rules="formRules">
+    <AForm ref="formRef" :model="formData" :rules="formRules" auto-label-width>
       <AFormItem :label="t('user.newPassword')" field="password">
         <AInputPassword v-model="formData.password" />
       </AFormItem>

@@ -96,7 +96,7 @@ function save() {
       </ASpace>
     </template>
 
-    <AForm ref="formRef" class="m-a !w-60%" :model="formData" :rules="formRules">
+    <AForm ref="formRef" class="m-a !w-50%" :model="formData" :rules="formRules" auto-label-width>
       <AFormItem :label="t('role.roleName')" field="roleName">
         <AInput v-model="formData.roleName" />
       </AFormItem>

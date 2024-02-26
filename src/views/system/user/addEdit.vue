@@ -101,7 +101,7 @@ function save() {
       </ASpace>
     </template>
 
-    <AForm ref="formRef" class="m-a !w-60%" :model="formData" :rules="formRules">
+    <AForm ref="formRef" class="m-a !w-50%" :model="formData" :rules="formRules" auto-label-width>
       <AFormItem v-if="!isEdit" :label="t('user.username')" field="username">
         <AInput v-model="formData.username" />
       </AFormItem>
