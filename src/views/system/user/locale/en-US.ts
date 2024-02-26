@@ -23,5 +23,6 @@ export default {
     disableTip: 'Are you sure to disable this user?',
     deleteTip: 'Are you sure to delete this user?',
     resetPwd: 'Reset Password',
+    resetPwdSuccess: 'Reset password successfully',
   },
 }

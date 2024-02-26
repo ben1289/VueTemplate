@@ -23,5 +23,6 @@ export default {
     disableTip: '确认禁用该用户吗？',
     deleteTip: '确认删除该用户吗？',
     resetPwd: '重置密码',
+    resetPwdSuccess: '重置密码成功',
   },
 }

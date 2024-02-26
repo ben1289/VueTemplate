@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { FormInstance } from '@arco-design/web-vue'
+import { useMessage } from '@/hooks'
 import { resetUserPwd } from '@/api/system/user'
 
 defineExpose({ open })
 
 const { t } = useI18n()
+const message = useMessage()
 
 const visible = ref(false)
 
@@ -26,6 +28,7 @@ async function handleBeforeOk() {
   const errors = await toValue(formRef)?.validate()
   if (!errors) {
     await resetUserPwd(formData)
+    message.success(t('user.resetPwdSuccess'))
     return true
   }
   return false
