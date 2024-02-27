@@ -1,5 +1,6 @@
 export default {
   menu: {
+    expandCollapse: 'Expand/Collapse',
     rootMenu: 'Root Menu',
     parentMenu: 'Parent Menu',
     type: 'Type',

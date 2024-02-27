@@ -1,5 +1,6 @@
 export default {
   menu: {
+    expandCollapse: '展开/收起',
     rootMenu: '根菜单',
     parentMenu: '上级菜单',
     type: '类型',

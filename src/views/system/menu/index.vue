@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import type { FormInstance, TableColumnData, TableInstance } from '@arco-design/web-vue'
+import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
 import type { MenuData } from '@/types'
+import type { CusTableInstance } from '@/components/CustomArco'
 import AddEdit from './addEdit.vue'
+import { CusTable } from '@/components/CustomArco'
 import { arrayToTree } from '@/utils/dataHandler'
 import { useMessage } from '@/hooks'
 import * as menuApi from '@/api/system/menu'
@@ -16,7 +18,7 @@ const formData = reactive({
   name: '',
 })
 
-const tableRef = ref<TableInstance>()
+const tableRef = ref<CusTableInstance>()
 const tbLoading = ref(false)
 const tbColumns: TableColumnData[] = [
   {
@@ -51,6 +53,7 @@ const tbColumns: TableColumnData[] = [
   },
 ]
 const tbData = ref<MenuData[]>([])
+const tbExpandAll = ref(false)
 
 function query() {
   tbLoading.value = true
@@ -66,6 +69,10 @@ query()
 function reset() {
   toValue(formRef)?.resetFields()
   query()
+}
+
+function toggleExpandAll() {
+  toValue(tableRef)?.arcoTable?.expandAll(tbExpandAll.value = !toValue(tbExpandAll))
 }
 
 function handleDelete(id: number) {
@@ -105,14 +112,17 @@ const addEditRef = ref<InstanceType<typeof AddEdit>>()
           <AButton type="outline" @click="addEditRef?.operateMenu()">
             {{ t('action.add') }}
           </AButton>
+          <AButton type="outline" @click="toggleExpandAll()">
+            {{ t('menu.expandCollapse') }}
+          </AButton>
         </ASpace>
-        <ATable
+        <CusTable
           ref="tableRef"
+          class="overflow-auto"
           :loading="tbLoading"
           :columns="tbColumns"
           :data="tbData"
           row-key="id"
-          :scroll="{ y: '100%' }"
           :pagination="false"
         >
           <template #visible="{ record }">
@@ -144,7 +154,7 @@ const addEditRef = ref<InstanceType<typeof AddEdit>>()
               {{ t('action.delete') }}
             </AButton>
           </template>
-        </ATable>
+        </CusTable>
       </div>
     </template>
     <template #second>
