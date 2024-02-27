@@ -2,6 +2,6 @@ import CusTable from './Table'
 
 export { CusTable }
 
-type InstanceCusTable = InstanceType<typeof CusTable>
+type CusTableInstance = InstanceType<typeof CusTable>
 
-export type { InstanceCusTable }
+export type { CusTableInstance }

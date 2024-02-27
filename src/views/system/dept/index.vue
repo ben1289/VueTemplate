@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
-import type { InstanceCusTable } from '@/components/CustomArco'
+import type { CusTableInstance } from '@/components/CustomArco'
 import AddEditModal from './addEditModal.vue'
 import { commonStateEnum } from '@/enums'
 import { arrayToTree } from '@/utils/dataHandler'
@@ -18,7 +18,7 @@ const formData = reactive({
   deptName: '',
 })
 
-const tableRef = ref<InstanceCusTable>()
+const tableRef = ref<CusTableInstance>()
 const tbLoading = ref(false)
 const tbCols: TableColumnData[] = [
   {
