@@ -13,13 +13,13 @@ export function getDictTypeSimpleList(): ResponseContent {
 
 /**
  * 获取字典列表
- * @param params
+ * @param data
  */
-export function getDictTypeList(params: any): ResponseContent {
+export function getDictTypeList(data: any): ResponseContent {
   return service({
     url: '/system/dict-type/page',
-    method: 'GET',
-    params,
+    method: 'POST',
+    data,
   })
 }
 
@@ -36,24 +36,24 @@ export function getDictType(id: number): ResponseContent {
 }
 
 /**
- * 创建字典
+ * 保存字典
  * @param data
  */
-export function createDictType(data: any): ResponseContent {
+export function saveDictType(data: any): ResponseContent {
   return service({
-    url: '/system/dict-type/create',
+    url: '/system/dict-type/save',
     method: 'POST',
     data,
   })
 }
 
 /**
- * 更新字典
+ * 更新字典状态
  * @param data
  */
-export function updateDictType(data: any): ResponseContent {
+export function updateDictTypeState(data: any): ResponseContent {
   return service({
-    url: '/system/dict-type/update',
+    url: '/system/dict-type/update-state',
     method: 'PUT',
     data,
   })
@@ -73,14 +73,12 @@ export function deleteDictType(id: number): ResponseContent {
 
 /**
  * 导出字典
- * @param params
  */
-export function exportDictType(params: any): Promise<Blob> {
+export function exportDictType(): Promise<Blob> {
   return service({
     url: '/system/dict-type/export',
     method: 'GET',
     responseType: 'blob',
-    params,
   })
 }
 
@@ -96,13 +94,13 @@ export function getDictDataSimpleList(): ResponseContent {
 
 /**
  * 获取字典数据列表
- * @param params
+ * @param data
  */
-export function getDictDataList(params: any): ResponseContent {
+export function getDictDataList(data: any): ResponseContent {
   return service({
     url: '/system/dict-data/page',
-    method: 'GET',
-    params,
+    method: 'POST',
+    data,
   })
 }
 
@@ -119,24 +117,24 @@ export function getDictData(id: number): ResponseContent {
 }
 
 /**
- * 创建字典数据
+ * 保存字典数据
  * @param data
  */
-export function createDictData(data: any): ResponseContent {
+export function saveDictData(data: any): ResponseContent {
   return service({
-    url: '/system/dict-data/create',
+    url: '/system/dict-data/save',
     method: 'POST',
     data,
   })
 }
 
 /**
- * 更新字典数据
+ * 更新字典数据状态
  * @param data
  */
-export function updateDictData(data: any): ResponseContent {
+export function updateDictDataState(data: any): ResponseContent {
   return service({
-    url: '/system/dict-data/update',
+    url: '/system/dict-data/update-state',
     method: 'PUT',
     data,
   })
@@ -151,18 +149,5 @@ export function deleteDictData(id: number): ResponseContent {
     url: '/system/dict-data/delete',
     method: 'DELETE',
     params: { id },
-  })
-}
-
-/**
- * 导出字典数据
- * @param params
- */
-export function exportDictData(params: any): Promise<Blob> {
-  return service({
-    url: '/system/dict-data/export',
-    method: 'GET',
-    responseType: 'blob',
-    params,
   })
 }
