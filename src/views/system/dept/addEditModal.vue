@@ -10,7 +10,7 @@ interface DeptData {
   parentId: '' | number
   id?: number
   deptName: string
-  sort: '' | number
+  sort?: number
 }
 
 const { t } = useI18n()
@@ -23,7 +23,7 @@ const formRef = ref<FormInstance>()
 const formData = ref<DeptData>({
   parentId: '',
   deptName: '',
-  sort: '',
+  sort: undefined,
 })
 const formRules = {
   parentId: [{ required: true, message: t('dept.parentDeptRequired') }],
@@ -57,7 +57,7 @@ function handleClose() {
   formData.value = {
     parentId: '',
     deptName: '',
-    sort: '',
+    sort: undefined,
   }
   toValue(formRef)?.resetFields()
 }
@@ -84,7 +84,7 @@ function handleClose() {
         <AInput v-model="formData.deptName" />
       </AFormItem>
       <AFormItem :label="t('dept.sort')" field="sort">
-        <AInput v-model="formData.sort" />
+        <AInputNumber v-model="formData.sort" />
       </AFormItem>
     </AForm>
   </AModal>
