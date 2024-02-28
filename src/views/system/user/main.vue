@@ -13,6 +13,7 @@ defineOptions({ name: 'UserMain' })
 
 const { t } = useI18n()
 const message = useMessage()
+const gotoView = useGotoView()
 
 const formRef = ref<FormInstance>()
 const formData = reactive({
@@ -89,7 +90,7 @@ function reset() {
 }
 
 function gotoAddEdit(id?: number) {
-  useGotoView('addEdit', { props: { id }, events: { refresh: query } })
+  gotoView('addEdit', { props: { id }, events: { refresh: query } })
 }
 
 function handleExport() {

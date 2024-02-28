@@ -1,18 +1,12 @@
-interface Attrs {
+import type { InjectionKey } from 'vue'
+
+export interface Attrs {
   props?: Record<string, any>
   events?: Record<string, Function>
 }
 
-const _view = ref<string>('')
-const _attrs = ref<Attrs>({})
+export const GOTO_VIEW = Symbol('gotoView') as InjectionKey<(view: string, attrs?: Attrs) => void>
 
-export default function useGotoView(view: string, attrs: Attrs = {}) {
-  const { props = {}, events = {} } = attrs
-  _view.value = view
-  _attrs.value = { props, events }
-
-  return {
-    view: _view,
-    attrs: _attrs,
-  }
+export default function useGotoView() {
+  return inject(GOTO_VIEW)!
 }

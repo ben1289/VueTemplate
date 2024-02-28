@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import useGotoView from './hooks/gotoView'
+import type { Attrs } from './hooks/gotoView'
+import { GOTO_VIEW } from './hooks/gotoView'
 import { useGlobImport } from '@/hooks'
 
 defineOptions({ name: 'ViewController' })
@@ -12,21 +13,31 @@ const props = defineProps<{
   exclude?: string | RegExp | (string | RegExp)[]
 }>()
 
-const { view, attrs } = useGotoView(props.defaultView)
-const component = useGlobImport(props.views, view)
+const _view = ref<string>(props.defaultView)
+const _attrs = ref<Attrs>({})
 
-// 当component发生变化时，再更新attrs
-const _attrs: typeof attrs = ref({})
+function gotoView(view: string, attrs: Attrs = {}) {
+  _view.value = view
+  _attrs.value = attrs
+}
+
+provide(GOTO_VIEW, gotoView)
+
+const component = useGlobImport(props.views, _view)
+
+// 当component发生变化时，再更新attrs，以便解决组件传参警告
+const attrs: typeof _attrs = ref({})
 watch(component, () => {
-  _attrs.value = toValue(attrs)
+  const { props = {}, events = {} } = toValue(_attrs)
+  attrs.value = { props, events }
 }, { immediate: true })
 </script>
 
 <template>
   <KeepAlive v-if="keepAlive" :include="include" :exclude="exclude">
-    <component :is="component" v-bind="_attrs.props" v-on="_attrs.events" />
+    <component :is="component" v-bind="attrs.props" v-on="attrs.events" />
   </KeepAlive>
-  <component :is="component" v-else v-bind="_attrs.props" v-on="_attrs.events" />
+  <component :is="component" v-else v-bind="attrs.props" v-on="attrs.events" />
 </template>
 
 <style scoped lang="less">

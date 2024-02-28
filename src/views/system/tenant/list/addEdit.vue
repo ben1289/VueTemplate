@@ -14,6 +14,7 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 const message = useMessage()
+const gotoView = useGotoView()
 
 const isEdit = computed(() => !!props.id)
 
@@ -56,7 +57,7 @@ function init() {
 }
 
 function gotoMain() {
-  useGotoView('main')
+  gotoView('main')
 }
 
 const saveLoading = ref(false)

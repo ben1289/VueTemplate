@@ -12,6 +12,7 @@ defineOptions({ name: 'DictTypeMain' })
 
 const { t } = useI18n()
 const message = useMessage()
+const gotoView = useGotoView()
 
 const formRef = ref<FormInstance>()
 const formData = reactive({
@@ -106,7 +107,7 @@ function handleStateChange(id: number, state: boolean) {
 }
 
 function gotoDictData(dictName: string, dictType: string) {
-  useGotoView('data/main', { props: { dictName, dictType }, events: { refresh: query } })
+  gotoView('data/main', { props: { dictName, dictType }, events: { refresh: query } })
 }
 
 function handleDelete(id: number) {

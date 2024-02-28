@@ -16,6 +16,7 @@ const props = defineProps<{
 
 const { t } = useI18n()
 const message = useMessage()
+const gotoView = useGotoView()
 
 const formRef = ref<FormInstance>()
 const formData = reactive({
@@ -103,7 +104,7 @@ function handleStateChange(id: number, state: boolean) {
 }
 
 function gotoDictType() {
-  useGotoView('type/main')
+  gotoView('type/main')
 }
 
 function handleDelete(id: number) {
