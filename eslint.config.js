@@ -25,7 +25,6 @@ export default defineConfig(
       },
       typescript: {
         'ts/prefer-ts-expect-error': 'off',
-        'ts/no-use-before-define': 'off',
       },
     },
   },
