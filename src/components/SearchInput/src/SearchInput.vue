@@ -13,14 +13,13 @@ type Row = GetFetchData<typeof props.fetchData>
 
 const value = defineModel<ModelValue>('value', { default: '' })
 const label = defineModel<ModelValue>('label', { default: '' })
+const string = ref('')
 
 watch(label, () => {
   string.value = toValue(label).toString()
 }, { immediate: true })
 
 const _fieldNames = computed(() => ({ valueKey: 'value', labelKey: 'label', rowKey: 'id', ...props.fieldNames }))
-
-const string = ref('')
 
 function handleStringChange(str: string) {
   if (!str) {
