@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
-import { commonStateEnum } from '@/enums'
+import { CommonStateEnum } from '@/enums'
 import { formatDate } from '@/utils/formatter'
 import { downloadByBlob } from '@/utils/download'
 import { useMessage } from '@/hooks'
@@ -178,8 +178,8 @@ function handleDelete(id: number) {
           <ASwitch
             v-model="record.state"
             type="round"
-            :checked-value="commonStateEnum.ENABLE"
-            :unchecked-value="commonStateEnum.DISABLE"
+            :checked-value="CommonStateEnum.ENABLE"
+            :unchecked-value="CommonStateEnum.DISABLE"
             :before-change="handleBeforeStateChange"
             @change="handleStateChange(record.id, $event as boolean)"
           />

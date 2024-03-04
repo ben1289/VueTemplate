@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
 import ResetPwdModal from './resetPwdModal.vue'
-import { commonStateEnum, dictTypeEnum } from '@/enums'
+import { CommonStateEnum, DictTypeEnum } from '@/enums'
 import { getDictLabel, getIntDictOptions } from '@/utils/dict'
 import { downloadByBlob } from '@/utils/download'
 import { useMessage } from '@/hooks'
@@ -35,7 +35,7 @@ const tbCols: TableColumnData[] = [
   {
     title: t('user.sex'),
     dataIndex: 'sex',
-    render: ({ record }) => getDictLabel(dictTypeEnum.USER_SEX, record.sex),
+    render: ({ record }) => getDictLabel(DictTypeEnum.USER_SEX, record.sex),
   },
   {
     title: t('user.role'),
@@ -149,7 +149,7 @@ function handleDelete(id: number) {
           <AInput v-model="formData.nickname" />
         </AFormItem>
         <AFormItem :label="t('user.sex')" field="sex">
-          <ASelect v-model="formData.sex" :options="getIntDictOptions(dictTypeEnum.USER_SEX)" />
+          <ASelect v-model="formData.sex" :options="getIntDictOptions(DictTypeEnum.USER_SEX)" />
         </AFormItem>
         <AFormItem class="m-l-a !w-auto">
           <ASpace>
@@ -184,8 +184,8 @@ function handleDelete(id: number) {
           <ASwitch
             v-model="record.state"
             type="round"
-            :checked-value="commonStateEnum.ENABLE"
-            :unchecked-value="commonStateEnum.DISABLE"
+            :checked-value="CommonStateEnum.ENABLE"
+            :unchecked-value="CommonStateEnum.DISABLE"
             :before-change="handleBeforeStateChange"
             @change="handleStateChange(record.id, $event as boolean)"
           />

@@ -1,15 +1,15 @@
-export enum dictTypeEnum {
+export enum DictTypeEnum {
   COMMON_STATUS = 'common_status',
   DATA_SCOPE = 'system_data_scope',
   USER_SEX = 'system_user_sex',
 }
 
-export enum commonStateEnum {
+export enum CommonStateEnum {
   DISABLE = 0,
   ENABLE = 1,
 }
 
-export enum dataScopeEnum {
+export enum DataScopeEnum {
   ALL = 1,
   DEPT_CUSTOM = 2,
   DEPT_ONLY = 3,
@@ -17,7 +17,7 @@ export enum dataScopeEnum {
   SELF = 5,
 }
 
-export enum userSexEnum {
+export enum UserSexEnum {
   MALE = 1,
   FEMALE = 2,
 }

@@ -3,7 +3,7 @@ import type { FormInstance } from '@arco-design/web-vue'
 import { useGotoView } from '@/components/ViewController'
 import { getIntDictOptions } from '@/utils/dict'
 import { arrayToTree } from '@/utils/dataHandler'
-import { dictTypeEnum, userSexEnum } from '@/enums'
+import { DictTypeEnum, UserSexEnum } from '@/enums'
 import { useMessage } from '@/hooks'
 import * as userApi from '@/api/system/user'
 import { getRoleSimpleList } from '@/api/system/role'
@@ -33,7 +33,7 @@ const formData = ref({
   username: '',
   password: '',
   nickname: '',
-  sex: userSexEnum.MALE,
+  sex: UserSexEnum.MALE,
   role: [],
   mobile: '',
   email: '',
@@ -113,7 +113,7 @@ function save() {
         <AInput v-model="formData.nickname" />
       </AFormItem>
       <AFormItem :label="t('user.sex')" field="sex">
-        <ARadioGroup v-model="formData.sex" :options="getIntDictOptions(dictTypeEnum.USER_SEX)" />
+        <ARadioGroup v-model="formData.sex" :options="getIntDictOptions(DictTypeEnum.USER_SEX)" />
       </AFormItem>
       <AFormItem :label="t('user.role')" field="role">
         <ASelect v-model="formData.role" :options="roleOptions" :field-names="{ value: 'id', label: 'name' }" allow-clear multiple />

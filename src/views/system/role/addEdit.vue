@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance } from '@arco-design/web-vue'
-import { dataScopeEnum, dictTypeEnum } from '@/enums'
+import { DataScopeEnum, DictTypeEnum } from '@/enums'
 import { getIntDictOptions } from '@/utils/dict'
 import { arrayToTree } from '@/utils/dataHandler'
 import { useMessage } from '@/hooks'
@@ -34,7 +34,7 @@ const formData = ref({
   roleCode: '',
   remark: '',
   menus: [],
-  dataScope: dataScopeEnum.SELF,
+  dataScope: DataScopeEnum.SELF,
   dataScopeDeptIds: [],
 })
 const formRules = {
@@ -120,9 +120,9 @@ function save() {
         </div>
       </AFormItem>
       <AFormItem :label="t('role.dataPermission')" field="dataScope">
-        <ASelect v-model="formData.dataScope" :options="getIntDictOptions(dictTypeEnum.DATA_SCOPE)" />
+        <ASelect v-model="formData.dataScope" :options="getIntDictOptions(DictTypeEnum.DATA_SCOPE)" />
       </AFormItem>
-      <AFormItem v-if="formData.dataScope === dataScopeEnum.DEPT_CUSTOM">
+      <AFormItem v-if="formData.dataScope === DataScopeEnum.DEPT_CUSTOM">
         <div class="tree-box !h-200px">
           <ATree
             v-model:checked-keys="formData.dataScopeDeptIds"

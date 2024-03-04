@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
 import AddEditModal from './addEditModal.vue'
-import { commonStateEnum } from '@/enums'
+import { CommonStateEnum } from '@/enums'
 import { useMessage } from '@/hooks'
 import { useGotoView } from '@/components/ViewController'
 import { CusTable } from '@/components/CustomArco'
@@ -164,8 +164,8 @@ function handleDelete(id: number) {
             <ASwitch
               v-model="record.state"
               type="round"
-              :checked-value="commonStateEnum.ENABLE"
-              :unchecked-value="commonStateEnum.DISABLE"
+              :checked-value="CommonStateEnum.ENABLE"
+              :unchecked-value="CommonStateEnum.DISABLE"
               :before-change="handleBeforeStateChange"
               @change="handleStateChange(record.id, $event as boolean)"
             />
