@@ -28,7 +28,7 @@ const page = defineModel<Page>('page', {
 <template>
   <ATable
     ref="tableRef"
-    :scroll="{ y: '100%' }"
+    :scroll="{ x: '100%', y: '100%' }"
     :pagination="{
       total,
       defaultCurrent,
