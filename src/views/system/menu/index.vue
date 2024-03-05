@@ -139,7 +139,7 @@ const addEditRef = ref<InstanceType<typeof AddEdit>>()
               {{ t('menu.enable') }}
             </ATag>
             <ATag v-else>
-              {{ t('common.disable') }}
+              {{ t('menu.disable') }}
             </ATag>
           </template>
 
