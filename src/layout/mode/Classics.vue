@@ -73,6 +73,7 @@ const footerHeight = computed(() => `${appStore.footer.height}px`)
 .arco-layout-content {
   padding: 10px;
   background-color: var(--color-fill-1);
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
