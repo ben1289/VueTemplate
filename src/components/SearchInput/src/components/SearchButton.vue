@@ -11,5 +11,7 @@
 </template>
 
 <style scoped lang="less">
-
+.arco-btn {
+  height: 100%;
+}
 </style>

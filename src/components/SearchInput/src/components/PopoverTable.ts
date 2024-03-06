@@ -5,4 +5,5 @@ export interface PopoverTableProps {
   columns: TableColumnData[]
   fetchData: FetchData
   rowKey: string
+  multiple?: boolean
 }

@@ -9,25 +9,13 @@ defineOptions({ name: 'PopoverTable' })
 const props = defineProps<PopoverTableProps>()
 
 const emit = defineEmits<{
-  (e: 'change', row: Row): void
+  (e: 'change', row: any): void
 }>()
 
 type Row = GetFetchData<typeof props.fetchData>
 
-/**
- * popover
- */
 const visible = ref(false)
 
-function handleVisibleChange(visible: boolean) {
-  if (visible && toValue(tbData).length === 0) {
-    query()
-  }
-}
-
-/**
- * table
- */
 const defaultCurrent = 1
 const defaultPageSize = 20
 const queryStr = ref('')
@@ -52,6 +40,27 @@ function handleRowDblclick(row: Row) {
   emit('change', row)
   visible.value = false
 }
+
+const selectedKeys = defineModel<(string | number)[]>('selectedKeys', { default: () => [] })
+const selectedRows = new Map()
+
+props.multiple && watch(selectedKeys, (keys) => {
+  toValue(tbData).forEach((row) => {
+    const key = row[props.rowKey]
+    if (keys.includes(key)) {
+      selectedRows.set(key, row)
+    } else {
+      selectedRows.delete(key)
+    }
+  })
+  emit('change', [...selectedRows.values()])
+}, { deep: true })
+
+function handleVisibleChange(visible: boolean) {
+  if (visible && toValue(tbData).length === 0) {
+    query()
+  }
+}
 </script>
 
 <template>
@@ -65,19 +74,21 @@ function handleRowDblclick(row: Row) {
     <SearchButton />
 
     <template #content>
-      <AInput v-model="queryStr" class="m-b-10px !w-80%" @press-enter="query">
+      <AInput v-model="queryStr" class="m-b-10px !w-80%" allow-clear @press-enter="query">
         <template #append>
           <SearchButton @click="query" />
         </template>
       </AInput>
 
       <CusTable
+        v-model:selected-keys="selectedKeys"
         v-model:page="tbPage"
         :loading="tbLoading"
         :columns="columns"
         :data="tbData"
         :total="tbTotal"
         :scroll="{ y: 260 }"
+        :row-selection="multiple ? { type: 'checkbox', showCheckedAll: true, fixed: true } : undefined"
         :pagination="{
           total: tbTotal,
           defaultCurrent,

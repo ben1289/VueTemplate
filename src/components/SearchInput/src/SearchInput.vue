@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import type { ModelValue, SearchInputProps } from './SearchInput'
+import type { SearchInputProps } from './SearchInput'
 import type { GetFetchData } from './types'
 import PopoverTable from './components/PopoverTable.vue'
 
 defineOptions({ name: 'SearchInput' })
 
-const props = withDefaults(defineProps<SearchInputProps>(), {
-  multiple: false,
-})
+const props = defineProps<SearchInputProps>()
+
+const emit = defineEmits<{
+  (e: 'change', value: string | number, row: Row): void
+}>()
 
 type Row = GetFetchData<typeof props.fetchData>
 
-const value = defineModel<ModelValue>('value', { default: '' })
-const label = defineModel<ModelValue>('label', { default: '' })
+const value = defineModel<string | number>('value', { default: '' })
+const label = defineModel<string | number>('label', { default: '' })
 const string = ref('')
 
 watch(label, () => {
@@ -33,13 +35,20 @@ function change(row: Row) {
   const { valueKey, labelKey } = toValue(_fieldNames)
   value.value = row[valueKey]
   label.value = row[labelKey]
+  emit('change', toValue(value), row)
 }
 </script>
 
 <template>
-  <AInput v-model="string" @change="handleStringChange">
+  <AInput v-model="string" class="search-input" @change="handleStringChange">
     <template #append>
-      <PopoverTable :columns="columns" :fetch-data="fetchData" :row-key="_fieldNames.rowKey" @change="change" />
+      <PopoverTable
+        :columns="columns"
+        :fetch-data="fetchData"
+        :row-key="_fieldNames.rowKey"
+        :multiple="false"
+        @change="change"
+      />
     </template>
   </AInput>
 </template>
