@@ -64,45 +64,47 @@ function handleVisibleChange(visible: boolean) {
 </script>
 
 <template>
-  <APopover
-    v-model:popup-visible="visible"
-    class="w-400px"
-    trigger="click"
-    position="bottom"
-    @popup-visible-change="handleVisibleChange"
-  >
-    <SearchButton />
+  <AFormItem no-style>
+    <APopover
+      v-model:popup-visible="visible"
+      class="w-400px"
+      trigger="click"
+      position="bottom"
+      @popup-visible-change="handleVisibleChange"
+    >
+      <SearchButton />
 
-    <template #content>
-      <AInput v-model="queryStr" class="m-b-10px !w-80%" allow-clear @press-enter="query">
-        <template #append>
-          <SearchButton @click="query" />
-        </template>
-      </AInput>
+      <template #content>
+        <AInput v-model="queryStr" class="m-b-10px !w-80%" allow-clear @press-enter="query">
+          <template #append>
+            <SearchButton @click="query" />
+          </template>
+        </AInput>
 
-      <CusTable
-        v-model:selected-keys="selectedKeys"
-        v-model:page="tbPage"
-        :loading="tbLoading"
-        :columns="columns"
-        :data="tbData"
-        :total="tbTotal"
-        :scroll="{ y: 260 }"
-        :row-selection="multiple ? { type: 'checkbox', showCheckedAll: true, fixed: true } : undefined"
-        :pagination="{
-          total: tbTotal,
-          defaultCurrent,
-          defaultPageSize,
-          simple: true,
-          showTotal: true,
-          showPageSize: true,
-          showJumper: true,
-        }"
-        :row-key="rowKey"
-        @row-dblclick="handleRowDblclick"
-      />
-    </template>
-  </APopover>
+        <CusTable
+          v-model:selected-keys="selectedKeys"
+          v-model:page="tbPage"
+          :loading="tbLoading"
+          :columns="columns"
+          :data="tbData"
+          :total="tbTotal"
+          :scroll="{ y: 260 }"
+          :row-selection="multiple ? { type: 'checkbox', showCheckedAll: true, fixed: true } : undefined"
+          :pagination="{
+            total: tbTotal,
+            defaultCurrent,
+            defaultPageSize,
+            simple: true,
+            showTotal: true,
+            showPageSize: true,
+            showJumper: true,
+          }"
+          :row-key="rowKey"
+          @row-dblclick="handleRowDblclick"
+        />
+      </template>
+    </APopover>
+  </AFormItem>
 </template>
 
 <style scoped lang="less">
