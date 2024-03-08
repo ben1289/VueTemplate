@@ -4,6 +4,7 @@ import type { MenuData } from '@/types'
 import type { CusTableInstance } from '@/components/CustomArco'
 import AddEdit from './addEdit.vue'
 import { CusTable } from '@/components/CustomArco'
+import { MenuTypeEnum } from '@/enums'
 import { arrayToTree } from '@/utils/dataHandler'
 import { useMessage } from '@/hooks'
 import * as menuApi from '@/api/system/menu'
@@ -33,7 +34,7 @@ const tbColumns: TableColumnData[] = [
   {
     title: t('menu.showType'),
     dataIndex: 'showType',
-    render: ({ record }) => record.showType && t(`menu.${record.showType}`),
+    render: ({ record }) => record.type === MenuTypeEnum.MENU && t(`menu.${record.showType}`),
   },
   {
     title: t('menu.visible'),
