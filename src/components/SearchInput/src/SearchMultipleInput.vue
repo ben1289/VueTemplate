@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { SearchMultipleInputProps } from './SearchMultipleInput'
 import type { GetFetchData } from './types'
+import { useFormItem } from '@arco-design/web-vue'
 import PopoverTable from './components/PopoverTable.vue'
 
 defineOptions({ name: 'SearchMultipleInput' })
@@ -12,6 +13,8 @@ const emit = defineEmits<{
 }>()
 
 type Row = GetFetchData<typeof props.fetchData>
+
+const { eventHandlers } = useFormItem()
 
 const value = defineModel<(string | number)[]>('value', { default: [] })
 const label = defineModel<(string | number)[]>('label', { default: [] })
@@ -37,6 +40,7 @@ function change(rows: Row[]) {
   const { labelKey } = toValue(_fieldNames)
   label.value = rows.map(row => row[labelKey])
   emit('change', toValue(value), rows)
+  toValue(eventHandlers)?.onChange?.()
 }
 </script>
 
