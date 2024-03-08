@@ -81,7 +81,7 @@ function reset() {
 const addEditModalRef = ref<InstanceType<typeof AddEditModal>>()
 
 function openAddEdit(id?: number) {
-  toValue(addEditModalRef)?.open(id)
+  toValue(addEditModalRef)?.open(props.dictType, id)
 }
 
 function handleBeforeStateChange(state: any) {
@@ -182,7 +182,7 @@ function handleDelete(id: number) {
         </CusTable>
       </div>
 
-      <AddEditModal ref="addEditModalRef" />
+      <AddEditModal ref="addEditModalRef" @refresh="query" />
     </div>
   </APageHeader>
 </template>

@@ -3,6 +3,10 @@ import type { FormInstance } from '@arco-design/web-vue'
 import { useMessage } from '@/hooks'
 import * as dictApi from '@/api/system/dict'
 
+const emit = defineEmits<{
+  (e: 'refresh'): void
+}>()
+
 defineExpose({ open })
 
 interface DictType {
@@ -42,6 +46,7 @@ async function handleBeforeOk() {
   if (!errors) {
     await dictApi.saveDictType(toValue(formData))
     message.success(t('tip.saveSuccess'))
+    emit('refresh')
     return true
   }
   return false

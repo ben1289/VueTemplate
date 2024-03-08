@@ -3,10 +3,15 @@ import type { FormInstance } from '@arco-design/web-vue'
 import { useMessage } from '@/hooks'
 import * as dictApi from '@/api/system/dict'
 
+const emit = defineEmits<{
+  (e: 'refresh'): void
+}>()
+
 defineExpose({ open })
 
 interface DictData {
   id?: number
+  dictType: string
   label: string
   value: string
   sort?: number
@@ -20,6 +25,7 @@ const visible = ref(false)
 
 const formRef = ref<FormInstance>()
 const formData = ref<DictData>({
+  dictType: '',
   label: '',
   value: '',
   sort: undefined,
@@ -31,7 +37,8 @@ const formRules = {
   sort: [{ required: true, message: t('dict.sortRequired') }],
 }
 
-function open(id?: number) {
+function open(type: string, id?: number) {
+  formData.value.dictType = type
   if (id) {
     dictApi.getDictData(id).then((res) => {
       formData.value = res.data
@@ -45,6 +52,7 @@ async function handleBeforeOk() {
   if (!errors) {
     await dictApi.saveDictData(toValue(formData))
     message.success(t('tip.saveSuccess'))
+    emit('refresh')
     return true
   }
   return false
@@ -52,6 +60,7 @@ async function handleBeforeOk() {
 
 function handleClose() {
   formData.value = {
+    dictType: '',
     label: '',
     value: '',
     sort: undefined,

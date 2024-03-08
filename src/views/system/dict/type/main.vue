@@ -188,7 +188,7 @@ function handleDelete(id: number) {
       </CusTable>
     </div>
 
-    <AddEditModal ref="addEditModalRef" />
+    <AddEditModal ref="addEditModalRef" @refresh="query" />
   </div>
 </template>
 
