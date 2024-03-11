@@ -1,0 +1,22 @@
+export default {
+  operateLog: {
+    logId: 'Log Id',
+    module: 'System module',
+    name: 'Operation name',
+    type: 'Operation type',
+    userId: 'User ID',
+    user: 'User',
+    userIp: 'User IP',
+    userAgent: 'User UA',
+    url: 'Request URL',
+    javaMethod: 'Java method',
+    javaParams: 'Java parameters',
+    time: 'Operation time',
+    duration: 'Execution time',
+    resultCode: 'Response code',
+    resultMsg: 'Response message',
+    resultData: 'Response result',
+    exportTip: 'Are you sure to export operation log data?',
+    exportXlsx: 'Operation log.xlsx',
+  },
+}

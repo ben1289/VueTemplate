@@ -1,0 +1,22 @@
+export default {
+  operateLog: {
+    logId: '日志主键',
+    module: '系统模块',
+    name: '操作名称',
+    type: '操作类型',
+    userId: '操作用户 ID',
+    user: '操作用户',
+    userIp: '操作用户 IP',
+    userAgent: '操作用户 UA',
+    url: '请求 URL',
+    javaMethod: 'Java 方法名',
+    javaParams: 'Java 方法参数',
+    time: '操作时间',
+    duration: '执行时长',
+    resultCode: '响应码',
+    resultMsg: '响应消息',
+    resultData: '响应结果',
+    exportTip: '确认导出操作日志数据吗？',
+    exportXlsx: '操作日志.xlsx',
+  },
+}
