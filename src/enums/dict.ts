@@ -2,6 +2,7 @@ export enum DictTypeEnum {
   COMMON_STATUS = 'common_status',
   DATA_SCOPE = 'system_data_scope',
   USER_SEX = 'system_user_sex',
+  OPERATE_TYPE = 'system_operate_type',
 }
 
 export enum CommonStateEnum {
