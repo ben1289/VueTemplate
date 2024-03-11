@@ -36,6 +36,7 @@ export default {
     confirm: 'Confirm',
     cancel: 'Cancel',
     close: 'Close',
+    back: 'Back',
   },
   tip: {
     operateSuccess: 'Operate Success',

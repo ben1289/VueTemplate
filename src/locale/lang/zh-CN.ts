@@ -36,6 +36,7 @@ export default {
     confirm: '确认',
     cancel: '取消',
     close: '关闭',
+    back: '返回',
   },
   tip: {
     operateSuccess: '操作成功',
