@@ -100,7 +100,7 @@ function handleVisibleChange(visible: boolean) {
             showJumper: true,
           }"
           :row-key="rowKey"
-          @row-dblclick="handleRowDblclick"
+          @row-dblclick="multiple && handleRowDblclick"
         />
       </template>
     </APopover>
