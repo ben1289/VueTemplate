@@ -3,6 +3,8 @@ export enum DictTypeEnum {
   DATA_SCOPE = 'system_data_scope',
   USER_SEX = 'system_user_sex',
   OPERATE_TYPE = 'system_operate_type',
+  LOGIN_TYPE = 'system_login_type',
+  LOGIN_RESULT = 'system_login_result',
 }
 
 export enum CommonStateEnum {
