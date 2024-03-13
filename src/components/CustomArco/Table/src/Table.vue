@@ -18,10 +18,8 @@ interface Page {
   pageSize: number
 }
 
-const defaultCurrent = 1
-const defaultPageSize = 20
 const page = defineModel<Page>('page', {
-  default: { pageNo: defaultCurrent, pageSize: defaultPageSize },
+  default: { pageNo: 1, pageSize: 20 },
 })
 </script>
 
@@ -31,8 +29,8 @@ const page = defineModel<Page>('page', {
     :scroll="{ x: '100%', y: '100%' }"
     :pagination="{
       total,
-      defaultCurrent,
-      defaultPageSize,
+      current: page.pageNo,
+      pageSize: page.pageSize,
       showTotal: true,
       showPageSize: true,
       showJumper: true,
