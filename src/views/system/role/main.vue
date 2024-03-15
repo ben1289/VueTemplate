@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
+import type { TableColumnData } from '@arco-design/web-vue'
+import type { FormSchema } from '@/components/QueryForm'
+import { useGotoView } from '@/components/ViewController'
+import { CusTable } from '@/components/CustomArco'
 import { CommonStateEnum } from '@/enums'
 import { downloadByBlob } from '@/utils/download'
 import { useMessage } from '@/hooks'
-import { useGotoView } from '@/components/ViewController'
-import { CusTable } from '@/components/CustomArco'
 import * as roleApi from '@/api/system/role'
 
 defineOptions({ name: 'RoleMain' })
@@ -13,11 +14,22 @@ const { t } = useI18n()
 const message = useMessage()
 const gotoView = useGotoView()
 
-const formRef = ref<FormInstance>()
 const formData = reactive({
   roleName: '',
   roleCode: '',
 })
+const formSchema: FormSchema[] = [
+  {
+    label: t('role.roleName'),
+    field: 'roleName',
+    component: 'input',
+  },
+  {
+    label: t('role.roleCode'),
+    field: 'roleCode',
+    component: 'input',
+  },
+]
 
 const tbLoading = ref(false)
 const tbCols: TableColumnData[] = [
@@ -65,7 +77,6 @@ function query() {
 }
 
 function reset() {
-  toValue(formRef)?.resetFields()
   query()
 }
 
@@ -116,24 +127,7 @@ function handleDelete(id: number) {
 <template>
   <div class="grid grid-rows-[auto_minmax(0,_1fr)] h-full gap-10px">
     <div class="card">
-      <AForm ref="formRef" :model="formData" layout="inline">
-        <AFormItem :label="t('role.roleName')" field="roleName">
-          <AInput v-model="formData.roleName" />
-        </AFormItem>
-        <AFormItem :label="t('role.roleCode')" field="roleCode">
-          <AInput v-model="formData.roleCode" />
-        </AFormItem>
-        <AFormItem class="m-l-a !w-auto">
-          <ASpace>
-            <AButton type="primary" @click="query">
-              {{ t('action.query') }}
-            </AButton>
-            <AButton @click="reset">
-              {{ t('action.reset') }}
-            </AButton>
-          </ASpace>
-        </AFormItem>
-      </AForm>
+      <QueryForm :model="formData" :schema="formSchema" @query="query" @reset="reset" />
     </div>
     <div class="card grid grid-rows-[auto_minmax(0,_1fr)] gap-10px">
       <ASpace>

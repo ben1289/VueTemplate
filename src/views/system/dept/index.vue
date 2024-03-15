@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
+import type { TableColumnData } from '@arco-design/web-vue'
 import type { CusTableInstance } from '@/components/CustomArco'
+import type { FormSchema } from '@/components/QueryForm'
 import AddEditModal from './addEditModal.vue'
+import { CusTable } from '@/components/CustomArco'
 import { CommonStateEnum } from '@/enums'
 import { arrayToTree } from '@/utils/dataHandler'
 import { useMessage } from '@/hooks'
-import { CusTable } from '@/components/CustomArco'
 import * as deptApi from '@/api/system/dept'
 
 defineOptions({ name: 'DeptPage' })
@@ -13,10 +14,16 @@ defineOptions({ name: 'DeptPage' })
 const { t } = useI18n()
 const message = useMessage()
 
-const formRef = ref<FormInstance>()
 const formData = reactive({
   deptName: '',
 })
+const formSchema: FormSchema[] = [
+  {
+    label: t('dept.deptName'),
+    field: 'deptName',
+    component: 'input',
+  },
+]
 
 const tableRef = ref<CusTableInstance>()
 const tbLoading = ref(false)
@@ -55,7 +62,6 @@ function query() {
 query()
 
 function reset() {
-  toValue(formRef)?.resetFields()
   query()
 }
 
@@ -102,21 +108,7 @@ function handleDelete(id: number) {
 <template>
   <div class="grid grid-rows-[auto_minmax(0,_1fr)] h-full gap-10px">
     <div class="card">
-      <AForm ref="formRef" :model="formData" layout="inline">
-        <AFormItem :label="t('dept.deptName')" field="deptName">
-          <AInput v-model="formData.deptName" />
-        </AFormItem>
-        <AFormItem class="m-l-a !w-auto">
-          <ASpace>
-            <AButton type="primary" @click="query">
-              {{ t('action.query') }}
-            </AButton>
-            <AButton @click="reset">
-              {{ t('action.reset') }}
-            </AButton>
-          </ASpace>
-        </AFormItem>
-      </AForm>
+      <QueryForm :model="formData" :schema="formSchema" @query="query" @reset="reset" />
     </div>
     <div class="card grid grid-rows-[auto_minmax(0,_1fr)] gap-10px">
       <ASpace>

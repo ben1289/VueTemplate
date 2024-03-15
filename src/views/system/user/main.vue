@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
+import type { TableColumnData } from '@arco-design/web-vue'
+import type { FormSchema } from '@/components/QueryForm'
 import ResetPwdModal from './resetPwdModal.vue'
+import { useGotoView } from '@/components/ViewController'
+import { CusTable } from '@/components/CustomArco'
 import { CommonStateEnum, DictTypeEnum } from '@/enums'
 import { getDictLabel, getIntDictOptions } from '@/utils/dict'
 import { downloadByBlob } from '@/utils/download'
 import { useMessage } from '@/hooks'
-import { useGotoView } from '@/components/ViewController'
-import { CusTable } from '@/components/CustomArco'
 import * as userApi from '@/api/system/user'
 
 defineOptions({ name: 'UserMain' })
@@ -15,12 +16,29 @@ const { t } = useI18n()
 const message = useMessage()
 const gotoView = useGotoView()
 
-const formRef = ref<FormInstance>()
 const formData = reactive({
   username: '',
   nickname: '',
   sex: '',
 })
+const formSchema: FormSchema[] = [
+  {
+    label: t('user.username'),
+    field: 'username',
+    component: 'input',
+  },
+  {
+    label: t('user.nickname'),
+    field: 'nickname',
+    component: 'input',
+  },
+  {
+    label: t('user.sex'),
+    field: 'sex',
+    component: 'select',
+    componentAttrs: { options: getIntDictOptions(DictTypeEnum.USER_SEX) },
+  },
+]
 
 const tbLoading = ref(false)
 const tbCols: TableColumnData[] = [
@@ -85,7 +103,6 @@ function query() {
 }
 
 function reset() {
-  toValue(formRef)?.resetFields()
   query()
 }
 
@@ -141,27 +158,7 @@ function handleDelete(id: number) {
 <template>
   <div class="grid grid-rows-[auto_minmax(0,_1fr)] h-full gap-10px">
     <div class="card">
-      <AForm ref="formRef" :model="formData" layout="inline">
-        <AFormItem :label="t('user.username')" field="username">
-          <AInput v-model="formData.username" />
-        </AFormItem>
-        <AFormItem :label="t('user.nickname')" field="nickname">
-          <AInput v-model="formData.nickname" />
-        </AFormItem>
-        <AFormItem :label="t('user.sex')" field="sex">
-          <ASelect v-model="formData.sex" :options="getIntDictOptions(DictTypeEnum.USER_SEX)" />
-        </AFormItem>
-        <AFormItem class="m-l-a !w-auto">
-          <ASpace>
-            <AButton type="primary" @click="query">
-              {{ t('action.query') }}
-            </AButton>
-            <AButton @click="reset">
-              {{ t('action.reset') }}
-            </AButton>
-          </ASpace>
-        </AFormItem>
-      </AForm>
+      <QueryForm :model="formData" :schema="formSchema" @query="query" @reset="reset" />
     </div>
     <div class="card grid grid-rows-[auto_minmax(0,_1fr)] gap-10px">
       <ASpace>

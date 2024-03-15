@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
-import { CommonStateEnum } from '@/enums'
-import { useMessage } from '@/hooks'
+import type { TableColumnData } from '@arco-design/web-vue'
+import type { FormSchema } from '@/components/QueryForm'
 import { useGotoView } from '@/components/ViewController'
 import { CusTable } from '@/components/CustomArco'
+import { CommonStateEnum } from '@/enums'
+import { useMessage } from '@/hooks'
 import * as tenantApi from '@/api/system/tenant'
 
 defineOptions({ name: 'TenantPackageMain' })
@@ -12,10 +13,16 @@ const { t } = useI18n()
 const message = useMessage()
 const gotoView = useGotoView()
 
-const formRef = ref<FormInstance>()
 const formData = reactive({
   packageName: '',
 })
+const formSchema: FormSchema[] = [
+  {
+    label: t('tenant.packageName'),
+    field: 'packageName',
+    component: 'input',
+  },
+]
 
 const tbLoading = ref(false)
 const tbCols: TableColumnData[] = [
@@ -59,7 +66,6 @@ function query() {
 }
 
 function reset() {
-  toValue(formRef)?.resetFields()
   query()
 }
 
@@ -100,21 +106,7 @@ function handleDelete(id: number) {
 <template>
   <div class="grid grid-rows-[auto_minmax(0,_1fr)] h-full gap-10px">
     <div class="card">
-      <AForm ref="formRef" :model="formData" layout="inline">
-        <AFormItem :label="t('tenant.packageName')" field="packageName">
-          <AInput v-model="formData.packageName" />
-        </AFormItem>
-        <AFormItem class="m-l-a !w-auto">
-          <ASpace>
-            <AButton type="primary" @click="query">
-              {{ t('action.query') }}
-            </AButton>
-            <AButton @click="reset">
-              {{ t('action.reset') }}
-            </AButton>
-          </ASpace>
-        </AFormItem>
-      </AForm>
+      <QueryForm :model="formData" :schema="formSchema" @query="query" @reset="reset" />
     </div>
     <div class="card grid grid-rows-[auto_minmax(0,_1fr)] gap-10px">
       <ASpace>

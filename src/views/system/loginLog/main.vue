@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { FormInstance, TableColumnData } from '@arco-design/web-vue'
+import type { TableColumnData } from '@arco-design/web-vue'
+import type { FormSchema } from '@/components/QueryForm'
 import { useGotoView } from '@/components/ViewController'
 import { CusTable } from '@/components/CustomArco'
 import { DictTypeEnum } from '@/enums'
@@ -15,11 +16,22 @@ const { t } = useI18n()
 const message = useMessage()
 const gotoView = useGotoView()
 
-const formRef = ref<FormInstance>()
 const formData = reactive({
   username: '',
   userIp: '',
 })
+const formSchema: FormSchema[] = [
+  {
+    label: t('loginLog.username'),
+    field: 'username',
+    component: 'input',
+  },
+  {
+    label: t('loginLog.ip'),
+    field: 'userIp',
+    component: 'input',
+  },
+]
 
 const tbLoading = ref(false)
 const tbCols: TableColumnData[] = [
@@ -84,7 +96,6 @@ function query() {
 }
 
 function reset() {
-  toValue(formRef)?.resetFields()
   query()
 }
 
@@ -106,24 +117,7 @@ function handleExport() {
 <template>
   <div class="grid grid-rows-[auto_minmax(0,_1fr)] h-full gap-10px">
     <div class="card">
-      <AForm ref="formRef" :model="formData" layout="inline">
-        <AFormItem :label="t('loginLog.username')" field="username">
-          <AInput v-model="formData.username" />
-        </AFormItem>
-        <AFormItem :label="t('loginLog.ip')" field="userIp">
-          <AInput v-model="formData.userIp" />
-        </AFormItem>
-        <AFormItem class="m-l-a !w-auto">
-          <ASpace>
-            <AButton type="primary" @click="query">
-              {{ t('action.query') }}
-            </AButton>
-            <AButton @click="reset">
-              {{ t('action.reset') }}
-            </AButton>
-          </ASpace>
-        </AFormItem>
-      </AForm>
+      <QueryForm :model="formData" :schema="formSchema" @query="query" @reset="reset" />
     </div>
     <div class="card grid grid-rows-[auto_minmax(0,_1fr)] gap-10px">
       <ASpace>
