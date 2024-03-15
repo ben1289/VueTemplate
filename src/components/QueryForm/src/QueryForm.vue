@@ -60,7 +60,7 @@ function reset() {
       </template>
     </template>
     <ASpace class="justify-end -col-end-1">
-      <ALink v-if="schemas[1]?.length" :hoverable="false" @click="showMore = !showMore">
+      <ALink v-if="schemas[1]?.length || showMore" :hoverable="false" @click="showMore = !showMore">
         {{ t('common.more') }}
         <i class="i-mdi-chevron-down text-20px transition duration-300" :class="{ 'rotate-180': showMore }" />
       </ALink>
