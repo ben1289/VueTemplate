@@ -24,7 +24,7 @@ withDefaults(defineProps<DropdownProps>(), {
           :key="index"
           class="min-w-100px"
           :value="option"
-          :disabled="disabled || option.disabled"
+          :disabled="disabled || option.disabled?.()"
           @click="option.click"
         >
           {{ option.label }}
@@ -40,7 +40,7 @@ withDefaults(defineProps<DropdownProps>(), {
             :key="index"
             class="min-w-100px"
             :value="option"
-            :disabled="disabled || option.disabled"
+            :disabled="disabled || option.disabled?.()"
             @click="option.click"
           >
             {{ option.label }}

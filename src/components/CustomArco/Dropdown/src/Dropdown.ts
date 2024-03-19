@@ -1,7 +1,7 @@
 interface Option {
   label: string
   click: Function
-  disabled?: boolean
+  disabled?: () => boolean
   [key: string]: any
 }
 
