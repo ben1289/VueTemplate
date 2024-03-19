@@ -1,6 +1,7 @@
 import CusTable from './Table'
+import CusDropdown from './Dropdown'
 
-export { CusTable }
+export { CusTable, CusDropdown }
 
 type CusTableInstance = InstanceType<typeof CusTable>
 
