@@ -13,6 +13,7 @@ export default function useAMap() {
   let map: any = null
   let marker: any = null
   let geocoder: any = null
+  let autoComplete: any = null
   const pointInfo = ref<PointInfo>({
     coordinate: [],
     address: '',
@@ -23,7 +24,7 @@ export default function useAMap() {
     aMap = await AMapLoader.load({
       key: import.meta.env.VITE_AMAP_KEY,
       version: '2.0',
-      plugins: ['AMap.Geocoder'],
+      plugins: ['AMap.Geocoder', 'AMap.AutoComplete'],
     })
 
     map = new aMap.Map(container)
@@ -52,6 +53,8 @@ export default function useAMap() {
     })
 
     geocoder = new aMap.Geocoder()
+
+    autoComplete = new aMap.AutoComplete()
   }
 
   function setMarker(lon: number, lat: number) {
@@ -80,6 +83,18 @@ export default function useAMap() {
     })
   }
 
+  function getAutoComplete(keyword: string): Promise<string[]> {
+    return new Promise((resolve) => {
+      autoComplete.search(keyword, (status: string, result: any) => {
+        if (status === 'complete' && result.tips.length) {
+          resolve(result.tips.map((tip: any) => tip.name))
+        } else {
+          resolve([])
+        }
+      })
+    })
+  }
+
   onUnmounted(() => {
     map?.destroy()
   })
@@ -89,6 +104,7 @@ export default function useAMap() {
     setMarker,
     removeMarker,
     getLocation,
+    getAutoComplete,
     pointInfo,
   }
 }

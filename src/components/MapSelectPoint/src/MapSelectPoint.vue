@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PointInfo } from './hooks/aMap'
+import { useDebounceFn } from '@vueuse/core'
 import useAMap from './hooks/aMap'
 
 defineOptions({ name: 'MapSelectPoint' })
@@ -10,7 +11,7 @@ const emit = defineEmits<{
 
 const modelValue = defineModel<string>({ default: '' })
 
-const { initMap, removeMarker, getLocation, pointInfo } = useAMap()
+const { initMap, removeMarker, getLocation, getAutoComplete, pointInfo } = useAMap()
 
 let mapInit = false
 const mapContainer = ref<HTMLDivElement>()
@@ -39,6 +40,11 @@ async function handleVisibleChange(visible: boolean) {
 }
 
 const address = ref('')
+const autoCompleteData = ref<string[]>([])
+
+const handleSearch = useDebounceFn(async (value: string) => {
+  autoCompleteData.value = await getAutoComplete(value)
+}, 500)
 </script>
 
 <template>
@@ -48,6 +54,7 @@ const address = ref('')
         class="w-500px"
         trigger="click"
         position="bottom"
+        content-class="map-popover-content"
         :unmount-on-close="false"
         @popup-visible-change="handleVisibleChange"
       >
@@ -58,7 +65,15 @@ const address = ref('')
         </AButton>
 
         <template #content>
-          <AInput v-model="address" class="m-b-10px !w-80%" allow-clear @press-enter="getLocation(address)">
+          <AAutoComplete
+            v-model="address"
+            class="m-b-10px !w-80%"
+            :data="autoCompleteData"
+            allow-clear
+            @search="handleSearch"
+            @select="getLocation(address)"
+            @press-enter="getLocation(address)"
+          >
             <template #append>
               <AButton type="primary" @click="getLocation(address)">
                 <template #icon>
@@ -66,7 +81,7 @@ const address = ref('')
                 </template>
               </AButton>
             </template>
-          </AInput>
+          </AAutoComplete>
           <div ref="mapContainer" class="h-400px w-full" />
         </template>
       </APopover>
@@ -76,6 +91,13 @@ const address = ref('')
 
 <style scoped lang="less">
 :deep(.arco-input-append) {
+  padding: 0;
+  border: none;
+}
+</style>
+
+<style lang="less">
+.map-popover-content .arco-input-append {
   padding: 0;
   border: none;
 }
