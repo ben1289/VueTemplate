@@ -35,8 +35,8 @@ const page = defineModel<Page>('page', {
       showPageSize: true,
       showJumper: true,
     }"
-    @page-change="(no) => page.pageNo = no"
-    @page-size-change="(size) => page.pageSize = size"
+    @page-change="(no: number) => page.pageNo = no"
+    @page-size-change="(size: number) => page.pageSize = size"
   >
     <template v-for="slot in Object.keys($slots)" :key="slot" #[slot]="scope">
       <slot :name="slot" v-bind="scope ?? {}" />
