@@ -37,6 +37,8 @@ async function query() {
 }
 
 function handleRowDblclick(row: Row) {
+  if (props.multiple)
+    return
   emit('change', row)
   visible.value = false
 }
@@ -100,7 +102,7 @@ function handleVisibleChange(visible: boolean) {
             showJumper: true,
           }"
           :row-key="rowKey"
-          @row-dblclick="multiple && handleRowDblclick"
+          @row-dblclick="handleRowDblclick"
         />
       </template>
     </APopover>
