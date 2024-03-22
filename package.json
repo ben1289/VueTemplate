@@ -35,7 +35,6 @@
     "@iconify-json/mdi": "^1.1.64",
     "@types/lodash-es": "^4.17.12",
     "@types/nprogress": "^0.2.3",
-    "@unocss/eslint-plugin": "^0.58.6",
     "@unocss/preset-icons": "^0.58.6",
     "@unocss/preset-uno": "^0.58.6",
     "@vitejs/plugin-vue": "^5.0.4",
