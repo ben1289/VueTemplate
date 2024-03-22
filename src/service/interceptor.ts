@@ -75,12 +75,12 @@ async function refreshTokenMiddleware(service: AxiosInstance, config: AxiosReque
   if (!refreshing) {
     const userStore = useUserStore()
     refreshing = true
-    if (!await auth.getRefreshToken()) {
+    const refreshToken = await auth.getRefreshToken()
+    if (!refreshToken) {
       return userStore.loginAgain()
     }
-
     try {
-      const { data: token } = await refreshTokenApi()
+      const { data: token } = await refreshTokenApi(refreshToken)
       await auth.setToken(token)
       requestList.forEach((cb: any) => {
         cb()

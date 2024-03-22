@@ -1,7 +1,6 @@
 import type { InfoResponse, LoginRequest, LoginResponse } from './types'
 import type { ResponseContent } from '@/types'
 import service from '@/service'
-import * as auth from '@/utils/auth'
 
 /**
  * 获取 租户 id
@@ -41,9 +40,9 @@ export function logoutApi(): ResponseContent {
 
 /**
  * 刷新 token
+ * @param refreshToken
  */
-export async function refreshTokenApi(): ResponseContent<LoginResponse> {
-  const refreshToken = await auth.getRefreshToken()
+export async function refreshTokenApi(refreshToken: string): ResponseContent<LoginResponse> {
   return service({
     url: '/system/auth/refresh-token',
     method: 'POST',
