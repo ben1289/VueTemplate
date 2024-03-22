@@ -48,7 +48,7 @@ export function createInterceptor(service: AxiosInstance) {
 
     const code: number = data?.code || 200
     const msg = data?.msg ?? '系统未知错误，请反馈给管理员'
-    if (code === 401) {
+    if (code === 401 && !ignoreMsg.includes(msg)) {
       return refreshTokenMiddleware(service, response.config)
     } else if (code !== 200) {
       if (!ignoreMsg.includes(msg)) {
