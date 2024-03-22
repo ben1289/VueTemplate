@@ -25,5 +25,11 @@ const route = useRoute()
 </template>
 
 <style scoped lang="less">
+.arco-menu :deep(.arco-menu-item .arco-menu-icon) {
+  margin-right: 10px;
 
+  & > i {
+    font-size: 1.2em;
+  }
+}
 </style>
