@@ -173,7 +173,7 @@ function handleSave() {
           :label="t('menu.icon')"
           field="icon"
         >
-          <AInput v-model="formData.icon" />
+          <IconSelect v-model="formData.icon" />
         </AFormItem>
 
         <AFormItem
