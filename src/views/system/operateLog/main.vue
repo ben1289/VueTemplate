@@ -4,7 +4,7 @@ import type { FormSchema } from '@/components/QueryForm'
 import { useGotoView } from '@/components/ViewController'
 import { CusTable } from '@/components/CustomArco'
 import { DictTypeEnum } from '@/enums'
-import { getDictLabel, getIntDictOptions } from '@/utils/dict'
+import { getDictLabel, getDictOptions } from '@/utils/dict'
 import { formatDate } from '@/utils/formatter'
 import { downloadByBlob } from '@/utils/download'
 import { useMessage } from '@/hooks'
@@ -31,7 +31,7 @@ const formSchema: FormSchema[] = [
     label: t('operateLog.type'),
     field: 'type',
     component: 'select',
-    componentAttrs: { options: getIntDictOptions(DictTypeEnum.OPERATE_TYPE) },
+    componentAttrs: { options: getDictOptions(DictTypeEnum.OPERATE_TYPE) },
   },
   {
     label: t('operateLog.user'),

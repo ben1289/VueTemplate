@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FileItem, FormInstance, RequestOption } from '@arco-design/web-vue'
 import { useDebounceFn } from '@vueuse/core'
-import { getIntDictOptions } from '@/utils/dict'
+import { getDictOptions } from '@/utils/dict'
 import { formatDate } from '@/utils/formatter'
 import { useMessage } from '@/hooks'
 import { DictTypeEnum } from '@/enums'
@@ -211,7 +211,7 @@ function resetPwd() {
             <AInput v-model="infoFormData.nickname" @change="autoSaveInfo" />
           </AFormItem>
           <AFormItem :label="t('userInfo.sex')" field="sex">
-            <ARadioGroup v-model="infoFormData.sex" :options="getIntDictOptions(DictTypeEnum.USER_SEX)" @change="autoSaveInfo" />
+            <ARadioGroup v-model="infoFormData.sex" :options="getDictOptions(DictTypeEnum.USER_SEX)" @change="autoSaveInfo" />
           </AFormItem>
           <AFormItem :label="t('userInfo.role')">
             {{ infoFormData.role }}

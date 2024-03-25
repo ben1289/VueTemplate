@@ -5,7 +5,7 @@ import ResetPwdModal from './resetPwdModal.vue'
 import { useGotoView } from '@/components/ViewController'
 import { CusTable } from '@/components/CustomArco'
 import { CommonStateEnum, DictTypeEnum } from '@/enums'
-import { getDictLabel, getIntDictOptions } from '@/utils/dict'
+import { getDictLabel, getDictOptions } from '@/utils/dict'
 import { downloadByBlob } from '@/utils/download'
 import { useMessage } from '@/hooks'
 import * as userApi from '@/api/system/user'
@@ -36,7 +36,7 @@ const formSchema: FormSchema[] = [
     label: t('user.sex'),
     field: 'sex',
     component: 'select',
-    componentAttrs: { options: getIntDictOptions(DictTypeEnum.USER_SEX) },
+    componentAttrs: { options: getDictOptions(DictTypeEnum.USER_SEX) },
   },
 ]
 
