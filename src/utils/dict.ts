@@ -1,7 +1,7 @@
 import type { Dict } from '@/types'
 import { useDictStore } from '@/store'
 
-export function getDictOptions(type: string): Dict[] {
+export function getDictOptions<T = any>(type: string): Dict<T>[] {
   const dictStore = useDictStore()
   return Reflect.get(dictStore.dict, type) ?? []
 }
