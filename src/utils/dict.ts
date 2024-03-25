@@ -6,27 +6,6 @@ export function getDictOptions(type: string): Dict[] {
   return Reflect.get(dictStore.dict, type) ?? []
 }
 
-export function getStrDictOptions(type: string): Dict<string>[] {
-  return getDictOptions(type).map(dict => ({
-    ...dict,
-    value: `${dict.value}`,
-  }))
-}
-
-export function getIntDictOptions(type: string): Dict<number>[] {
-  return getDictOptions(type).map(dict => ({
-    ...dict,
-    value: Number.parseInt(`${dict.value}`),
-  }))
-}
-
-export function getBoolDictOptions(type: string): Dict<boolean>[] {
-  return getDictOptions(type).map(dict => ({
-    ...dict,
-    value: `${dict.value}` === 'true',
-  }))
-}
-
 export function getDictLabel(type: string, value: any): string {
   return getDictOptions(type).find(dict => dict.value == value)?.label ?? ''
 }
