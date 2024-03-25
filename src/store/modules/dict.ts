@@ -17,7 +17,7 @@ const useDictStore = defineStore(STORE_ID, () => {
       if (isValidNumber(d.value)) {
         d.value = Number(d.value)
       } else if (isValidBoolean(d.value)) {
-        d.value = Boolean(d.value)
+        d.value = d.value === 'true'
       }
       return d
     })
