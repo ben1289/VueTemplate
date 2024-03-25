@@ -1,6 +1,7 @@
 import type { Dict } from '@/types'
 import { defineStore } from 'pinia'
 import { groupBy } from 'lodash-es'
+import { isValidBoolean, isValidNumber } from '@/utils/validType'
 import { getDictDataSimpleList } from '@/api/system/dict'
 
 const STORE_ID = 'dictStore'
@@ -12,7 +13,15 @@ const useDictStore = defineStore(STORE_ID, () => {
 
   async function setDict() {
     const { data } = await getDictDataSimpleList()
-    dict.value = groupBy(data, 'dictType')
+    const typedData = data.map((d) => {
+      if (isValidNumber(d.value)) {
+        d.value = Number(d.value)
+      } else if (isValidBoolean(d.value)) {
+        d.value = Boolean(d.value)
+      }
+      return d
+    })
+    dict.value = groupBy(typedData, 'dictType')
     expires.value = new Date(Date.now() + 1000 * 60 * 30)
     isSet.value = true
   }

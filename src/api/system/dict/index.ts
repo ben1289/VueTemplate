@@ -1,4 +1,4 @@
-import type { ResponseContent } from '@/types'
+import type { Dict, ResponseContent } from '@/types'
 import service from '@/service'
 
 /**
@@ -85,7 +85,7 @@ export function exportDictType(): Promise<Blob> {
 /**
  * 获取精简字典数据列表
  */
-export function getDictDataSimpleList(): ResponseContent {
+export function getDictDataSimpleList(): ResponseContent<Dict[]> {
   return service({
     url: '/system/dict-data/list-all-simple',
     method: 'GET',
