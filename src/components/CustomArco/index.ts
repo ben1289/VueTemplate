@@ -6,3 +6,4 @@ export { CusTable, CusDropdown }
 type CusTableInstance = InstanceType<typeof CusTable>
 
 export type { CusTableInstance }
+export type { TableColumnData } from './Table'
