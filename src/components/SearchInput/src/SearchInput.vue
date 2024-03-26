@@ -47,13 +47,14 @@ function change(row?: Row) {
 </script>
 
 <template>
-  <AInput v-model="string" class="search-input" @change="handleStringChange">
+  <AInput v-model="string" class="search-input" :disabled="disabled" @change="handleStringChange">
     <template #append>
       <PopoverTable
         :columns="columns"
         :fetch-data="fetchData"
         :row-key="_fieldNames.rowKey"
         :multiple="false"
+        :disabled="disabled"
         @change="change"
       />
     </template>

@@ -74,7 +74,7 @@ function handleVisibleChange(visible: boolean) {
       position="bottom"
       @popup-visible-change="handleVisibleChange"
     >
-      <SearchButton />
+      <SearchButton :disabled="disabled" />
 
       <template #content>
         <AInput v-model="queryStr" class="m-b-10px !w-80%" allow-clear @press-enter="query">

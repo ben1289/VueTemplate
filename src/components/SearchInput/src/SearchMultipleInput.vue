@@ -45,12 +45,12 @@ function change(rows: Row[]) {
 </script>
 
 <template>
-  <AInput v-model="string" class="search-multiple-input">
+  <AInput v-model="string" class="search-multiple-input" :disabled="disabled">
     <template #prefix>
       <ATag
         v-for="(row, i) of selectedRows.slice(0, maxTags)"
         :key="row[_fieldNames.valueKey] || i"
-        closable
+        :closable="!disabled"
         @close="handleTagClose(row)"
       >
         {{ row[_fieldNames.labelKey] }}
@@ -63,7 +63,7 @@ function change(rows: Row[]) {
               v-for="(row, i) of selectedRows.slice(maxTags)"
               :key="row[_fieldNames.valueKey] || i"
               class="m-2px"
-              closable
+              :closable="!disabled"
               @close="handleTagClose(row)"
             >
               {{ row[_fieldNames.labelKey] }}
@@ -80,6 +80,7 @@ function change(rows: Row[]) {
         :fetch-data="fetchData"
         :row-key="_fieldNames.valueKey"
         :multiple="true"
+        :disabled="disabled"
         @change="change"
       />
     </template>

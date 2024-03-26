@@ -6,4 +6,5 @@ export interface PopoverTableProps {
   fetchData: FetchData
   rowKey: string
   multiple?: boolean
+  disabled?: boolean
 }
