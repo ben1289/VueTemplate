@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import mdiIcons from '@iconify-json/mdi/icons.json'
+import { icons as mdiIcons } from '@iconify-json/mdi'
 
 defineOptions({ name: 'IconSelect' })
 
-const icon = defineModel({ default: '' })
+const iconName = defineModel({ default: '' })
 
-const sourceIcons = Object.keys(mdiIcons.icons).map(key => `i-${mdiIcons.prefix}-${key}`)
+const sourceIcons = Object.keys(mdiIcons.icons)
 
 const visible = ref(false)
 
@@ -28,16 +28,16 @@ function query() {
   }
 }
 
-function handleIconClick(iconName: string) {
-  icon.value = iconName
+function handleIconClick(_iconName: string) {
+  iconName.value = _iconName
   visible.value = false
 }
 </script>
 
 <template>
-  <AInput v-model="icon" readonly allow-clear>
-    <template v-if="icon" #prefix>
-      <i class="text-18px" :class="icon" />
+  <AInput v-model="iconName" readonly allow-clear>
+    <template v-if="iconName" #prefix>
+      <RuntimeIcon class="text-18px" :name="iconName" />
     </template>
 
     <template #append>
@@ -61,10 +61,10 @@ function handleIconClick(iconName: string) {
             </AInput>
 
             <div v-show="filterIcons.length" class="icon-list">
-              <i
+              <RuntimeIcon
                 v-for="item in filterIcons.slice((page.pageNo - 1) * page.pageSize, page.pageNo * page.pageSize)"
                 :key="item"
-                :class="item"
+                :name="item"
                 @click="handleIconClick(item)"
               />
             </div>
