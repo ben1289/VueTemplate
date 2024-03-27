@@ -10,6 +10,7 @@ export default mergeConfig(
           manualChunks: {
             vue: ['vue', 'vue-router', 'pinia', '@vueuse/core', 'vue-i18n', 'pinia-plugin-persistedstate'],
             arco: ['@arco-design/web-vue'],
+            iconify: ['@iconify/utils', '@iconify-json/mdi'],
           },
         },
       },
