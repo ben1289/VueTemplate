@@ -26,8 +26,14 @@ export default function createRouteGuard(router: Router) {
         }
         if (!routeStore.isSet) {
           routeStore.setRoutes()
-          const path = decodeURIComponent(from.query.redirect?.toString() ?? to.path)
-          return { path, replace: true }
+          const redirect = from.query.redirect
+          if (redirect) {
+            const redirectUrl = new URL(redirect.toString(), window.location.origin)
+            const { pathname, searchParams } = redirectUrl
+            return { path: pathname, query: Object.fromEntries(searchParams), replace: true }
+          }
+          const { path, query } = to
+          return { path, query, replace: true }
         } else {
           return true
         }
