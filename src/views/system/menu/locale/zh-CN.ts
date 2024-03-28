@@ -1,6 +1,7 @@
 export default {
   menu: {
     expandCollapse: '展开/收起',
+    refreshCache: '刷新缓存',
     rootMenu: '根菜单',
     parentMenu: '上级菜单',
     type: '类型',

@@ -7,12 +7,14 @@ import { CusTable } from '@/components/CustomArco'
 import { MenuTypeEnum } from '@/enums'
 import { arrayToTree } from '@/utils/dataHandler'
 import { useMessage } from '@/hooks'
+import { useUserStore } from '@/store'
 import * as menuApi from '@/api/system/menu'
 
 defineOptions({ name: 'MenuPage' })
 
 const { t } = useI18n()
 const message = useMessage()
+const userStore = useUserStore()
 
 const formRef = ref<FormInstance>()
 const formData = reactive({
@@ -76,6 +78,11 @@ function toggleExpandAll() {
   toValue(tableRef)?.arcoTable?.expandAll(tbExpandAll.value = !toValue(tbExpandAll))
 }
 
+function handleRefreshCache() {
+  userStore.clearStorage()
+  window.location.reload()
+}
+
 function handleDelete(id: number) {
   message.confirm(t('menu.deleteConfirm'), {
     onOk() {
@@ -115,6 +122,9 @@ const addEditRef = ref<InstanceType<typeof AddEdit>>()
           </AButton>
           <AButton type="outline" @click="toggleExpandAll()">
             {{ t('menu.expandCollapse') }}
+          </AButton>
+          <AButton type="outline" @click="handleRefreshCache">
+            {{ t('menu.refreshCache') }}
           </AButton>
         </ASpace>
         <CusTable

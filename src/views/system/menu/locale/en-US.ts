@@ -1,6 +1,7 @@
 export default {
   menu: {
     expandCollapse: 'Expand/Collapse',
+    refreshCache: 'Refresh Cache',
     rootMenu: 'Root Menu',
     parentMenu: 'Parent Menu',
     type: 'Type',
