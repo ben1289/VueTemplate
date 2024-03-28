@@ -16,7 +16,7 @@ setInterval(() => {
   <ACard title="时钟" hoverable>
     <AStatistic :value="currentTime" format="hh:mm:ss" :value-style="{ color: '#fff', fontSize: '38px', fontWeight: 'bold' }" />
     <br>
-    <AStatistic :value="currentTime" format="YYYY年MM月DD" :value-style="{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '16px' }" />
+    <AStatistic :value="currentTime" format="YYYY年MM月DD日" :value-style="{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '16px' }" />
   </ACard>
 </template>
 
