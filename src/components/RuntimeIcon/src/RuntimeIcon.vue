@@ -3,6 +3,8 @@ import type { IconProps } from '@/components/RuntimeIcon/src/RuntimeIcon'
 import { icons } from '@iconify-json/mdi'
 import { encodeSvgForCss, getIconData, iconToHTML, iconToSVG } from '@iconify/utils'
 
+defineOptions({ name: 'RuntimeIcon' })
+
 const props = defineProps<IconProps>()
 
 const url = computed(() => {
