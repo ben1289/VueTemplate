@@ -7,8 +7,9 @@ import { useDictStore, useRouteStore, useUserStore } from '@/store'
 const whiteList = ['/login']
 
 export default function createRouteGuard(router: Router) {
+  const globalConfig = useGlobalConfig()
+
   router.beforeEach(async (to, from) => {
-    const globalConfig = useGlobalConfig()
     const userStore = useUserStore()
     const dictStore = useDictStore()
     const routeStore = useRouteStore()
@@ -43,7 +44,9 @@ export default function createRouteGuard(router: Router) {
     }
   })
 
-  router.afterEach(() => {
+  router.afterEach((to) => {
+    const { meta: { title } } = to
+    document.title = title ? `${globalConfig.appTitle} - ${title}` : globalConfig.appTitle
     NProgress.done()
   })
 }
