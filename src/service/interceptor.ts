@@ -37,13 +37,22 @@ export function createInterceptor(service: AxiosInstance) {
   }, error => Promise.reject(error))
 
   service.interceptors.response.use(async (response) => {
-    const { data } = response
+    let { data } = response
     if (!data) {
       throw new Error('Empty Response')
     }
 
     if (response.request.responseType === 'blob') {
-      return data
+      if (data instanceof Blob && data.type === 'application/json') {
+        const text = await data.text()
+        try {
+          data = JSON.parse(text)
+        } catch (err) {
+          return Promise.reject(data)
+        }
+      } else {
+        return data
+      }
     }
 
     const code: number = data?.code || 200
