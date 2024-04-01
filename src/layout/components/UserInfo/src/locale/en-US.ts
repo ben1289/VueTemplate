@@ -29,5 +29,7 @@ export default {
     pwdSpecial: 'Password at least contains a special character',
     pwdDiff: 'Two passwords entered are inconsistent',
     editPwdSuccess: 'Password modified successfully',
+    initPwdTip: 'First login must be modified password',
+    longTermPwdTip: 'Password has not been modified, it is recommended to modify password',
   },
 }

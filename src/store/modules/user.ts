@@ -1,13 +1,14 @@
 import type { MenuData } from '@/types'
+import type { PasswordStateEnum } from '@/enums'
 import { defineStore } from 'pinia'
 import router from '@/router'
 import i18n from '@/locale'
+import { MenuTypeEnum } from '@/enums'
 import { setTenantId, setToken } from '@/utils/auth'
 import { arrayToTree } from '@/utils/dataHandler'
 import { useMessage, useStorage } from '@/hooks'
 import { useAppStore, useDictStore, useRouteStore, useTabRouteStore } from '@/store'
 import { getInfoApi, getTenantIdApi, loginApi, logoutApi } from '@/api/login'
-import { MenuTypeEnum } from '@/enums'
 
 interface UserInfo {
   id: number
@@ -23,6 +24,7 @@ const useUserStore = defineStore(STORE_ID, () => {
   const roles = ref<string[]>([])
   const menus = ref<MenuData[]>([])
   const permissions = ref<string[]>([])
+  const passwordState = ref<PasswordStateEnum | null>(null)
 
   async function setInfo() {
     const { data } = await getInfoApi()
@@ -39,6 +41,7 @@ const useUserStore = defineStore(STORE_ID, () => {
     roles.value = []
     menus.value = []
     permissions.value = []
+    passwordState.value = null
     await nextTick()
   }
 
@@ -55,8 +58,9 @@ const useUserStore = defineStore(STORE_ID, () => {
     const { data: tenantId } = await getTenantIdApi(platform)
     await setTenantId(tenantId)
 
-    const { data: token } = await loginApi(loginParams)
-    await setToken(token)
+    const { data: loginRes } = await loginApi(loginParams)
+    await setToken(loginRes)
+    passwordState.value = loginRes?.passwordState ?? null
   }
 
   /**
@@ -115,6 +119,7 @@ const useUserStore = defineStore(STORE_ID, () => {
     roles,
     menus,
     permissions,
+    passwordState,
     setInfo,
     reset,
     clearStorage,

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InfoModal from './InfoModal.vue'
+import UpdatePwdModal from './UpdatePwdModal.vue'
 import { useMessage } from '@/hooks'
 import { useAppStore, useUserStore } from '@/store'
 
@@ -45,6 +46,7 @@ async function handleSelect(value: any) {
   </ADropdown>
 
   <InfoModal ref="infoModalRef" />
+  <UpdatePwdModal v-if="userStore.passwordState != null" :state="userStore.passwordState" />
 </template>
 
 <style scoped lang="less">

@@ -1,4 +1,5 @@
 import type { MenuData } from '@/types'
+import type { PasswordStateEnum } from '@/enums'
 
 export interface LoginRequest {
   username: string
@@ -11,6 +12,7 @@ export interface LoginResponse {
   accessToken: string
   refreshToken: string
   expiresTime: number
+  passwordState?: PasswordStateEnum
 }
 
 export interface InfoResponse {

@@ -21,4 +21,9 @@ export enum MenuShowTypeEnum {
   LINK = 'link',
 }
 
+export enum PasswordStateEnum {
+  INIT,
+  LONG_TERM,
+}
+
 export * from './dict'

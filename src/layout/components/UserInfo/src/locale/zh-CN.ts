@@ -29,5 +29,7 @@ export default {
     pwdSpecial: '密码至少包含一个特殊字符',
     pwdDiff: '两次密码输入不一致',
     editPwdSuccess: '密码修改成功',
+    initPwdTip: '首次登录必须修改密码',
+    longTermPwdTip: '密码长期未修改，建议修改密码',
   },
 }
