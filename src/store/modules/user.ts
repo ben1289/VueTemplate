@@ -5,7 +5,7 @@ import i18n from '@/locale'
 import { setTenantId, setToken } from '@/utils/auth'
 import { arrayToTree } from '@/utils/dataHandler'
 import { useMessage, useStorage } from '@/hooks'
-import { useAppStore, useDictStore } from '@/store'
+import { useAppStore, useDictStore, useRouteStore, useTabRouteStore } from '@/store'
 import { getInfoApi, getTenantIdApi, loginApi, logoutApi } from '@/api/login'
 import { MenuTypeEnum } from '@/enums'
 
@@ -31,6 +31,15 @@ const useUserStore = defineStore(STORE_ID, () => {
     menus.value = arrayToTree(data.menus.filter(menu => menu.type !== MenuTypeEnum.BUTTON))
     permissions.value = data.permissions
     isSet.value = true
+  }
+
+  async function reset() {
+    isSet.value = false
+    userInfo.value = undefined
+    roles.value = []
+    menus.value = []
+    permissions.value = []
+    await nextTick()
   }
 
   function clearStorage() {
@@ -75,7 +84,7 @@ const useUserStore = defineStore(STORE_ID, () => {
     try {
       await logoutApi()
       await clearCache()
-      await router.push('/login')
+      await router.push({ name: 'login' })
     } finally {
       appStore.loading = false
     }
@@ -87,12 +96,32 @@ const useUserStore = defineStore(STORE_ID, () => {
   async function clearCache() {
     const storage = useStorage()
     const dictStore = useDictStore()
-    await storage.clearAuthStorage()
+    const routeStore = useRouteStore()
+    const tabRouteStore = useTabRouteStore()
+    await Promise.all([
+      storage.clearAuthStorage(),
+      reset(),
+      dictStore.reset(),
+      routeStore.reset(),
+      tabRouteStore.reset(),
+    ])
     clearStorage()
     dictStore.clearStorage()
   }
 
-  return { isSet, userInfo, roles, menus, permissions, setInfo, clearStorage, login, loginAgain, logout }
+  return {
+    isSet,
+    userInfo,
+    roles,
+    menus,
+    permissions,
+    setInfo,
+    reset,
+    clearStorage,
+    login,
+    loginAgain,
+    logout,
+  }
 }, { persist: true })
 
 export default useUserStore

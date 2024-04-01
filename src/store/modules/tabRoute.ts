@@ -69,6 +69,12 @@ const useTabRouteStore = defineStore('tabRouteStore', () => {
     })
   }
 
+  async function reset() {
+    routes.value = [homeRoute]
+    noKeepAliveComponents.value = []
+    await nextTick()
+  }
+
   return {
     routes,
     keepAliveComponents,
@@ -78,6 +84,7 @@ const useTabRouteStore = defineStore('tabRouteStore', () => {
     removeOtherRoute,
     removeAllRoute,
     refreshRoute,
+    reset,
   }
 })
 

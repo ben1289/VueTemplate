@@ -82,10 +82,17 @@ const useRouteStore = defineStore('routeStore', () => {
     isSet.value = true
   }
 
+  async function reset() {
+    isSet.value = false
+    routes.value = []
+    await nextTick()
+  }
+
   return {
     isSet,
     routes,
     setRoutes,
+    reset,
   }
 })
 

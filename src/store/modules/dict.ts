@@ -26,6 +26,13 @@ const useDictStore = defineStore(STORE_ID, () => {
     isSet.value = true
   }
 
+  async function reset() {
+    isSet.value = false
+    expires.value = undefined
+    dict.value = {}
+    await nextTick()
+  }
+
   function clearStorage() {
     sessionStorage.removeItem(STORE_ID)
   }
@@ -35,6 +42,7 @@ const useDictStore = defineStore(STORE_ID, () => {
     expires,
     dict,
     setDict,
+    reset,
     clearStorage,
   }
 }, {
