@@ -3,14 +3,20 @@ import UpdatePwdForm from './UpdatePwdForm.vue'
 import { PasswordStateEnum } from '@/enums'
 import { useUserStore } from '@/store'
 
-defineProps<{
-  state: PasswordStateEnum
-}>()
-
 const { t } = useI18n()
 const userStore = useUserStore()
 
 const visible = ref(true)
+const closable = computed(() => userStore.passwordState === PasswordStateEnum.LONG_TERM)
+const alertTip = computed(() => {
+  if (userStore.passwordState === PasswordStateEnum.INIT) {
+    return t('userInfo.initPwdTip')
+  } else if (userStore.passwordState === PasswordStateEnum.LONG_TERM) {
+    return t('userInfo.longTermPwdTip', { days: userStore.passwordExpirationDays })
+  } else {
+    return null
+  }
+})
 </script>
 
 <template>
@@ -19,14 +25,14 @@ const visible = ref(true)
     :title="t('userInfo.editPwd')"
     :mask-closable="false"
     :footer="false"
-    :closable="state === PasswordStateEnum.LONG_TERM"
-    :esc-to-close="state === PasswordStateEnum.LONG_TERM"
+    :closable="closable"
+    :esc-to-close="closable"
     draggable
     unmount-on-close
-    @close="userStore.passwordState = null"
+    @close="userStore.passwordState = PasswordStateEnum.NORMAL"
   >
-    <AAlert class="m-b-24px" type="warning" banner center>
-      {{ state === PasswordStateEnum.INIT ? t('userInfo.initPwdTip') : t('userInfo.longTermPwdTip') }}
+    <AAlert v-if="alertTip" class="m-b-24px" type="warning" banner center>
+      {{ alertTip }}
     </AAlert>
 
     <UpdatePwdForm @done="visible = false" />

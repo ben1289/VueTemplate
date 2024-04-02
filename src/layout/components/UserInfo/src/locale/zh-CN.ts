@@ -30,6 +30,6 @@ export default {
     pwdDiff: '两次密码输入不一致',
     editPwdSuccess: '密码修改成功',
     initPwdTip: '首次登录必须修改密码',
-    longTermPwdTip: '密码长期未修改，建议修改密码',
+    longTermPwdTip: '密码已经{days}天未修改，建议修改密码',
   },
 }

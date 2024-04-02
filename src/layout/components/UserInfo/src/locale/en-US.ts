@@ -30,6 +30,6 @@ export default {
     pwdDiff: 'Two passwords entered are inconsistent',
     editPwdSuccess: 'Password modified successfully',
     initPwdTip: 'First login must be modified password',
-    longTermPwdTip: 'Password has not been modified, it is recommended to modify password',
+    longTermPwdTip: 'Password has been {days} days not modified, it is recommended to modify password',
   },
 }

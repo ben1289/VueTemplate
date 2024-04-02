@@ -22,8 +22,9 @@ export enum MenuShowTypeEnum {
 }
 
 export enum PasswordStateEnum {
-  INIT,
-  LONG_TERM,
+  NORMAL = -1,
+  INIT = 0,
+  LONG_TERM = 1,
 }
 
 export * from './dict'

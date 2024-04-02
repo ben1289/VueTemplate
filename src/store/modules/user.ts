@@ -1,9 +1,8 @@
 import type { MenuData } from '@/types'
-import type { PasswordStateEnum } from '@/enums'
 import { defineStore } from 'pinia'
 import router from '@/router'
 import i18n from '@/locale'
-import { MenuTypeEnum } from '@/enums'
+import { MenuTypeEnum, PasswordStateEnum } from '@/enums'
 import { setTenantId, setToken } from '@/utils/auth'
 import { arrayToTree } from '@/utils/dataHandler'
 import { useMessage, useStorage } from '@/hooks'
@@ -24,7 +23,8 @@ const useUserStore = defineStore(STORE_ID, () => {
   const roles = ref<string[]>([])
   const menus = ref<MenuData[]>([])
   const permissions = ref<string[]>([])
-  const passwordState = ref<PasswordStateEnum | null>(null)
+  const passwordState = ref<PasswordStateEnum>(PasswordStateEnum.NORMAL)
+  const passwordExpirationDays = ref<number>()
 
   async function setInfo() {
     const { data } = await getInfoApi()
@@ -41,7 +41,8 @@ const useUserStore = defineStore(STORE_ID, () => {
     roles.value = []
     menus.value = []
     permissions.value = []
-    passwordState.value = null
+    passwordState.value = PasswordStateEnum.NORMAL
+    passwordExpirationDays.value = undefined
     await nextTick()
   }
 
@@ -60,7 +61,8 @@ const useUserStore = defineStore(STORE_ID, () => {
 
     const { data: loginRes } = await loginApi(loginParams)
     await setToken(loginRes)
-    passwordState.value = loginRes?.passwordState ?? null
+    passwordState.value = loginRes.passwordState
+    passwordExpirationDays.value = loginRes.passwordExpirationDays
   }
 
   /**
@@ -120,6 +122,7 @@ const useUserStore = defineStore(STORE_ID, () => {
     menus,
     permissions,
     passwordState,
+    passwordExpirationDays,
     setInfo,
     reset,
     clearStorage,

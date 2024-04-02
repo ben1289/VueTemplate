@@ -12,7 +12,8 @@ export interface LoginResponse {
   accessToken: string
   refreshToken: string
   expiresTime: number
-  passwordState?: PasswordStateEnum
+  passwordState: PasswordStateEnum
+  passwordExpirationDays?: number
 }
 
 export interface InfoResponse {
