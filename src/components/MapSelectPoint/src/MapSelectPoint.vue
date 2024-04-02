@@ -5,6 +5,10 @@ import useAMap from './hooks/aMap'
 
 defineOptions({ name: 'MapSelectPoint' })
 
+defineProps<{
+  disabled?: boolean
+}>()
+
 const emit = defineEmits<{
   (e: 'change', pointInfo: PointInfo): void
 }>()
@@ -48,7 +52,7 @@ const handleSearch = useDebounceFn(async (value: string) => {
 </script>
 
 <template>
-  <AInput v-model="modelValue">
+  <AInput v-model="modelValue" :disabled="disabled">
     <template #append>
       <APopover
         class="w-500px"
@@ -58,7 +62,7 @@ const handleSearch = useDebounceFn(async (value: string) => {
         :unmount-on-close="false"
         @popup-visible-change="handleVisibleChange"
       >
-        <AButton type="primary">
+        <AButton type="primary" :disabled="disabled">
           <template #icon>
             <i class="i-mdi-map-marker text-18px" />
           </template>
