@@ -165,7 +165,7 @@ const autoSaveInfo = useDebounceFn(() => {
       </ATabPane>
 
       <ATabPane key="2" :title="t('userInfo.editPwd')">
-        <UpdatePwdForm />
+        <UpdatePwdForm class="m-a !w-450px" />
       </ATabPane>
     </ATabs>
 

@@ -88,13 +88,7 @@ function resetPwd() {
 </script>
 
 <template>
-  <AForm
-    ref="pwdForm"
-    class="m-a !w-400px"
-    :model="pwdFormData"
-    :rules="pwdFormRules"
-    auto-label-width
-  >
+  <AForm ref="pwdForm" :model="pwdFormData" :rules="pwdFormRules" auto-label-width>
     <AFormItem :label="t('userInfo.oldPwd')" field="oldPassword">
       <AInputPassword v-model="pwdFormData.oldPassword" />
     </AFormItem>
