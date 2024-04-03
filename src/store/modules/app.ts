@@ -6,6 +6,8 @@ import { LocaleEnum } from '@/enums'
 const useAppStore = defineStore('appStore', () => {
   // 页面加载状态
   const loading = ref(false)
+  // 整页
+  const fullPage = ref(false)
 
   // 布局 mode: [Classic, TopMix]
   const layout = reactive({ mode: 'TopMix' })
@@ -41,6 +43,7 @@ const useAppStore = defineStore('appStore', () => {
 
   return {
     loading,
+    fullPage,
     layout,
     header,
     sider,
@@ -51,6 +54,10 @@ const useAppStore = defineStore('appStore', () => {
     arcoLocale,
     toggleLocale,
   }
-}, { persist: true })
+}, {
+  persist: {
+    paths: ['layout', 'header', 'sider', 'tabBar', 'content', 'footer', 'locale'],
+  },
+})
 
 export default useAppStore

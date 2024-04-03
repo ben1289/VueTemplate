@@ -35,6 +35,7 @@ const footerHeight = computed(() => `${appStore.footer.height}px`)
 
     <ALayout class="overflow-hidden">
       <ALayoutSider
+        v-show="!appStore.fullPage"
         :width="appStore.sider.width"
         :collapsed-width="appStore.sider.collapsedWidth"
         breakpoint="xl"
@@ -48,7 +49,7 @@ const footerHeight = computed(() => `${appStore.footer.height}px`)
           <MainContent />
         </ALayoutContent>
 
-        <ALayoutFooter v-if="appStore.footer.visible">
+        <ALayoutFooter v-if="appStore.footer.visible" v-show="!appStore.fullPage">
           {{ `Copyright © ${new Date().getFullYear()} ${globalConfig.appTitle}. All Rights Reserved.` }}
         </ALayoutFooter>
       </ALayout>

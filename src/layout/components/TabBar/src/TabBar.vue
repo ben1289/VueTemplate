@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { RouteLocation } from 'vue-router'
 import { useGlobalConfig } from '@/hooks'
-import { useTabRouteStore } from '@/store'
+import { useAppStore, useTabRouteStore } from '@/store'
 
 const { t } = useI18n()
 const router = useRouter()
 const route = useRoute()
 const globalConfig = useGlobalConfig()
+const appStore = useAppStore()
 const tabRouteStore = useTabRouteStore()
 
 watch(route, () => {
@@ -115,6 +116,9 @@ function handleSelect(value: any, tabRoute: RouteLocation) {
       </ADropdown>
     </AScrollbar>
     <span class="tab-bar-btn !border-r-none" @click="refresh(route)"><i class="i-mdi-refresh text-22px" /></span>
+    <span class="tab-bar-btn !border-r-none" @click="appStore.fullPage = !appStore.fullPage">
+      <i class="text-20px" :class="appStore.fullPage ? 'i-mdi-arrow-collapse-all' : 'i-mdi-arrow-expand-all' " />
+    </span>
   </div>
 </template>
 
