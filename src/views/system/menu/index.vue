@@ -29,6 +29,13 @@ const tbColumns: TableColumnData[] = [
     dataIndex: 'name',
   },
   {
+    title: t('menu.icon'),
+    dataIndex: 'icon',
+    width: 60,
+    align: 'center',
+    slotName: 'icon',
+  },
+  {
     title: t('menu.type'),
     dataIndex: 'type',
     render: ({ record }) => t(`menu.${record.type}`),
@@ -136,6 +143,10 @@ const addEditRef = ref<InstanceType<typeof AddEdit>>()
           row-key="id"
           :pagination="false"
         >
+          <template #icon="{ record }">
+            <RuntimeIcon :name="record.icon" />
+          </template>
+
           <template #visible="{ record }">
             <ATag v-if="record.visible" color="arcoblue">
               {{ t('common.yes') }}
