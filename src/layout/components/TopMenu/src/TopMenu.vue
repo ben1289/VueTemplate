@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { MenuData } from '@/types'
+import { MenuShowTypeEnum, MenuTypeEnum } from '@/enums'
 import { useTopMenuStore, useUserStore } from '@/store'
 import { useMenuClick } from '@/layout/hooks'
 
@@ -10,7 +11,14 @@ const userStore = useUserStore()
 const topMenuStore = useTopMenuStore()
 
 watch(route, () => {
-  topMenuStore.currentMenu = userStore.menus.find(menu => route.path.includes(menu.routePath))
+  topMenuStore.currentMenu = userStore.menus.find((menu) => {
+    if (menu.type === MenuTypeEnum.DIR) {
+      return route.path.includes(menu.routePath)
+    } else if (menu.type === MenuTypeEnum.MENU && menu.showType !== MenuShowTypeEnum.LINK) {
+      return route.path === menu.routePath
+    }
+    return false
+  })
 }, { immediate: true })
 
 function handleMenuClick(menu: MenuData) {
