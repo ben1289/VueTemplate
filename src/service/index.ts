@@ -1,9 +1,12 @@
 import type { AxiosInstance } from 'axios'
 import axios from 'axios'
 import { createInterceptor } from './interceptor'
+import { useGlobalConfig } from '@/hooks'
+
+const { baseUrl, apiUrl } = useGlobalConfig()
 
 const service: AxiosInstance = new (axios.create as any)({
-  baseURL: import.meta.env.VITE_BASE_URL + import.meta.env.VITE_API_URL,
+  baseURL: baseUrl + apiUrl,
   timeout: 1000 * 30,
 })
 

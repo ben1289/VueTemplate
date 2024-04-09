@@ -1,11 +1,15 @@
 export default function useGlobalConfig() {
   const appTitle = import.meta.env.VITE_APP_TITLE
+  const baseUrl = import.meta.env.VITE_BASE_URL
+  const apiUrl = import.meta.env.VITE_API_URL
   const homePath = import.meta.env.VITE_HOME_PATH
   const tenantEnable: boolean = JSON.parse(import.meta.env.VITE_TENANT_ENABLE)
   const watermark = import.meta.env.VITE_WATERMARK
 
   return {
     appTitle,
+    baseUrl,
+    apiUrl,
     homePath,
     tenantEnable,
     watermark,
