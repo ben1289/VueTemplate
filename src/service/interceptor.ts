@@ -1,23 +1,36 @@
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import { sm4 } from 'sm-crypto'
+import { AES, enc } from 'crypto-js'
+import { CryptoEnum } from '@/enums'
 import * as auth from '@/utils/auth'
 import { useGlobalConfig, useMessage } from '@/hooks'
 import { useAppStore, useUserStore } from '@/store'
 import { refreshTokenApi } from '@/api/login'
 
 const ignoreMsg = ['无效的刷新令牌', '刷新令牌已过期']
+const globalConfig = useGlobalConfig()
 
 export function createInterceptor(service: AxiosInstance) {
-  const globalConfig = useGlobalConfig()
   const message = useMessage()
 
+  /**
+   * 请求拦截器
+   */
   service.interceptors.request.use(async (config) => {
     // 设置 Token
-    const { noToken = false } = config
+    const { noToken = false, encrypt, data } = config
     if (!noToken) {
       const accessToken = await auth.getAccessToken()
       if (accessToken) {
         config.headers.set('Authorization', `Bearer ${accessToken}`)
       }
+    }
+
+    // 加密
+    if (encrypt) {
+      config.data = encryptData(data, encrypt)
+      config.headers.set('Content-Type', 'application/json')
+      config.transformRequest = d => d
     }
 
     // 设置 租户id
@@ -36,8 +49,11 @@ export function createInterceptor(service: AxiosInstance) {
     return config
   }, error => Promise.reject(error))
 
+  /**
+   * 响应拦截器
+   */
   service.interceptors.response.use(async (response) => {
-    let { data } = response
+    let { data, config } = response
     if (!data) {
       throw new Error('Empty Response')
     }
@@ -65,12 +81,61 @@ export function createInterceptor(service: AxiosInstance) {
       }
       return Promise.reject(msg)
     } else {
+      if (config.decrypt) {
+        data.data = decryptData(data.data, config.decrypt)
+      }
       return data
     }
   }, (error) => {
     message.error(error.message)
     return Promise.reject(error)
   })
+}
+
+/**
+ * 加密 data
+ * @param data
+ * @param crypto
+ */
+function encryptData(data: Record<string, any>, crypto: CryptoEnum) {
+  if (data) {
+    const plaintext = JSON.stringify(data)
+    let ciphertext: string
+    if (crypto === CryptoEnum.SM4) {
+      ciphertext = sm4.encrypt(plaintext, globalConfig.sm4SecretKey)
+    } else if (crypto === CryptoEnum.AES) {
+      ciphertext = AES.encrypt(plaintext, globalConfig.aesSecretKey).toString()
+    } else {
+      return data
+    }
+    return window.btoa(ciphertext)
+  }
+}
+
+/**
+ * 解密 data
+ * @param data
+ * @param crypto
+ */
+function decryptData(data: string, crypto: CryptoEnum) {
+  if (data) {
+    let ciphertext
+    try {
+      ciphertext = window.atob(data)
+    } catch (e) {
+      return data
+    }
+    let plaintext: string
+    if (crypto === CryptoEnum.SM4) {
+      plaintext = sm4.decrypt(ciphertext, globalConfig.sm4SecretKey)
+    } else if (crypto === CryptoEnum.AES) {
+      const bytes = AES.decrypt(ciphertext, globalConfig.aesSecretKey)
+      plaintext = bytes.toString(enc.Utf8)
+    } else {
+      return data
+    }
+    return JSON.parse(plaintext)
+  }
 }
 
 let requestList: any[] = []

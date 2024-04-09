@@ -27,4 +27,9 @@ export enum PasswordStateEnum {
   LONG_TERM = 1,
 }
 
+export enum CryptoEnum {
+  SM4 = 'sm4',
+  AES = 'aes',
+}
+
 export * from './dict'

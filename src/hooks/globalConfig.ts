@@ -5,6 +5,8 @@ export default function useGlobalConfig() {
   const homePath = import.meta.env.VITE_HOME_PATH
   const tenantEnable: boolean = JSON.parse(import.meta.env.VITE_TENANT_ENABLE)
   const watermark = import.meta.env.VITE_WATERMARK
+  const sm4SecretKey = import.meta.env.VITE_SM4_SECRET_KEY
+  const aesSecretKey = import.meta.env.VITE_AES_SECRET_KEY
 
   return {
     appTitle,
@@ -13,5 +15,7 @@ export default function useGlobalConfig() {
     homePath,
     tenantEnable,
     watermark,
+    sm4SecretKey,
+    aesSecretKey,
   }
 }

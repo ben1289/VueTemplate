@@ -7,6 +7,8 @@ interface ImportMetaEnv {
   readonly VITE_HOME_PATH: string
   readonly VITE_TENANT_ENABLE: string
   readonly VITE_WATERMARK: string
+  readonly VITE_SM4_SECRET_KEY: string
+  readonly VITE_AES_SECRET_KEY: string
 }
 
 interface ImportMeta {
