@@ -1,6 +1,7 @@
 import type { InfoResponse, LoginRequest, LoginResponse } from './types'
 import type { ResponseContent } from '@/types'
 import service from '@/service'
+import { CryptoEnum } from '@/enums'
 
 /**
  * 获取 租户 id
@@ -25,6 +26,8 @@ export function loginApi(data: LoginRequest): ResponseContent<LoginResponse> {
     method: 'POST',
     data,
     noToken: true,
+    encrypt: CryptoEnum.SM4,
+    decrypt: CryptoEnum.SM4,
   })
 }
 
