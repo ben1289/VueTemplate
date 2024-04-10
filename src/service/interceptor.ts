@@ -27,7 +27,7 @@ export function createInterceptor(service: AxiosInstance) {
     }
 
     // 加密
-    if (encrypt) {
+    if (globalConfig.apiCryptoEnable && encrypt) {
       config.data = encryptData(data, encrypt)
       config.headers.set('Content-Type', 'application/json')
       config.transformRequest = d => d
@@ -81,7 +81,7 @@ export function createInterceptor(service: AxiosInstance) {
       }
       return Promise.reject(msg)
     } else {
-      if (config.decrypt) {
+      if (globalConfig.apiCryptoEnable && config.decrypt) {
         data.data = decryptData(data.data, config.decrypt)
       }
       return data
