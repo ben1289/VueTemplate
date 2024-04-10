@@ -9,3 +9,25 @@ A development template for Vite+Vue3+TS+Arco
 - **Pinia** - It's trendy and delicious.
 - **Arco Design** - Powered by [ArcoDesign Vue](https://github.com/arco-design/arco-design-vue) component library.
 - **I18n** - Built-in internationalized multi-language solution.
+
+![login](https://github.com/ben1289/image-hosting/blob/master/vue-template/login.png?raw=true)
+
+![board](https://github.com/ben1289/image-hosting/blob/master/vue-template/board.png?raw=true)
+
+![board-edit](https://github.com/ben1289/image-hosting/blob/master/vue-template/board-edit.png?raw=true)
+
+![menu](https://github.com/ben1289/image-hosting/blob/master/vue-template/menu.png?raw=true)
+
+![dict-type](https://github.com/ben1289/image-hosting/blob/master/vue-template/dict-type.png?raw=true)
+
+![dict-data](https://github.com/ben1289/image-hosting/blob/master/vue-template/dict-data.png?raw=true)
+
+![operate-log](https://github.com/ben1289/image-hosting/blob/master/vue-template/operate-log.png?raw=true)
+
+![search-input](https://github.com/ben1289/image-hosting/blob/master/vue-template/search-input.png?raw=true)
+
+![search-multiple-input](https://github.com/ben1289/image-hosting/blob/master/vue-template/search-multiple-input.png?raw=true)
+
+![icon-select](https://github.com/ben1289/image-hosting/blob/master/vue-template/icon-select.png?raw=true)
+
+![map-select-point](https://github.com/ben1289/image-hosting/blob/master/vue-template/map-select-point.png?raw=true)
