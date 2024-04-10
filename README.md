@@ -8,6 +8,7 @@ A development template for Vite+Vue3+TS+Arco
 - **Vue3** - Look to the future and embrace Vue3.
 - **Pinia** - It's trendy and delicious.
 - **Arco Design** - Powered by [ArcoDesign Vue](https://github.com/arco-design/arco-design-vue) component library.
+- **Mock** - Using [Apifox](https://apifox.com/apidoc/shared-cd988981-7ee5-4eca-b273-5d9a81f7873a) for api simulation has a complete api description.
 - **I18n** - Built-in internationalized multi-language solution.
 
 ![login](https://github.com/ben1289/image-hosting/blob/master/vue-template/login.png?raw=true)
