@@ -27,7 +27,6 @@ export function loginApi(data: LoginRequest): ResponseContent<LoginResponse> {
     data,
     noToken: true,
     encrypt: CryptoEnum.SM4,
-    decrypt: CryptoEnum.SM4,
   })
 }
 
