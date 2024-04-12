@@ -79,12 +79,12 @@ function handlePopupVisibleChange(visible: boolean) {
 
         <template #content>
           <ACheckboxGroup v-model="showColumns">
-            <VueDraggable v-model="_columns" class="grid gap-4px min-w-120px" :animation="150" handle=".i-mdi-drag">
-              <div v-for="col in _columns" :key="col.id" class="flex justify-between items-center">
+            <VueDraggable v-model="_columns" class="grid min-w-120px gap-4px" :animation="150" handle=".i-mdi-drag">
+              <div v-for="col in _columns" :key="col.id" class="flex items-center justify-between">
                 <ACheckbox :value="col.id">
                   {{ col.title }}
                 </ACheckbox>
-                <i class="i-mdi-drag text-18px cursor-move" />
+                <i class="i-mdi-drag cursor-move text-18px" />
               </div>
             </VueDraggable>
           </ACheckboxGroup>
