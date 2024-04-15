@@ -33,6 +33,7 @@ const useRouteStore = defineStore('routeStore', () => {
           componentPath,
           componentName,
           keepAlive,
+          icon,
           children,
         } = menu
         if (menu.type === MenuTypeEnum.DIR) {
@@ -40,7 +41,7 @@ const useRouteStore = defineStore('routeStore', () => {
           return {
             path: routePath,
             name: routeName || undefined,
-            meta: { title: name, componentName, keepAlive },
+            meta: { title: name, componentName, keepAlive, icon },
             children: children ? generateRoutes(children) : [],
           }
         } else {
@@ -49,7 +50,7 @@ const useRouteStore = defineStore('routeStore', () => {
             path: routePath,
             name: routeName || undefined,
             component: getRouteComp(componentPath),
-            meta: { title: name, componentName, keepAlive },
+            meta: { title: name, componentName, keepAlive, icon },
             children: [],
           }
           if (showType === MenuShowTypeEnum.LAYOUT) {
