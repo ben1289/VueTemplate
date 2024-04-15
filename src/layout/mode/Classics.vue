@@ -22,15 +22,10 @@ const footerHeight = computed(() => `${appStore.footer.height}px`)
 
 <template>
   <ALayout class="h-full w-full">
-    <ALayoutHeader>
+    <ALayoutHeader v-show="!appStore.fullPage">
       <Logo />
-      <div class="flex flex-col">
-        <div class="flex justify-between">
-          <Breadcrumb />
-          <ToolBar />
-        </div>
-        <TabBar v-if="appStore.tabBar.visible" />
-      </div>
+      <Breadcrumb />
+      <ToolBar />
     </ALayoutHeader>
 
     <ALayout class="overflow-hidden">
@@ -45,6 +40,8 @@ const footerHeight = computed(() => `${appStore.footer.height}px`)
       </ALayoutSider>
 
       <ALayout class="overflow-hidden">
+        <TabBar v-if="appStore.tabBar.visible" />
+
         <ALayoutContent>
           <MainContent />
         </ALayoutContent>
@@ -68,7 +65,6 @@ const footerHeight = computed(() => `${appStore.footer.height}px`)
 
 .tab-bar {
   height: v-bind(tabBarHeight);
-  border-top: 1px solid var(--color-border-2);
 }
 
 .arco-layout-content {
