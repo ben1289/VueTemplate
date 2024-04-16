@@ -5,7 +5,7 @@ export interface Attrs {
   events?: Record<string, Function>
 }
 
-export const GOTO_VIEW = Symbol('gotoView') as InjectionKey<(view: string, attrs?: Attrs) => void>
+export const GOTO_VIEW: InjectionKey<(view: string, attrs?: Attrs) => void> = Symbol('gotoView')
 
 export default function useGotoView() {
   return inject(GOTO_VIEW)!
