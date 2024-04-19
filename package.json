@@ -1,7 +1,8 @@
 {
   "name": "vue-template",
   "private": true,
-  "version": "0.0.0",
+  "author": "Macro Ben",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite --config ./config/vite.config.dev.ts",
