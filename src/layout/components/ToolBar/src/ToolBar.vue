@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import FullScreen from '@/layout/components/FullScreen'
 import Translate from '@/layout/components/Translate'
+import Notify from '@/layout/components/Notify'
 import UserInfo from '@/layout/components/UserInfo'
 import { useAppStore } from '@/store'
 
@@ -15,6 +16,7 @@ const headerHeight = computed(() => `${appStore.header.height}px`)
   <div class="flex items-center gap-10px">
     <FullScreen />
     <Translate />
+    <Notify />
     <UserInfo />
   </div>
 </template>
