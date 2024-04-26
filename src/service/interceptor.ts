@@ -3,6 +3,7 @@ import { sm4 } from 'sm-crypto'
 import { AES, enc } from 'crypto-js'
 import { CryptoEnum } from '@/enums'
 import * as auth from '@/utils/auth'
+import { downloadByBlob } from '@/utils/download'
 import { useGlobalConfig, useMessage } from '@/hooks'
 import { useAppStore, useUserStore } from '@/store'
 import { refreshTokenApi } from '@/api/login'
@@ -53,12 +54,12 @@ export function createInterceptor(service: AxiosInstance) {
    * 响应拦截器
    */
   service.interceptors.response.use(async (response) => {
-    let { data, config } = response
+    let { data, config, request, headers } = response
     if (!data) {
       throw new Error('Empty Response')
     }
 
-    if (response.request.responseType === 'blob') {
+    if (request.responseType === 'blob') {
       if (data instanceof Blob && data.type === 'application/json') {
         const text = await data.text()
         try {
@@ -67,6 +68,10 @@ export function createInterceptor(service: AxiosInstance) {
           return Promise.reject(data)
         }
       } else {
+        const filename = extractFilenameFromContentDisposition(headers['content-disposition'])
+        if (filename) {
+          downloadByBlob(data, filename)
+        }
         return data
       }
     }
@@ -74,7 +79,7 @@ export function createInterceptor(service: AxiosInstance) {
     const code: number = data?.code || 200
     const msg = data?.msg ?? '系统未知错误，请反馈给管理员'
     if (code === 401 && !ignoreMsg.includes(msg)) {
-      return refreshTokenMiddleware(service, response.config)
+      return refreshTokenMiddleware(service, config)
     } else if (code !== 200) {
       if (!ignoreMsg.includes(msg)) {
         message.error(msg)
@@ -136,6 +141,21 @@ function decryptData(data: string, crypto: CryptoEnum) {
     }
     return JSON.parse(plaintext)
   }
+}
+
+/**
+ * 从 Content-Disposition 中提取文件名
+ * @param contentDisposition
+ */
+function extractFilenameFromContentDisposition(contentDisposition: string): string | null {
+  if (!contentDisposition) {
+    return null
+  }
+  const matches = contentDisposition.match(/filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?(?:;|$)/i)
+  if (matches && matches[1] !== undefined) {
+    return window.decodeURIComponent(matches[1])
+  }
+  return null
 }
 
 let requestList: any[] = []
