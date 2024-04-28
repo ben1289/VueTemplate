@@ -38,7 +38,12 @@ function query() {
 </script>
 
 <template>
-  <APopover trigger="click" position="bottom" content-class="p-0!" @popup-visible-change="(visible) => visible && query()">
+  <APopover
+    trigger="click"
+    position="bottom"
+    content-class="p-0!"
+    @popup-visible-change="(visible: boolean) => visible && query()"
+  >
     <ABadge :max-count="99" :count="unreadTotal">
       <span class="icon-btn">
         <i class="i-mdi-bell-outline text-20px" />
