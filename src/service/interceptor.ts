@@ -29,9 +29,11 @@ export function createInterceptor(service: AxiosInstance) {
 
     // 加密
     if (globalConfig.apiCryptoEnable && encrypt) {
-      config.data = encryptData(data, encrypt)
-      config.headers.set('Content-Type', 'application/json')
-      config.transformRequest = d => d
+      const encrypted = encryptData(data, encrypt)
+      if (encrypted) {
+        config.data = encrypted
+        config.headers.set('Content-Type', 'text/plain')
+      }
     }
 
     // 设置 租户id
