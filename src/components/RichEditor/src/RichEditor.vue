@@ -24,6 +24,7 @@ defineOptions({ name: 'RichEditor' })
 const props = withDefaults(defineProps<RichEditorProps>(), {
   plugins: 'advlist code codesample directionality fullscreen image link lists media pagebreak preview searchreplace table',
   toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough forecolor backcolor align lineheight numlist bullist outdent indent removeformat pagebreak | link table image media codesample | fullscreen code preview print',
+  width: '100%',
   height: '100%',
 })
 
@@ -35,6 +36,7 @@ const init = {
   content_css: '/tinymce/skins/content/default/content.css',
   plugins: props.plugins,
   toolbar: props.toolbar,
+  width: props.width,
   height: props.height,
   menubar: false,
   statusbar: true,
