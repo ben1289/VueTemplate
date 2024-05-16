@@ -1,8 +1,9 @@
-import { mergeConfig } from 'vite'
+import { defineConfig, mergeConfig } from 'vite'
 import baseConfig from './vite.config.base'
 
 export default mergeConfig(
-  {
+  baseConfig,
+  defineConfig({
     mode: 'production',
     build: {
       rollupOptions: {
@@ -15,6 +16,5 @@ export default mergeConfig(
         },
       },
     },
-  },
-  baseConfig,
+  }),
 )
