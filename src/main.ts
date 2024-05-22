@@ -5,6 +5,7 @@ import router from './router'
 import i18n from './locale'
 import App from './App.vue'
 import { setContext } from './hooks/message'
+import '@arco-design/web-vue/dist/arco.css'
 import './assets/style/main.less'
 
 const app = createApp(App)

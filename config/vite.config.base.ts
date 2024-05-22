@@ -20,11 +20,11 @@ export default defineConfig({
     UnoCSS(),
     AutoImport({
       imports: ['vue', 'vue-router', 'vue-i18n'],
-      resolvers: [ArcoResolver()],
+      resolvers: [ArcoResolver({ importStyle: false })],
       dts: 'types/auto-imports.d.ts',
     }),
     Components({
-      resolvers: [ArcoResolver()],
+      resolvers: [ArcoResolver({ importStyle: false })],
       dts: 'types/vue-components.d.ts',
     }),
   ],
