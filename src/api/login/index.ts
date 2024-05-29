@@ -44,7 +44,7 @@ export function logoutApi(): ResponseContent {
  * 刷新 token
  * @param refreshToken
  */
-export async function refreshTokenApi(refreshToken: string): ResponseContent<LoginResponse> {
+export function refreshTokenApi(refreshToken: string): ResponseContent<LoginResponse> {
   return service({
     url: '/system/auth/refresh-token',
     method: 'POST',
@@ -55,7 +55,7 @@ export async function refreshTokenApi(refreshToken: string): ResponseContent<Log
 /**
  * 获取 用户信息 角色信息 菜单信息 权限信息
  */
-export async function getInfoApi(): ResponseContent<InfoResponse> {
+export function getInfoApi(): ResponseContent<InfoResponse> {
   return service({
     url: '/system/auth/get-permission-info',
     method: 'GET',
