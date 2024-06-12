@@ -118,6 +118,7 @@ function handleDelete(id: number) {
     onOk() {
       roleApi.deleteRole(id).then(() => {
         message.success(t('tip.deleteSuccess'))
+        query()
       })
     },
   })
