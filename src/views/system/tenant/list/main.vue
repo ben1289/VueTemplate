@@ -142,6 +142,7 @@ function handleDelete(id: number) {
     onOk() {
       tenantApi.deleteTenant(id).then(() => {
         message.success(t('tip.deleteSuccess'))
+        query()
       })
     },
   })

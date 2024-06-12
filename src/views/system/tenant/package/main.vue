@@ -97,6 +97,7 @@ function handleDelete(id: number) {
     onOk() {
       tenantApi.deleteTenantPackage(id).then(() => {
         message.success(t('tip.deleteSuccess'))
+        query()
       })
     },
   })
