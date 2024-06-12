@@ -126,6 +126,7 @@ function handleDelete(id: number) {
     onOk() {
       dictApi.deleteDictType(id).then(() => {
         message.success(t('tip.deleteSuccess'))
+        query()
       })
     },
   })
