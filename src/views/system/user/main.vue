@@ -149,6 +149,7 @@ function handleDelete(id: number) {
     onOk() {
       userApi.deleteUser(id).then(() => {
         message.success(t('tip.deleteSuccess'))
+        query()
       })
     },
   })
