@@ -99,6 +99,7 @@ function handleDelete(id: number) {
     onOk() {
       deptApi.deleteDept(id).then(() => {
         message.success(t('tip.deleteSuccess'))
+        query()
       })
     },
   })
@@ -150,7 +151,7 @@ function handleDelete(id: number) {
       </CusTable>
     </div>
 
-    <AddEditModal ref="addEditModalRef" />
+    <AddEditModal ref="addEditModalRef" @refresh="query" />
   </div>
 </template>
 

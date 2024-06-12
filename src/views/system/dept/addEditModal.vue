@@ -4,6 +4,10 @@ import { arrayToTree } from '@/utils/dataHandler'
 import { useMessage } from '@/hooks'
 import * as deptApi from '@/api/system/dept'
 
+const emit = defineEmits<{
+  (e: 'refresh'): void
+}>()
+
 defineExpose({ open })
 
 interface DeptData {
@@ -48,6 +52,7 @@ async function handleBeforeOk() {
   if (!errors) {
     await deptApi.saveDept(toValue(formData))
     message.success(t('tip.saveSuccess'))
+    emit('refresh')
     return true
   }
   return false
