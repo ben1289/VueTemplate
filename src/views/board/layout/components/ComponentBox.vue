@@ -19,18 +19,16 @@ const getComponent = inject(GET_COMPONENT)!
 
 <template>
   <VueDraggable
-    v-if="draggable"
     v-model="modelValue"
-    class="component-box draggable"
+    class="component-box"
+    :class="{ draggable }"
     :animation="150"
     group="component"
     v-bind="$attrs"
+    :disabled="!draggable"
   >
     <ComponentWrapper v-for="name in modelValue" :key="name" :component="getComponent(name)" />
   </VueDraggable>
-  <div v-else class="component-box">
-    <component :is="getComponent(name)" v-for="name in modelValue" :key="name" />
-  </div>
 </template>
 
 <style scoped lang="less">
