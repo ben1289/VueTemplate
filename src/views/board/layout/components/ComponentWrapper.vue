@@ -3,6 +3,7 @@ import { REMOVE_COMPONENT } from '@/views/board/injectKeys'
 
 defineProps<{
   component: any
+  closeable: boolean
 }>()
 
 const removeComponent = inject(REMOVE_COMPONENT)!
@@ -11,8 +12,8 @@ const removeComponent = inject(REMOVE_COMPONENT)!
 <template>
   <div class="component-wrapper">
     <component :is="component" />
-    <div class="wrapper-mask">
-      <i class="i-mdi-close remove-button" @click="removeComponent(component.name)" />
+    <div v-if="closeable" class="wrapper-mask">
+      <i class="remove-button i-mdi-close" @click="removeComponent(component.name)" />
     </div>
   </div>
 </template>

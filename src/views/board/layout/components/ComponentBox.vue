@@ -27,7 +27,7 @@ const getComponent = inject(GET_COMPONENT)!
     v-bind="$attrs"
     :disabled="!draggable"
   >
-    <ComponentWrapper v-for="name in modelValue" :key="name" :component="getComponent(name)" />
+    <ComponentWrapper v-for="name in modelValue" :key="name" :component="getComponent(name)" :closeable="draggable" />
   </VueDraggable>
 </template>
 
