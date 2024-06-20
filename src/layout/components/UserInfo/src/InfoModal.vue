@@ -179,7 +179,9 @@ const autoSaveInfo = useDebounceFn(() => {
 
 <style scoped lang="less">
 .avatar-uploader {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 80px;
   height: 80px;
   margin: 0 auto 10px;
