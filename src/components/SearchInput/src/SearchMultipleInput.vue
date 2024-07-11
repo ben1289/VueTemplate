@@ -22,13 +22,19 @@ const string = ref('')
 
 const _fieldNames = computed(() => ({ valueKey: 'value', labelKey: 'label', ...props.fieldNames }))
 
-const selectedRows = computed(() => toValue(value).map((v, i) => {
-  const { valueKey, labelKey } = toValue(_fieldNames)
-  return {
-    [valueKey]: v,
-    [labelKey]: toValue(label)[i],
+const selectedRows = ref<Record<string, any>>([])
+
+watch([value, label], ([_value, _label]) => {
+  if (_value.length === _label.length) {
+    selectedRows.value = _value.map((v, i) => {
+      const { valueKey, labelKey } = toValue(_fieldNames)
+      return {
+        [valueKey]: v,
+        [labelKey]: _label[i],
+      }
+    })
   }
-}))
+}, { immediate: true })
 
 function handleTagClose(row: Row) {
   const { valueKey } = toValue(_fieldNames)
