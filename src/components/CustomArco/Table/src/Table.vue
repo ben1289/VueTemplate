@@ -25,6 +25,15 @@ const page = defineModel<Page>('page', {
 
 const { indexedDB } = useStorage()
 
+watch(() => props.total, (_total) => {
+  const { pageNo, pageSize } = toValue(page)
+  if (pageNo * pageSize > _total) {
+    nextTick(() => {
+      page.value.pageNo = Math.ceil(_total / pageSize)
+    })
+  }
+})
+
 const showColumns = ref<string[]>([])
 const _columns = ref(cloneDeep(props.columns))
 const colSetting = computed(() => props.id && props.columns.every(({ id }) => id))
