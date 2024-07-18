@@ -27,9 +27,9 @@ const { indexedDB } = useStorage()
 
 watch(() => props.total, (_total) => {
   const { pageNo, pageSize } = toValue(page)
-  if (pageNo * pageSize > _total) {
+  if (_total <= (pageNo - 1) * pageSize) {
     nextTick(() => {
-      page.value.pageNo = Math.ceil(_total / pageSize)
+      page.value.pageNo = _total <= 0 ? 1 : Math.ceil(_total / pageSize)
     })
   }
 })
