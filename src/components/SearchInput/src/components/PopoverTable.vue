@@ -59,7 +59,7 @@ props.multiple && watch(selectedKeys, (keys) => {
 }, { deep: true })
 
 function handleVisibleChange(visible: boolean) {
-  if (visible && toValue(tbData).length === 0) {
+  if (visible && (props.alwaysFetch || toValue(tbData).length === 0)) {
     query()
   }
 }

@@ -53,6 +53,7 @@ function change(row?: Row) {
         :class="popoverClass"
         :columns="columns"
         :fetch-data="fetchData"
+        :always-fetch="alwaysFetch"
         :row-key="_fieldNames.rowKey"
         :multiple="false"
         :disabled="disabled"
