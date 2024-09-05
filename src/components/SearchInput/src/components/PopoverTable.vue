@@ -4,7 +4,7 @@ import type { GetFetchData } from '../types'
 import SearchButton from './SearchButton.vue'
 import { CusTable } from '@/components/CustomArco'
 
-defineOptions({ name: 'PopoverTable' })
+defineOptions({ name: 'PopoverTable', inheritAttrs: false })
 
 const props = defineProps<PopoverTableProps>()
 
@@ -68,6 +68,7 @@ function handleVisibleChange(visible: boolean) {
 <template>
   <AFormItem no-style>
     <APopover
+      v-bind="$attrs"
       v-model:popup-visible="visible"
       class="w-400px"
       trigger="click"

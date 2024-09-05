@@ -6,4 +6,6 @@ export interface SearchInputProps extends Pick<PopoverTableProps, 'columns' | 'f
     labelKey?: string
     rowKey?: string
   }
+  popoverClass?: string
+  popoverStyle?: Record<string, any>
 }

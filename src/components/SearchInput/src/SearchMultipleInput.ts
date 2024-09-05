@@ -6,4 +6,6 @@ export interface SearchMultipleInputProps extends Pick<PopoverTableProps, 'colum
     labelKey?: string
   }
   maxTags?: number
+  popoverClass?: string
+  popoverStyle?: Record<string, any>
 }

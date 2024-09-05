@@ -82,11 +82,13 @@ function change(rows: Row[]) {
     <template #append>
       <PopoverTable
         v-model:selected-keys="value"
+        :class="popoverClass"
         :columns="columns"
         :fetch-data="fetchData"
         :row-key="_fieldNames.valueKey"
         :multiple="true"
         :disabled="disabled"
+        :style="popoverStyle"
         @change="change"
       />
     </template>
