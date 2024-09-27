@@ -12,7 +12,7 @@ const useDictStore = defineStore(STORE_ID, () => {
   const dict = ref<Record<string, Dict[]>>({})
 
   async function setDict() {
-    const { data } = await getDictDataSimpleList()
+    const { data = [] } = await getDictDataSimpleList() ?? {}
     const typedData = data.map((d) => {
       if (isValidNumber(d.value)) {
         d.value = Number(d.value)
