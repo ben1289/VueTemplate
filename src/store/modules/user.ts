@@ -68,15 +68,24 @@ const useUserStore = defineStore(STORE_ID, () => {
   /**
    * 重新登录
    */
+  let opened = false
   function loginAgain() {
+    if (opened)
+      return
     // @ts-ignore Type instantiation is excessively deep and possibly infinite.
     const { t } = i18n.global
     const message = useMessage()
     message.warningAlert(t('app.loginTimeout'), false, {
       okText: t('app.loginAgain'),
+      onOpen: () => {
+        opened = true
+      },
       onOk: async () => {
         await clearCache()
         await router.push({ name: 'login' })
+      },
+      onClose: () => {
+        opened = false
       },
     })
   }
