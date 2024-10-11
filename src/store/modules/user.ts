@@ -77,9 +77,6 @@ const useUserStore = defineStore(STORE_ID, () => {
     const message = useMessage()
     message.warningAlert(t('app.loginTimeout'), false, {
       okText: t('app.loginAgain'),
-      onOpen: () => {
-        opened = true
-      },
       onOk: async () => {
         await clearCache()
         await router.push({ name: 'login' })
@@ -88,6 +85,7 @@ const useUserStore = defineStore(STORE_ID, () => {
         opened = false
       },
     })
+    opened = true
   }
 
   /**
