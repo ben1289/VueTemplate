@@ -2,6 +2,7 @@
 import type { SearchMultipleInputProps } from './SearchMultipleInput'
 import type { GetFetchData } from './types'
 import { useFormItem } from '@arco-design/web-vue'
+import { unionBy } from 'lodash-es'
 import PopoverTable from './components/PopoverTable.vue'
 
 defineOptions({ name: 'SearchMultipleInput' })
@@ -16,13 +17,13 @@ type Row = GetFetchData<typeof props.fetchData>
 
 const { eventHandlers } = useFormItem()
 
-const value = defineModel<(string | number)[]>('value', { default: [] })
-const label = defineModel<(string | number)[]>('label', { default: [] })
+const value = defineModel<string[] | number[]>('value', { default: [] })
+const label = defineModel<string[] | number[]>('label', { default: [] })
 const string = ref('')
 
 const _fieldNames = computed(() => ({ valueKey: 'value', labelKey: 'label', ...props.fieldNames }))
 
-const selectedRows = ref<Record<string, any>>([])
+const selectedRows = ref<Row[]>([])
 
 watch([value, label], ([_value, _label]) => {
   if (_value.length === _label.length) {
@@ -40,11 +41,13 @@ function handleTagClose(row: Row) {
   const { valueKey } = toValue(_fieldNames)
   const index = toValue(value).indexOf(row[valueKey] as never)
   value.value.splice(index, 1)
+  label.value.splice(index, 1)
 }
 
 function change(rows: Row[]) {
-  const { labelKey } = toValue(_fieldNames)
-  label.value = rows.map(row => row[labelKey])
+  const { valueKey, labelKey } = toValue(_fieldNames)
+  const _rows = unionBy([...toValue(selectedRows), ...rows], valueKey).filter(row => toValue(value).includes(row[valueKey] as never))
+  label.value = _rows.map(row => row[labelKey])
   emit('change', toValue(value), rows)
   toValue(eventHandlers)?.onChange?.()
 }

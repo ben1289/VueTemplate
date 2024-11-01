@@ -3,6 +3,7 @@ import type { PopoverTableProps } from './PopoverTable'
 import type { GetFetchData } from '../types'
 import SearchButton from './SearchButton.vue'
 import { CusTable } from '@/components/CustomArco'
+import { useSelectedRows } from '@/components/CustomArco/Table'
 
 defineOptions({ name: 'PopoverTable', inheritAttrs: false })
 
@@ -14,6 +15,8 @@ const emit = defineEmits<{
 
 type Row = GetFetchData<typeof props.fetchData>
 
+const selectedKeys = defineModel<string[] | number[]>('selectedKeys', { default: () => [] })
+
 const visible = ref(false)
 
 const defaultCurrent = 1
@@ -23,6 +26,7 @@ const tbLoading = ref(false)
 const tbData = ref<Row[]>([])
 const tbTotal = ref(0)
 const tbPage = reactive({ pageNo: defaultCurrent, pageSize: defaultPageSize })
+const selectedRows = useSelectedRows(selectedKeys, tbData, props.rowKey)
 
 watch(tbPage, () => {
   query()
@@ -43,20 +47,9 @@ function handleRowDblclick(row: Row) {
   visible.value = false
 }
 
-const selectedKeys = defineModel<(string | number)[]>('selectedKeys', { default: () => [] })
-const selectedRows = new Map()
-
-props.multiple && watch(selectedKeys, (keys) => {
-  toValue(tbData).forEach((row) => {
-    const key = row[props.rowKey]
-    if (keys.includes(key)) {
-      selectedRows.set(key, row)
-    } else {
-      selectedRows.delete(key)
-    }
-  })
-  emit('change', [...selectedRows.values()])
-}, { deep: true })
+props.multiple && watch(selectedRows, (rows) => {
+  emit('change', rows)
+})
 
 function handleVisibleChange(visible: boolean) {
   if (visible && (props.alwaysFetch || toValue(tbData).length === 0)) {
