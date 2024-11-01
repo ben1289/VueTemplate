@@ -95,8 +95,8 @@ function handleVisibleChange(visible: boolean) {
           :row-selection="multiple ? { type: 'checkbox', showCheckedAll: true, fixed: true } : undefined"
           :pagination="{
             total: tbTotal,
-            defaultCurrent,
-            defaultPageSize,
+            current: tbPage.pageNo,
+            pageSize: tbPage.pageSize,
             simple: true,
             showTotal: true,
             showPageSize: true,
