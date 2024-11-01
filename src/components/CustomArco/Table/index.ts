@@ -1,7 +1,7 @@
 import Table from './src/Table.vue'
-import useSelectRows from './src/hooks/selectRows'
+import useSelectedRows from './src/hooks/selectedRows'
 
 export default Table
 
-export { useSelectRows }
+export { useSelectedRows }
 export type { TableColumnData } from './src/Table'
