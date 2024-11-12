@@ -24,7 +24,7 @@ const slotNames = Object.keys(useSlots()).filter(slotName => !['fixed'].includes
 
 <template>
   <div class="grid-card">
-    <ASpin class="overflow-auto" :loading="loading">
+    <ASpin class="flex-1 overflow-auto" :loading="loading">
       <AGrid :cols="{ xxl: 4, lg: 3, sm: 2, xs: 1 }" :col-gap="12" :row-gap="12" v-bind="gridProps">
         <AGridItem v-if="$slots.fixed">
           <slot name="fixed" />
@@ -56,7 +56,6 @@ const slotNames = Object.keys(useSlots()).filter(slotName => !['fixed'].includes
 .grid-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 12px;
 }
 
