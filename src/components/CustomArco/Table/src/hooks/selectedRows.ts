@@ -8,8 +8,8 @@ export default function useSelectedRows(
 ): Ref<Record<string, any>[]> {
   const selectedRows = ref<Record<string, any>[]>([])
 
-  watch(selectedRowKeys, () => {
-    selectedRows.value = unionBy([...toValue(selectedRows), ...toValue(tbData)], rowKey)
+  watch([selectedRowKeys, tbData], () => {
+    selectedRows.value = unionBy([...toValue(tbData), ...toValue(selectedRows)], rowKey)
       .filter(row => toValue(selectedRowKeys).includes(row[rowKey] as never))
   })
 
