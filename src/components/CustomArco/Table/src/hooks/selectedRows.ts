@@ -9,7 +9,7 @@ interface Options {
 export default function useSelectedRows(
   selectedRowKeys: MaybeRef<string[] | number[]>,
   tbData: MaybeRef<Record<string, any>[]>,
-  options: Options,
+  options: Options = {},
 ): Ref<Record<string, any>[]> {
   const { rowKey = 'id', deep = false } = options
   const selectedRows = ref<Record<string, any>[]>([])
