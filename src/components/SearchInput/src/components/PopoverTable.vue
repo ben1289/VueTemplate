@@ -26,7 +26,7 @@ const tbLoading = ref(false)
 const tbData = ref<Row[]>([])
 const tbTotal = ref(0)
 const tbPage = reactive({ pageNo: defaultCurrent, pageSize: defaultPageSize })
-const selectedRows = useSelectedRows(selectedKeys, tbData, props.rowKey)
+const selectedRows = useSelectedRows(selectedKeys, tbData, { rowKey: props.rowKey })
 
 watch(tbPage, () => {
   query()
