@@ -1,4 +1,5 @@
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import { AxiosError } from 'axios'
 import { sm4 } from 'sm-crypto'
 import { AES, enc } from 'crypto-js'
 import { CryptoEnum } from '@/enums'
@@ -9,6 +10,7 @@ import { useAppStore, useUserStore } from '@/store'
 import { refreshTokenApi } from '@/api/login'
 
 const ignoreMsg = ['无效的刷新令牌', '刷新令牌已过期']
+const pendingRequests: Set<string> = new Set()
 const globalConfig = useGlobalConfig()
 
 export function createInterceptor(service: AxiosInstance) {
@@ -18,8 +20,18 @@ export function createInterceptor(service: AxiosInstance) {
    * 请求拦截器
    */
   service.interceptors.request.use(async (config) => {
+    const { noToken = false, dedupe = false, encrypt, data } = config
+
+    // 去重
+    if (dedupe) {
+      const requestKey = generateRequestKey(config)
+      if (pendingRequests.has(requestKey)) {
+        return Promise.reject(new Error('Repeated requests'))
+      }
+      pendingRequests.add(requestKey)
+    }
+
     // 设置 Token
-    const { noToken = false, encrypt, data } = config
     if (!noToken) {
       const accessToken = await auth.getAccessToken()
       if (accessToken) {
@@ -57,6 +69,10 @@ export function createInterceptor(service: AxiosInstance) {
    */
   service.interceptors.response.use(async (response) => {
     let { data, config, request, headers } = response
+
+    const requestKey = generateRequestKey(config)
+    pendingRequests.delete(requestKey)
+
     if (!data) {
       throw new Error('Empty Response')
     }
@@ -94,9 +110,25 @@ export function createInterceptor(service: AxiosInstance) {
       return data
     }
   }, (error) => {
+    if (error instanceof AxiosError && error.config) {
+      const requestKey = generateRequestKey(error.config)
+      pendingRequests.delete(requestKey)
+    }
     message.error(error.message)
     return Promise.reject(error)
   })
+}
+
+/**
+ * 生成请求 key
+ * @param config
+ */
+function generateRequestKey(config: AxiosRequestConfig) {
+  try {
+    return `${config.method}:${config.url}:${JSON.stringify(config.params)}:${JSON.stringify(config.data)}`
+  } catch (e) {
+    return `${config.method}:${config.url}`
+  }
 }
 
 /**
