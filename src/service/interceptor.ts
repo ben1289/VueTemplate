@@ -125,8 +125,10 @@ export function createInterceptor(service: AxiosInstance) {
  */
 function generateRequestKey(config: AxiosRequestConfig) {
   try {
-    return `${config.method}:${config.url}:${JSON.stringify(config.params)}:${JSON.stringify(config.data)}`
-  } catch (e) {
+    const params = typeof config.params === 'string' ? config.params : JSON.stringify(config.params)
+    const data = typeof config.data === 'string' ? config.data : JSON.stringify(config.data)
+    return `${config.method}:${config.url}:${params}:${data}`
+  } catch {
     return `${config.method}:${config.url}`
   }
 }
